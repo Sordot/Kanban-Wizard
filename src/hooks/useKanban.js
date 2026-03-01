@@ -8,22 +8,23 @@ export const useKanban = (initialData) => {
         return saved ? JSON.parse(saved) : initialData
     })
 
+    const [activeTask, setActiveTask] = useState(null)
+
+    const [isAddingColumn, setIsAddingColumn] = useState(false)
+    const [newColumnTitle, setNewColumnTitle] = useState("")
+
     useEffect(() => {
         localStorage.setItem('theo-kanban-data', JSON.stringify(columns))
     }, [columns])
 
-    const [activeTask, setActiveTask] = useState(null)
+    
 
     //CRUD UTILITIES
     const addTask = (inputColumnID) => {
-        //ask user for input
-        const content = window.prompt('Task Description:')
-        if (!content) return
-    
         //get unique task id
         const newTask = {
           id: `task-${Date.now()}`,
-          text: content,
+          text: '',
           priority: 'medium',
           description: '',
           isNew: true, //trigger edit mode automatically
@@ -53,22 +54,31 @@ export const useKanban = (initialData) => {
     }
 
     const addColumn = () => {
-        const title = window.prompt('Column Title:')
+        const title = newColumnTitle.trim()
         if (!title) return
     
         const newColumn = {
+          // eslint-disable-next-line react-hooks/purity
           id: `col-${Date.now()}`,
           title: title,
           tasks: []
         }
     
         setColumns([...columns, newColumn])
+        closeColumnEditor()
     }
 
     const removeColumn = (columnID) => {
         if (window.confirm("Are you sure you'd like to remove this column and all of its child tasks?")) {
           setColumns(columns.filter(column => column.id !== columnID))
         }
+    }
+
+    const openColumnEditor = () => setIsAddingColumn(true)
+
+    const closeColumnEditor = () => {
+      setIsAddingColumn(false)
+      setNewColumnTitle("")
     }
 
     //Drag and Drop Handlers
@@ -168,5 +178,22 @@ export const useKanban = (initialData) => {
   }
 
 
-  return { columns, activeTask, addTask, updateTask, deleteTask, addColumn, removeColumn, handleDragStart, handleDragOver, handleDragEnd}
+  return { 
+    columns, 
+    setColumns,
+    activeTask, 
+    isAddingColumn, 
+    newColumnTitle, 
+    setNewColumnTitle,
+    openColumnEditor,
+    closeColumnEditor, 
+    addTask, 
+    updateTask, 
+    deleteTask, 
+    addColumn, 
+    removeColumn, 
+    handleDragStart, 
+    handleDragOver, 
+    handleDragEnd
+  }
 }

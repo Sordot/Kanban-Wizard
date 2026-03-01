@@ -24,7 +24,20 @@ const DEFAULT_DATA = [
 function App() {
 
   const { 
-    columns, activeTask, addTask, updateTask, deleteTask, addColumn, removeColumn, handleDragOver, handleDragEnd 
+    columns, 
+    activeTask, 
+    addTask, 
+    updateTask, 
+    deleteTask, 
+    addColumn, 
+    removeColumn, 
+    handleDragOver, 
+    handleDragEnd,
+    isAddingColumn, 
+    newColumnTitle, 
+    setNewColumnTitle, 
+    openColumnEditor, 
+    closeColumnEditor 
   } = useKanban(DEFAULT_DATA)
 
   const sensors = useSensors(
@@ -48,7 +61,29 @@ function App() {
               onRemoveColumn={removeColumn}
             />
           ))}
-          <button className='add-column-btn' onClick={addColumn}> + Add Column</button>
+          {isAddingColumn ? (
+            <div className="add-column-editor">
+              <input
+                autoFocus
+                className="edit-input column-title-input"
+                placeholder="Name this column..."
+                value={newColumnTitle}
+                onChange={(e) => setNewColumnTitle(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') addColumn();
+                  if (e.key === 'Escape') closeColumnEditor();
+                }}
+              />
+              <div className="edit-actions">
+                <button className="cancel-btn" onClick={closeColumnEditor}>Cancel</button>
+                <button className="save-btn" onClick={addColumn}>Add Column</button>
+              </div>
+            </div>
+          ) : (
+            <button className="add-column-btn" onClick={openColumnEditor}>
+              <span>+ Add Column</span>
+            </button>
+          )}
         </div>
         <DragOverlay>
           {activeTask ? (

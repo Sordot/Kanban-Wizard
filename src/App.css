@@ -59,12 +59,47 @@ body {
 .kanban-board {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
-    gap: 24px;
+    justify-content: flex-start;
+    gap: 32px;
     width: 100%;
-    padding: 20px;
+    padding: 20px 80px;
     max-width: 1400px;
+    mask-image: linear-gradient(
+        to right, 
+        transparent, 
+        black 4%, 
+        black 96%, 
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to right, 
+        transparent, 
+        black 4%, 
+        black 96%, 
+        transparent
+    );
     overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.kanban-board::-webkit-scrollbar {
+    height: 8px;
+}
+
+.kanban-board::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin: 0 80px;
+}
+
+.kanban-board::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #4c1d95, #8b5cf6);
+    border-radius: 10px;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.kanban-board::-webkit-scrollbar-thumb:hover {
+    background: #a78bfa;
 }
 
 .column-header {
@@ -273,7 +308,7 @@ body {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-    padding-top: 4px;
+    padding-top: 10px;
 }
 
 .save-btn {
@@ -368,6 +403,24 @@ body {
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+.add-column-editor {
+    min-width: 320px;
+    background: rgba(15, 12, 41, 0.8);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(139, 92, 246, 0.6);
+    border-radius: 16px;
+    padding: 20px;
+    height: fit-content;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.column-title-input {
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 .delete-column-btn {

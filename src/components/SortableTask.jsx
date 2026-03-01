@@ -1,11 +1,15 @@
-import { useState } from "react";
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { useState } from 'react';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 
 function SortableTask({id, task, columnID, onDelete, onUpdate}) {
     const [isEditing, setIsEditing] = useState(task.isNew || false)
-    const [editData, setEditData] = useState({...task})
+    const [editData, setEditData] = useState({
+        title: task.text || '', 
+        description: task.description || '',
+        priority: task.priority || ''
+    })
 
     const {
         attributes,
@@ -20,7 +24,6 @@ function SortableTask({id, task, columnID, onDelete, onUpdate}) {
         const finalData = {...editData, isNew: false}
         onUpdate(columnID, id, finalData)
         setIsEditing(false)
-        
     }
 
     const handleKeyDown = (event) => {
@@ -29,7 +32,7 @@ function SortableTask({id, task, columnID, onDelete, onUpdate}) {
     }
 
     const formatTime = (ts) => {
-        if (!ts) return ""
+        if (!ts) return ''
         return new Date(ts).toLocaleString([], {
             month: 'short',
             day: 'numeric',
@@ -46,47 +49,47 @@ function SortableTask({id, task, columnID, onDelete, onUpdate}) {
 
     if (isEditing) {
         return (
-            <div ref={setNodeRef} style={style} className="task-card editing" onKeyDown={handleKeyDown}>
+            <div ref={setNodeRef} style={style} className='task-card editing' onKeyDown={handleKeyDown}>
                 <input 
-                    className="edit-input title"
+                    className='edit-input title'
                     value={editData.text}
                     onPointerDown={e => e.stopPropagation()}
                     onChange={e => setEditData({...editData, text: e.target.value})}
-                    placeholder="Task title..."
+                    placeholder='Task title...'
                     autoFocus
                 />
                 <select 
-                    className="edit-input priority"
+                    className='edit-input priority'
                     value={editData.priority}
                     onPointerDown={e => e.stopPropagation()}
                     onChange={e => setEditData({...editData, priority: e.target.value})}
                 >
-                    <option value="low">Low Priority</option>
-                    <option value="medium">Medium Priority</option>
-                    <option value="high">High Priority</option>
+                    <option value='low'>Low Priority</option>
+                    <option value='medium'>Medium Priority</option>
+                    <option value='high'>High Priority</option>
                 </select>
                 <textarea 
-                    className="edit-input desc"
+                    className='edit-input desc'
                     value={editData.description}
                     onPointerDown={e => e.stopPropagation()}
                     onChange={e => setEditData({...editData, description: e.target.value})}
-                    placeholder="Add a description..."
+                    placeholder='Add a description...'
                 />
-                <div className="edit-actions">
-                    <button className="save-btn" onClick={handleSave} onPointerDown={e => e.stopPropagation()}>Save Task</button>
-                    <button className="cancel-btn" onClick={() => setIsEditing(false)} onPointerDown={e => e.stopPropagation()}>Cancel</button>
+                <div className='edit-actions'>
+                    <button className='save-btn' onClick={handleSave} onPointerDown={e => e.stopPropagation()}>Save Task</button>
+                    <button className='cancel-btn' onClick={() => setIsEditing(false)} onPointerDown={e => e.stopPropagation()}>Cancel</button>
                 </div>
             </div>
         )
     }
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`task-card priority-${task.priority}`}>
-            <div className="task-content">
-                <div className="task-header">
+            <div className='task-content'>
+                <div className='task-header'>
                     <span className={`priority-badge ${task.priority || 'medium'}`}>
                         {(task.priority || 'medium').toUpperCase()}
                     </span>
-                    <button className="edit-btn"
+                    <button className='edit-btn'
                         onPointerDown={(e) => e.stopPropagation()}
                         onClick={(e) => { e.stopPropagation(); setIsEditing(true); }}>
                         ✎ Edit
@@ -97,10 +100,10 @@ function SortableTask({id, task, columnID, onDelete, onUpdate}) {
                         x
                     </button>
                 </div>
-                <p className="task-text">{task.text}</p>
-                {task.description && (<p className="task-desc-preview">{task.description}</p>)}
-                <div className="task-footer">
-                    <span className="timestamp">
+                <p className='task-text'>{task.text}</p>
+                {task.description && (<p className='task-desc-preview'>{task.description}</p>)}
+                <div className='task-footer'>
+                    <span className='timestamp'>
                         Updated: {formatTime(task.updatedAt)}
                     </span>
                 </div>
