@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
@@ -17,7 +17,7 @@ function SortableTask({id, task, columnID, onDelete, onUpdate}) {
     } = useSortable({id, disabled: isEditing}) //stop dragging while typing
 
     const handleSave = () => {
-        const { isNew, ...finalData } = editData
+        const { ...finalData } = editData
         onUpdate(columnID, id, finalData)
         setIsEditing(false)
     }
@@ -25,7 +25,17 @@ function SortableTask({id, task, columnID, onDelete, onUpdate}) {
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') handleSave()
         if (event.key === 'Escape') setIsEditing(false)
-    } 
+    }
+
+    const formatTime = (ts) => {
+        if (!ts) return ""
+        return new Date(ts).toLocaleString([], {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        })
+    }
 
     const style = {
         transform: CSS.Transform.toString(transform), 
@@ -87,9 +97,12 @@ function SortableTask({id, task, columnID, onDelete, onUpdate}) {
                     </button>
                 </div>
                 <p className="task-text">{task.text}</p>
-                {task.description && (
-                    <p className="task-desc-preview">{task.description}</p>
-                )}
+                {task.description && (<p className="task-desc-preview">{task.description}</p>)}
+                <div className="task-footer">
+                    <span className="timestamp">
+                        Updated: {formatTime(task.updatedAt)}
+                    </span>
+                </div>
             </div>
         </div>
     )

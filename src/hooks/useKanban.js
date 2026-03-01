@@ -26,7 +26,8 @@ export const useKanban = (initialData) => {
           text: content,
           priority: 'medium',
           description: '',
-          isNew: true //trigger edit mode automatically
+          isNew: true, //trigger edit mode automatically
+          updatedAt: Date.now()
         }
         setColumns(columns.map(column => {
           if (column.id !== inputColumnID) return column
@@ -38,7 +39,7 @@ export const useKanban = (initialData) => {
       setColumns(prev => prev.map(column => {
         if (column.id !== columnID) return column
         return {
-          ...column, tasks: column.tasks.map(task => task.id === taskID ? {...task, ...updates} : task)
+          ...column, tasks: column.tasks.map(task => task.id === taskID ? {...task, ...updates, updatedAt: Date.now()} : task)
         }
       }))
     }
