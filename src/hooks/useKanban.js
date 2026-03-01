@@ -12,6 +12,8 @@ export const useKanban = (initialData) => {
         localStorage.setItem('theo-kanban-data', JSON.stringify(columns))
     }, [columns])
 
+    const [activeTask, setActiveTask] = useState(null)
+
     //CRUD UTILITIES
     const addTask = (inputColumnID) => {
         //ask user for input
@@ -21,7 +23,10 @@ export const useKanban = (initialData) => {
         //get unique task id
         const newTask = {
           id: `task-${Date.now()}`,
-          text: content
+          text: content,
+          priority: 'medium',
+          description: '',
+          createdAt: new Date.toISOString()
         }
         setColumns(columns.map(column => {
           if (column.id !== inputColumnID) return column
@@ -57,6 +62,13 @@ export const useKanban = (initialData) => {
     }
 
     //Drag and Drop Handlers
+    const handleDragStart = (event) => {
+      const {active} = event
+      //Find task object from columns state
+      const task = columns.flatMap(column => column.tasks).find(task => task.id === active.id)
+      setActiveTask(task)
+    }
+
     const handleDragEnd = (event) => {
     const {active, over} = event
     if (!over) return
@@ -140,6 +152,9 @@ export const useKanban = (initialData) => {
         return column
       })
     })
+    setActiveTask(null)
   }
-  return { columns, addTask, deleteTask, addColumn, removeColumn, handleDragOver, handleDragEnd}
+
+
+  return { columns, activeTask, addTask, deleteTask, addColumn, removeColumn, handleDragStart, handleDragOver, handleDragEnd}
 }

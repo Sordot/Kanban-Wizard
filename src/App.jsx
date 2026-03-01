@@ -1,5 +1,6 @@
 import {
   DndContext,
+  DragOverlay,
   closestCorners,
   KeyboardSensor,
   PointerSensor,
@@ -14,7 +15,8 @@ import { useKanban } from './hooks/useKanban'
 import Column from './components/Column'
 
 const DEFAULT_DATA = [
-    {id: 1, title: 'To Do', tasks: [{id:'t1', text:'Learn React'}, {id: 't2', text: "Set up project"}]},
+    {id: 1, title: 'To Do', tasks: [{id:'t1', text:'Learn React', priority: 'high', description: 'Shake off the rust!'}, 
+                                    {id: 't2', text: "Set up project", priority: 'low', description: 'AI is OP'}]},
     {id: 2, title: 'In Progress', tasks: []},
     {id: 3, title: 'Done', tasks: []}
   ]
@@ -22,7 +24,7 @@ const DEFAULT_DATA = [
 function App() {
 
   const { 
-    columns, addTask, deleteTask, addColumn, removeColumn, handleDragOver, handleDragEnd 
+    columns, activeTask, addTask, deleteTask, addColumn, removeColumn, handleDragOver, handleDragEnd 
   } = useKanban(DEFAULT_DATA)
 
   const sensors = useSensors(
@@ -47,6 +49,13 @@ function App() {
           ))}
           <button className="add-column-btn" onClick={addColumn}> + Add Column</button>
         </div>
+        <DragOverlay>
+          {activeTask ? (
+            <div className="task-card dragging-overlay">
+              <span>{activeTask.text}</span>
+            </div>
+          ) : null}
+        </DragOverlay>
         </DndContext>  
     </div>   
   )
