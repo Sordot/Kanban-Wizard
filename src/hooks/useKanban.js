@@ -13,6 +13,12 @@ export const useKanban = (initialData) => {
     const [isAddingColumn, setIsAddingColumn] = useState(false)
     const [newColumnTitle, setNewColumnTitle] = useState("")
 
+    const [modalConfig, setModalConfig] = useState({
+      isOpen: false,
+      type: null, // 'task' or 'column'
+      data: null // stores IDs needed for deletion
+    })
+
     useEffect(() => {
         localStorage.setItem('theo-kanban-data', JSON.stringify(columns))
     }, [columns])
@@ -69,9 +75,7 @@ export const useKanban = (initialData) => {
     }
 
     const removeColumn = (columnID) => {
-        if (window.confirm("Are you sure you'd like to remove this column and all of its child tasks?")) {
-          setColumns(columns.filter(column => column.id !== columnID))
-        }
+      setColumns(columns.filter(column => column.id !== columnID))
     }
 
     const openColumnEditor = () => setIsAddingColumn(true)
@@ -79,6 +83,25 @@ export const useKanban = (initialData) => {
     const closeColumnEditor = () => {
       setIsAddingColumn(false)
       setNewColumnTitle("")
+    }
+
+    const openDeleteModal = (type, data) => {
+      setModalConfig({isOpen: true, type, data})
+    }
+
+    const closeModal = () => {
+      setModalConfig({isOpen: false, type: null, data: null})
+    }
+
+    const confirmDelete = () => {
+      const {type, data} = modalConfig
+
+      if (type === 'column') {
+        removeColumn(data.columnID)
+      } else if (type === 'task') {
+        deleteTask(data.columnID, data.taskID)
+      }
+      closeModal()
     }
 
     //Drag and Drop Handlers
@@ -191,7 +214,11 @@ export const useKanban = (initialData) => {
     updateTask, 
     deleteTask, 
     addColumn, 
-    removeColumn, 
+    removeColumn,
+    modalConfig,
+    openDeleteModal,
+    closeModal,
+    confirmDelete, 
     handleDragStart, 
     handleDragOver, 
     handleDragEnd

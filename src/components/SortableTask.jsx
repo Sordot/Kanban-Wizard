@@ -6,7 +6,7 @@ import { CSS } from '@dnd-kit/utilities';
 function SortableTask({id, task, columnID, onDelete, onUpdate}) {
     const [isEditing, setIsEditing] = useState(task.isNew || false)
     const [editData, setEditData] = useState({
-        title: task.text || '', 
+        text: task.text || '', 
         description: task.description || '',
         priority: task.priority || ''
     })

@@ -13,6 +13,7 @@ import {
 import './App.css'
 import { useKanban } from './hooks/useKanban'
 import Column from './components/Column'
+import ConfirmationModal from './components/ConfirmationModal'
 
 const DEFAULT_DATA = [
     {id: 1, title: 'To Do', tasks: [{id:'t1', text:'Learn React', priority: 'high', description: 'Shake off the rust!', isNew: false}, 
@@ -30,7 +31,11 @@ function App() {
     updateTask, 
     deleteTask, 
     addColumn, 
-    removeColumn, 
+    removeColumn,
+    modalConfig,
+    openDeleteModal,
+    closeModal,
+    confirmDelete, 
     handleDragOver, 
     handleDragEnd,
     isAddingColumn, 
@@ -56,9 +61,9 @@ function App() {
               key={column.id}
               column={column}
               onAddTask={addTask}
-              onDeleteTask={deleteTask}
+              onDeleteTask={(colId, taskId) => openDeleteModal('task', { columnID: colId, taskID: taskId })}
               onUpdateTask={updateTask}
-              onRemoveColumn={removeColumn}
+              onRemoveColumn={() => openDeleteModal('column', { columnID: column.id })}
             />
           ))}
           {isAddingColumn ? (
@@ -85,6 +90,13 @@ function App() {
             </button>
           )}
         </div>
+        <ConfirmationModal 
+        isOpen={modalConfig.isOpen}
+        title={`Delete ${modalConfig.type === 'column' ? 'Column' : 'Task'}?`}
+        message="This action is permanent and cannot be undone."
+        onConfirm={confirmDelete}
+        onCancel={closeModal}
+        />
         <DragOverlay>
           {activeTask ? (
             <div className={`task-card dragging-overlay priority-${activeTask.priority}`}>
@@ -95,7 +107,7 @@ function App() {
             </div>
           ) : null}
         </DragOverlay>
-        </DndContext>  
+      </DndContext>  
     </div>   
   )
 }

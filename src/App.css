@@ -60,9 +60,9 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 32px;
+    gap: 20px;
     width: 100%;
-    padding: 20px 80px;
+    padding: 20px 40px;
     max-width: 1400px;
     mask-image: linear-gradient(
         to right, 
@@ -79,6 +79,7 @@ body {
         transparent
     );
     overflow-x: auto;
+    overflow-x: overlay;
     scroll-behavior: smooth;
 }
 
@@ -137,7 +138,7 @@ body {
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(139, 92, 246, 0.1);
     border-radius: 16px;
-    width: 360px;
+    width: 320px;
     min-width: 300px;
     min-height: 600px;
     padding: 20px;
@@ -156,8 +157,30 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    gap: 8px;
+    gap: 12px;
+    padding-right: 14px;
     min-height: 100px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 250px);
+}
+
+.task-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.task-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.task-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #4c1d95, #8b5cf6);
+    border-radius: 10px;
+}
+
+.task-list::-webkit-scrollbar-thumb:hover {
+    background: #a78bfa;
 }
 
 .task-card {
@@ -380,7 +403,7 @@ body {
 }
 
 .add-column-btn {
-    min-width: 280px;
+    min-width: 260px;
     height: 150px; /* Shorter than a full column, but aligned at the top */
     background: rgba(255, 255, 255, 0.02);
     border: 2px dashed rgba(139, 92, 246, 0.2);
@@ -477,4 +500,65 @@ body {
     text-transform: uppercase;
     display: inline-block;
     margin-bottom: 8px;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: rgba(15, 12, 41, 0.95);
+    border: 1px solid rgba(139, 92, 246, 0.4);
+    border-radius: 20px;
+    padding: 32px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.modal-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.modal-btn.cancel {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.modal-btn.delete {
+    background: #ef4444;
+    color: white;
+}
+
+.modal-btn.delete:hover {
+    background: #dc2626;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
 }
