@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
@@ -11,6 +11,21 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
 
     // Track the previous task ID to know when a new card is opened
     const [prevTaskId, setPrevTaskId] = useState(null);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === "Escape") {
+                onClose();
+            }
+        };
+        if (isOpen) {
+            window.addEventListener("keydown", handleKeyDown);
+        }
+        // Clean up the listener when the modal closes or component unmounts
+        return () => {
+            window.removeEventListener("keydown", handleKeyDown);
+        };
+    }, [isOpen, onClose]);
 
     //Sync state before component render
     if (task && task.id !== prevTaskId) {

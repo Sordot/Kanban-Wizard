@@ -1,13 +1,27 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 export default function ConfirmationModal ({isOpen, title, message, onConfirm, onCancel, children, confirmText = "Confirm", variant = 'Danger'}) {
-    if (!isOpen) return null
+    
+    //listen for escape key to close modal and enter key to confirm
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onCancel();
+            if (e.key === 'Enter') onConfirm();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, onCancel, onConfirm]);
+    
+    if (!isOpen) return null;
 
     const handleOverlayClick = (event) => {
         if (event.target === event.currentTarget) {
             onCancel();
         }
     }
+
+    
 
     return (
         <div className="modal-overlay" onMouseDown={handleOverlayClick}>

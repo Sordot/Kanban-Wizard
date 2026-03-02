@@ -24,7 +24,14 @@ export default function BoardHeader({ activeBoard, onUpdateBoard }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           onBlur={handleSave}
-          onKeyDown={(e) => e.key === 'Enter' && handleSave()}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSave();
+            if (e.key === 'Escape') {
+              setTitle(activeBoard.name);
+              setIsEditing(false);
+            }
+            }
+          }
           autoFocus
         />
       ) : (

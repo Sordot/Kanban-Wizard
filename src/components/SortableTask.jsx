@@ -50,26 +50,32 @@ const SortableTask = memo(({id, task, columnID, onDelete, onUpdate, onOpenModal}
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`task-card priority-${task.priority} ${task.isNew ? 'is-new-flash' : ''}`}>
             <div className='task-content'>
                 <div className='task-header'>
-                    <span className={`priority-badge ${task.priority || 'medium'}`} onClick={cyclePriority} style={{cursor: 'pointer'}} title={'Click to cycle priority'}>
+                    <span className={`priority-badge ${task.priority || 'medium'}`} 
+                        onPointerDown={(e) => e.stopPropagation()}onClick={cyclePriority} 
+                        style={{cursor: 'pointer'}} 
+                        title={'Click to cycle priority'}
+                    >
                         {(task.priority || 'medium').toUpperCase()}
                     </span>
-                    <button 
-                        className='edit-btn'
-                        onPointerDown={(e) => e.stopPropagation()}
-                        onClick={(e) => { 
-                            e.stopPropagation(); 
-                            onOpenModal(columnID, task); 
-                        }}>
-                        📄 Details
-                    </button>
-                    <button className='delete-btn' 
-                        onPointerDown={(e) => e.stopPropagation()}
-                        onClick={(e) =>{e.stopPropagation(); onDelete(columnID, id);}}>
-                        x
-                    </button>
+                    <div>
+                        <button 
+                            className='edit-btn'
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onClick={(e) => { 
+                                e.stopPropagation(); 
+                                onOpenModal(columnID, task); 
+                            }}>
+                            📄
+                        </button>
+                        <button className='delete-btn' 
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onClick={(e) =>{e.stopPropagation(); onDelete(columnID, id);}}>
+                            x
+                        </button>
+                    </div>
                 </div>
                 <p className='task-text'>{task.text || 'Untitled Task'}</p>
-                {task.description && (<p className='task-desc-preview'>{task.description}</p>)}
+                {task.description && (<small className='task-desc-preview'>{task.description}</small>)}
                 <div className='task-footer'>
                     <span className='timestamp'>
                         Updated: {formatTime(task.updatedAt)}

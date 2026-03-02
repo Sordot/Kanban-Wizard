@@ -46,7 +46,8 @@ function App() {
     columns, 
     activeTask, 
     addTask, 
-    updateTask,  
+    updateTask,
+    deleteTask,  
     addColumn, 
     modalConfig,
     openDeleteModal,
@@ -150,9 +151,13 @@ function App() {
           <TaskModal 
             isOpen={taskModalConfig.isOpen}
             task={taskModalConfig.task}
-            onClose={closeTaskModal}
+            onClose={() => {
+              if (taskModalConfig.task?.isNew) {
+                deleteTask(taskModalConfig.columnID, taskModalConfig.task.id);
+              }
+              closeTaskModal();}}
             onSave={(taskID, updatedTask) => {
-              updateTask(taskModalConfig.columnID, taskID, updatedTask);
+              updateTask(taskModalConfig.columnID, taskID, { ...updatedTask, isNew: false });
               closeTaskModal();
             }}
           />

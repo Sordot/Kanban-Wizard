@@ -110,7 +110,7 @@ export const useKanban = (initialData) => {
                   ...column, 
                   tasks: column.tasks.map(task => {
                         if (task.id === taskID) {
-                            if (updates.isNew === false && task.isNew === false) return task; 
+                            // if (updates.isNew === false && task.isNew === false) return task; STRICT check
                             return { ...task, ...updates, updatedAt: Date.now() };
                         }
                         return task;
