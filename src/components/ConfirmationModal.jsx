@@ -1,7 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 
-export default function ConfirmationModal ({isOpen, title, message, onConfirm, onCancel, children, confirmText = "Confirm", variant = 'Danger'}) {
-    
+export default function ConfirmationModal({ isOpen, title, message, onConfirm, onCancel, children, confirmText = "Confirm", variant = 'Danger' }) {
+
     //listen for escape key to close modal and enter key to confirm
     useEffect(() => {
         if (!isOpen) return;
@@ -12,7 +12,7 @@ export default function ConfirmationModal ({isOpen, title, message, onConfirm, o
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isOpen, onCancel, onConfirm]);
-    
+
     if (!isOpen) return null;
 
     const handleOverlayClick = (event) => {
@@ -21,14 +21,14 @@ export default function ConfirmationModal ({isOpen, title, message, onConfirm, o
         }
     }
 
-    
+
 
     return (
         <div className="modal-overlay" onMouseDown={handleOverlayClick}>
             <div className="modal-content" onClick={(event) => event.stopPropagation()}>
                 <h2 className="modal-title">{title}</h2>
                 {message && <p className="modal-message">{message}</p>}
-                
+
                 {/* This allows us to put an input field here for renaming */}
                 {children}
 

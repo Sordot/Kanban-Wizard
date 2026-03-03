@@ -2,7 +2,7 @@ import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import DroppableContainer from './DroppableContainer'
 import SortableTask from "./SortableTask"
 
-export default function Column ({column, onAddTask, onDeleteTask, onUpdateTask, onRemoveColumn, onOpenTaskModal}) {
+export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, onRemoveColumn, onOpenTaskModal }) {
     return (
         <div className='kanban-column' key={column.id}>
             <div className="column-header">
@@ -10,36 +10,34 @@ export default function Column ({column, onAddTask, onDeleteTask, onUpdateTask, 
                     <h3 className='column-title'>{column.title}</h3>
                     <span className="task-count-badge">{column.tasks.length}</span>
                 </div>
-                
+
                 <div className="column-controls">
-                    
+                    <button className='add-task-btn' onClick={() => onAddTask(column.id)}>Add Task</button>
                     <button className="delete-column-btn" onClick={() => onRemoveColumn(column.id)}>x</button>
                 </div>
             </div>
             {column.tasks.length === 0 && (
                 <div className="empty-column-placeholder">
                     <h4>No tasks here yet.</h4>
-                    <p>Drop something or click +</p>
                 </div>
             )}
             {/* map each task for for each column */}
             <SortableContext id={column.id} items={column.tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
                 <DroppableContainer id={column.id} className='task-list'>
                     {column.tasks.map((task) => (
-                    <SortableTask 
-                        key={task.id}
-                        id={task.id}
-                        task={task}
-                        columnID={column.id}
-                        onDelete={onDeleteTask}
-                        onUpdate={onUpdateTask}
-                        onOpenModal={onOpenTaskModal}
-                    />
+                        <SortableTask
+                            key={task.id}
+                            id={task.id}
+                            task={task}
+                            columnID={column.id}
+                            onDelete={onDeleteTask}
+                            onUpdate={onUpdateTask}
+                            onOpenModal={onOpenTaskModal}
+                        />
                     ))}
                 </DroppableContainer>
             </SortableContext>
-            <button className='add-task-btn' onClick={() => onAddTask(column.id)}>+</button>
         </div>
-        
+
     )
 }

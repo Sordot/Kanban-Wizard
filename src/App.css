@@ -62,7 +62,7 @@ body {
     object-fit: contain;
     flex-shrink: 0;
     margin-left: -36px;              /* Pull logo to the left */
-    filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.6));
+    filter: drop-shadow(0 0 4px rgba(139, 92, 246, 0.6));
 }
 
 .sidebar-logo span {
@@ -73,6 +73,26 @@ body {
 }
 
 /* Header Styles */
+/* Indicates an element can be edited inline */
+.editable-field {
+    padding: 6px 8px;
+    margin: -6px -8px; /* Offsets padding so it aligns with surrounding text */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.editable-field:hover {
+    background-color: rgba(139, 92, 246, 0.15);
+}
+
+/* Ensure empty states still look clickable */
+.tiptap-preview.editable-field .empty-state {
+    margin: 0;
+    pointer-events: none; /* Prevents text selection issues on click */
+}
+
 .editable-title {
     cursor: pointer;
     padding: 4px 8px;
@@ -345,15 +365,28 @@ body {
     gap: 8px;
 }
 
+.column-title {
+    font-size: 20px;
+    color: #f1f5f9;
+    
+}
+
 .task-count-badge {
-    background-color: rgba(139, 92, 246, 0.2);
-    color: #ddd6fe;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 12px;
-    line-height: 1;
-    display: inline-block;
+    background-color: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    min-width: 24px;
+    height: 20px;
+    padding: 8px;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 0;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.1);
+    transition: all 0.3s ease;
 }
 
 .column-controls {
@@ -460,22 +493,10 @@ body {
     color: #f1f5f9;
     font-size: 16px;
     font-weight: 600;
-    line-height: 1;
+    line-height: 1.2;
+    
     margin: 0 0 4px 0;
-    letter-spacing: -0.01em; 
     word-wrap: break-word;
-}
-
-.task-desc-preview {
-    color: #5e6c84; 
-    font-size: 0.8rem;
-    font-weight: 400;
-    line-height: 1;
-    /* Limit the preview to 3 lines so cards stay uniform in height */
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
 .task-content {
@@ -673,17 +694,23 @@ body {
     background: rgba(139, 92, 246, 0.1);
     color: #a78bfa;
     border: 1px solid rgba(139, 92, 246, 0.2);
-    border-radius: 4px;
-    width: 28px;
-    height: 28px;
+    border-radius: 6px;
+    width: auto;
+    height: 32px;
+    padding: 0px 12px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
 .add-task-btn:hover {
-    background: #7c3aed;
-    color: white;
+    background: rgba(139, 92, 246, 0.2);
+    border-color: rgba(139, 92, 246, 0.5);
+    color: #f1f5f9;
 }
 
 .delete-btn {
@@ -698,7 +725,6 @@ body {
 
 .delete-btn:hover {
     color: #cc0000;
-    transform: scale(1.2);
 }
 
 .add-column-btn {
@@ -746,12 +772,29 @@ body {
 }
 
 .delete-column-btn {
-    background: none;
+     /* 1. Reset button defaults */
+    background: transparent;
     border: none;
-    color: #888;
-    font-size: 20px;
+    padding: 0;
     cursor: pointer;
+    
+    /* 2. Set a fixed, compact size */
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    
+    /* 3. Center the 'X' inside the 32px box */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 4. Refine look and feel */
+    color: #64748b;
+    font-size: 20px; /* Reduced from 28px */
+    font-weight: 400;
     line-height: 1;
+    border-radius: 6px; /* Subtle rounding for the hover background */
+    transition: all 0.2s ease;
 }
 
 .delete-column-btn:hover {
@@ -816,6 +859,13 @@ body {
     z-index: 9999;
 }
 
+.modal-title-wrapper {
+    display: flex;
+    flex-grow: 1;
+    text-align: left;
+    margin-right: 16px;
+}
+
 .modal-content {
     background: rgba(15, 12, 41, 0.95);
     border: 1px solid rgba(139, 92, 246, 0.4);
@@ -836,6 +886,34 @@ body {
     display: flex;
     gap: 12px;
     margin-top: 24px;
+}
+
+.modal-close-x {
+    /* 1. Reset button defaults */
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    
+    /* 2. Set a fixed, compact size */
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    
+    /* 3. Center the 'X' inside the 32px box */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 4. Refine look and feel */
+    color: #64748b;
+    font-size: 20px; /* Reduced from 28px */
+    font-weight: 400;
+    line-height: 1;
+}
+
+.modal-close-x:hover {
+    color: #ef4444; 
 }
 
 .modal-btn {
@@ -936,6 +1014,9 @@ body {
 
 /* Modal Header */
 .task-detail-modal .modal-header {
+    display: flex;
+    justify-content: space-between; /* Pushes title left and X right */
+    align-items: flex-start; /* Aligns them to the top */
     margin-bottom: 20px;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(139, 92, 246, 0.2);
@@ -949,37 +1030,7 @@ body {
     letter-spacing: 0.05em;
 }
 
-/* Tabs Navigation */
-.tabs {
-    display: flex;
-    gap: 24px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.tabs button {
-    background: none;
-    border: none;
-    color: #64748b;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 8px 4px;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s ease;
-}
-
-.tabs button:hover {
-    color: #cbd5e1;
-}
-
-.tabs button.active {
-    color: #a78bfa;
-    border-bottom: 2px solid #a78bfa;
-}
-
 .task-detail-modal .modal-header,
-.tabs,
 .task-detail-modal .modal-actions {
     flex-shrink: 0;
 }
@@ -997,31 +1048,94 @@ body {
     overflow: hidden; /* Contains the scrollable areas */
 }
 
-/* Write Mode: Textarea */
-.markdown-input {
+.rich-text-editor {
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    color: #e2e8f0;
-    border-radius: 8px;
-    padding: 16px;
-    resize: none; /* Disable manual resize since we use flexbox */
-    font-family: 'Fira Code', 'Courier New', Courier, monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    outline: none;
-    transition: border-color 0.2s;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
-.markdown-input:focus {
+.tiptap-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    height: 100%;
+}
+
+/* Toolbar Styling */
+.tiptap-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+}
+
+.tiptap-toolbar button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #94a3b8;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+
+.tiptap-toolbar button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #f8fafc;
+}
+
+/* Active state for when a format is applied */
+.tiptap-toolbar button.is-active {
+    background: rgba(139, 92, 246, 0.2);
+    color: #a78bfa;
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+.toolbar-divider {
+    width: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 4px;
+}
+
+/* Editor Container */
+.tiptap-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 0 0 8px 8px;
+    overflow-y: auto;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Focus glow effect */
+.tiptap-container:focus-within {
     border-color: #8b5cf6;
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 0 0 2px rgba(139, 92, 246, 0.2);
 }
 
-/* Preview Mode: Rendered Markdown Area */
-.markdown-preview {
+/* The actual text area where you type */
+.ProseMirror {
+    padding: 16px 24px;
+    min-height: 200px;
+    outline: none;
+    color: #e2e8f0;
+    line-height: 1.7;
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* Preview Mode Container */
+.tiptap-preview {
     flex-grow: 1;
     background: rgba(0, 0, 0, 0.15);
     border: 1px solid transparent;
@@ -1029,88 +1143,46 @@ body {
     padding: 16px 24px;
     color: #cbd5e1;
     line-height: 1.7;
-    overflow-y: auto; /* Allows scrolling if content is long */
-}
-
-.empty-state {
-    color: #475569;
-    font-style: italic;
-    text-align: center;
-    margin-top: 40px;
-}
-
-.markdown-input, 
-.markdown-preview {
-    flex-grow: 1;
-    height: 100%;
     overflow-y: auto;
 }
 
 /* =========================================
-   MARKDOWN RICH TEXT FORMATTING
+   RICH TEXT FORMATTING (Applies to Editor & Preview)
    ========================================= */
 
-.markdown-preview h1, 
-.markdown-preview h2, 
-.markdown-preview h3 {
+.ProseMirror h1, .ProseMirror h2, .ProseMirror h3,
+.tiptap-preview h1, .tiptap-preview h2, .tiptap-preview h3 {
     color: #f8fafc;
     margin-top: 24px;
     margin-bottom: 16px;
     font-weight: 700;
+    
 }
 
-.markdown-preview h1 {
+.ProseMirror h1, .tiptap-preview h1 {
     font-size: 1.75em;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 8px;
 }
 
-.markdown-preview h2 {
+.ProseMirror h2, .tiptap-preview h2 {
     font-size: 1.4em;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     padding-bottom: 6px;
 }
 
-.markdown-preview ul, 
-.markdown-preview ol {
+.ProseMirror ul, .ProseMirror ol,
+.tiptap-preview ul, .tiptap-preview ol {
     padding-left: 24px;
     margin-bottom: 16px;
 }
 
-.markdown-preview li {
-    margin-bottom: 6px;
+.ProseMirror li p, .tiptap-preview li p {
+    margin: 0;
 }
 
-/* Styles specifically for remark-gfm task/checklists */
-.markdown-preview li.task-list-item {
-    list-style-type: none; /* Removes the standard bullet */
-    margin-left: -24px;    /* Pulls it back to align flush */
-    display: flex;
-    align-items: flex-start;
-}
-
-.markdown-preview input[type="checkbox"] {
-    margin-top: 6px;
-    margin-right: 12px;
-    accent-color: #8b5cf6;
-    cursor: pointer;
-    width: 16px;
-    height: 16px;
-}
-
-.markdown-preview a {
-    color: #a78bfa;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-}
-
-.markdown-preview a:hover {
-    border-bottom: 1px solid #a78bfa;
-}
-
-/* Inline Code Snippets */
-.markdown-preview code {
+/* Inline Code */
+.ProseMirror code, .tiptap-preview code {
     background: rgba(139, 92, 246, 0.15);
     color: #c4b5fd;
     padding: 3px 6px;
@@ -1119,8 +1191,8 @@ body {
     font-size: 0.9em;
 }
 
-/* Multi-line Code Blocks */
-.markdown-preview pre {
+/* Code Blocks */
+.ProseMirror pre, .tiptap-preview pre {
     background: #09090b;
     padding: 16px;
     border-radius: 8px;
@@ -1130,15 +1202,14 @@ body {
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
 }
 
-.markdown-preview pre code {
+.ProseMirror pre code, .tiptap-preview pre code {
     background: transparent;
     padding: 0;
     color: #e2e8f0;
-    border-radius: 0;
 }
 
-/* Blockquotes (Great for Acceptance Criteria!) */
-.markdown-preview blockquote {
+/* Blockquotes */
+.ProseMirror blockquote, .tiptap-preview blockquote {
     border-left: 4px solid #8b5cf6;
     background: rgba(139, 92, 246, 0.05);
     margin: 0 0 16px 0;
@@ -1147,6 +1218,8 @@ body {
     font-style: italic;
     border-radius: 0 8px 8px 0;
 }
+
+
 
 /* Modal Actions (Save / Cancel buttons) */
 .task-detail-modal .modal-actions {

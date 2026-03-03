@@ -1,9 +1,55 @@
-import React, { useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
+
+const MenuBar = ({ editor }) => {
+    if (!editor) {
+        return null;
+    }
+
+    return (
+        <div className="tiptap-toolbar">
+            <button onClick={() => editor.chain().focus().toggleBold().run()} className={editor.isActive('bold') ? 'is-active' : ''}>
+                Bold
+            </button>
+            <button onClick={() => editor.chain().focus().toggleItalic().run()} className={editor.isActive('italic') ? 'is-active' : ''}>
+                Italic
+            </button>
+            <button onClick={() => editor.chain().focus().toggleStrike().run()} className={editor.isActive('strike') ? 'is-active' : ''}>
+                Strike
+            </button>
+
+            <div className="toolbar-divider"></div>
+
+            <button onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}>
+                H1
+            </button>
+            <button onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}>
+                H2
+            </button>
+
+            <div className="toolbar-divider"></div>
+
+            <button onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive('bulletList') ? 'is-active' : ''}>
+                Bullet List
+            </button>
+            <button onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive('orderedList') ? 'is-active' : ''}>
+                Numbered List
+            </button>
+            <button onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive('blockquote') ? 'is-active' : ''}>
+                Quote
+            </button>
+            <button onClick={() => editor.chain().focus().toggleCodeBlock().run()} className={editor.isActive('codeBlock') ? 'is-active' : ''}>
+                Code
+            </button>
+        </div>
+    );
+};
 
 export default function TaskModal({ isOpen, task, onClose, onSave }) {
-    const [isEditing, setIsEditing] = useState(false);
+
+    const [isEditingTitle, setIsEditingTitle] = useState(false)
+    const [isEditingDescription, setIsEditingDescription] = useState(false)
 
     const [text, setText] = useState("");
     const [priority, setPriority] = useState("medium")
@@ -12,91 +58,159 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
     // Track the previous task ID to know when a new card is opened
     const [prevTaskId, setPrevTaskId] = useState(null);
 
+    // 1. Create a ref to track the latest state for our close handler
+    const modalStateRef = useRef({ text, description, task, priority });
+    useEffect(() => {
+        modalStateRef.current = { text, description, task, priority };
+    }, [text, description, task, priority]);
+
+    // 2. Create a smart close handler that auto-saves if you typed anything
+    const handleModalClose = useCallback(() => {
+        const { text: currentText, description: currentDesc, task: currentTask, priority: currentPriority } = modalStateRef.current;
+
+        if (!currentTask) {
+            onClose();
+            return;
+        }
+
+        // Check if the user left the task completely blank/default
+        const cleanDesc = currentDesc ? currentDesc.replace(/<[^>]*>?/gm, '').trim() : '';
+        const isTitleBlank = !currentText || currentText.trim() === 'New Task' || currentText.trim() === '';
+        const isDescBlank = !cleanDesc;
+
+        if (currentTask.isNew && isTitleBlank && isDescBlank) {
+            // It's empty and new -> tell App to delete it
+            onClose(true);
+        } else {
+            // They typed something! Auto-save it and tell App NOT to delete it
+            onSave(currentTask.id, {
+                ...currentTask,
+                text: currentText,
+                description: currentDesc,
+                priority: currentPriority
+            });
+            onClose(false);
+        }
+    }, [onClose, onSave]);
+
+    const editor = useEditor({
+        extensions: [StarterKit],
+        content: task?.description || '',
+        onUpdate: ({ editor }) => {
+            setDescription(editor.getHTML());
+        },
+    }, [task?.id]);
+
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") {
-                onClose();
+                handleModalClose();
             }
         };
         if (isOpen) {
             window.addEventListener("keydown", handleKeyDown);
         }
-        // Clean up the listener when the modal closes or component unmounts
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [isOpen, onClose]);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [isOpen, handleModalClose]);
 
-    //Sync state before component render
-    if (task && task.id !== prevTaskId) {
-        setPrevTaskId(task.id);
-        setDescription(task.description || "");
-        setIsEditing(true);
-        setIsEditing(task.text === 'New Task' || !task.description); //if new task or no title go straight to edit mode
-    }
+    // Sync state safely using useEffect instead of doing it during render
+    useEffect(() => {
+        if (task && isOpen) {
+            setText(task.text || "");
+            setDescription(task.description || "");
+
+            // Set initial editing states based on whether data exists
+            setIsEditingTitle(task.text === 'New Task' || !task.text);
+            setIsEditingDescription(!task.description);
+
+            // Ensure TipTap updates if the task description changes externally
+            if (editor && editor.getHTML() !== task.description) {
+                editor.commands.setContent(task.description || '');
+            }
+        }
+    }, [task, isOpen, editor]);
 
     if (!isOpen || !task) return null;
 
-    const handleSave = () => {
-        // Pass the updated description back up to your state manager
-        onSave(task.id, { ...task, description });
-        setIsEditing(false);
+    // Save Handlers
+    const handleTitleSave = () => {
+        setIsEditingTitle(false);
+        onSave(task.id, { ...task, text, description, priority });
+    };
+
+    const handleDescriptionSave = () => {
+        setIsEditingDescription(false);
+        onSave(task.id, { ...task, text, description, priority });
+    };
+
+    const handleDescriptionCancel = () => {
+        setIsEditingDescription(false);
+        // Revert to original task description if cancelled
+        setDescription(task.description || "");
+        editor.commands.setContent(task.description || '');
     };
 
     return (
-        <div className="modal-overlay" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
+        <div className="modal-overlay" onMouseDown={(e) => { if (e.target === e.currentTarget) handleModalClose(); }}>
             <div className="modal-content task-detail-modal">
                 <div className="modal-header">
-                    {/* Fallback to title or content depending on your data structure */}
-                    <h2 className="modal-title">{isEditing ? text : task.text}</h2>
-                </div>
-                
-                <div className="task-modal-body">
-                    <div className="tabs">
-                        <button 
-                            className={isEditing ? "active" : ""} 
-                            onClick={() => setIsEditing(true)}
-                        >
-                            Write
-                        </button>
-                        <button 
-                            className={!isEditing ? "active" : ""} 
-                            onClick={() => setIsEditing(false)}
-                        >
-                            Preview
-                        </button>
+                    <div className="modal-title-wrapper" style={{ alignItems: 'center' }}>
+                        {isEditingTitle ? (
+                            <input
+                                autoFocus
+                                className="modal-title-input edit-input"
+                                value={text}
+                                onChange={(e) => setText(e.target.value)}
+                                onBlur={handleTitleSave}
+                                onKeyDown={(e) => e.key === 'Enter' && handleTitleSave()}
+                                placeholder="Task Title..."
+                                style={{ fontSize: '1.25em', fontWeight: 'bold', width: '100%', padding: '4px' }}
+                            />
+                        ) : (
+                            <h2
+                                className="modal-title editable-field"
+                                onClick={() => setIsEditingTitle(true)}
+                                title="Click to edit title"
+                            >
+                                {text}
+                            </h2>
+                        )}
                     </div>
+                    <button className="modal-close-x" onClick={handleModalClose}>X</button>
+                </div>
+                <div className="task-modal-body">
+                    {/* DESCRIPTION SECTION */}
+                    <div className="description-section">
+                        <h3 className="section-label" style={{ marginBottom: '8px', color: '#5e6c84', fontSize: '14px' }}>Description</h3>
 
-                    {isEditing ? (
-                        <textarea 
-                            className="markdown-input"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Add user stories, acceptance criteria, or technical notes here..."
-                            rows="12"
-                            autoFocus
-                        />
-                    ) : (
-                        <div className="markdown-preview">
-                            {description ? (
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                    {description}
-                                </ReactMarkdown>
-                            ) : (
-                                <p className="empty-state">No description provided.</p>
-                            )}
-                        </div>
-                    )}
+                        {isEditingDescription ? (
+                            <div className="rich-text-editor">
+                                <div className="tiptap-wrapper">
+                                    <MenuBar editor={editor} />
+                                    <EditorContent editor={editor} className="tiptap-container" />
+                                </div>
+                                <div className="editor-actions" style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
+                                    <button className="modal-btn confirm-green" onClick={handleDescriptionSave}>Save</button>
+                                    <button className="modal-btn cancel" onClick={handleDescriptionCancel}>Cancel</button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div
+                                className="tiptap-preview editable-field"
+                                onClick={() => setIsEditingDescription(true)}
+                                title="Click to edit description"
+                                style={{ minHeight: '60px' }}
+                            >
+                                {description ? (
+                                    <div dangerouslySetInnerHTML={{ __html: description }} />
+                                ) : (
+                                    <p className="empty-state" style={{ color: '#888' }}>Add a more detailed description...</p>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
 
-                <div className="modal-actions">
-                    <button className="modal-btn cancel" onClick={onClose}>Close</button>
-                    {isEditing && (
-                        <button className="modal-btn confirm-green" onClick={handleSave}>
-                            Save Details
-                        </button>
-                    )}
-                </div>
             </div>
         </div>
     );

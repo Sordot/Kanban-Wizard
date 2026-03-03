@@ -15,83 +15,79 @@ import { useKanban } from './hooks/useKanban'
 import Column from './components/Column'
 import ConfirmationModal from './components/ConfirmationModal'
 import Sidebar from './components/Sidebar'
-import BoardHeader from './components/BoardHeader'
 import TaskModal from './components/TaskModal'
 
 const DEFAULT_DATA = [
   {
     id: 'board-1',
     name: '🚀 Project 1',
-    columns: [{id: 1, title: 'To Do', tasks: [{id:'t1', text:'Learn React', priority: 'high', description: 'Shake off the rust!', isNew: false}, {id: 't2', text: 'Set up project', priority: 'low', description: 'AI is OP', isNew: false}]},
-    {id: 2, title: 'In Progress', tasks: []},
-    {id: 3, title: 'Done', tasks: []}]
+    columns: [{ id: 1, title: 'To Do', tasks: [{ id: 't1', text: 'Learn React', priority: 'high', description: 'Shake off the rust!', isNew: false }, { id: 't2', text: 'Set up project', priority: 'low', description: 'AI is OP', isNew: false }] },
+    { id: 2, title: 'In Progress', tasks: [] },
+    { id: 3, title: 'Done', tasks: [] }]
   },
   {
     id: 'board-2',
     name: '🛠️ Project 2',
-    columns: [{id: 1, title: 'To Do', tasks: [{id:'t1', text:'Learn React', priority: 'high', description: 'Shake off the rust!', isNew: false}, {id: 't2', text: 'Set up project', priority: 'low', description: 'AI is OP', isNew: false}]},
-    {id: 2, title: 'In Progress', tasks: []},
-    {id: 3, title: 'Done', tasks: []}]
-  }  
-] 
+    columns: [{ id: 1, title: 'To Do', tasks: [{ id: 't1', text: 'Learn React', priority: 'high', description: 'Shake off the rust!', isNew: false }, { id: 't2', text: 'Set up project', priority: 'low', description: 'AI is OP', isNew: false }] },
+    { id: 2, title: 'In Progress', tasks: [] },
+    { id: 3, title: 'Done', tasks: [] }]
+  }
+]
 
 function App() {
 
-  const { 
+  const {
     boards,
-    activeBoard, 
-    addBoard,            
-    activeBoardID,      
+    activeBoard,
+    addBoard,
+    activeBoardID,
     setActiveBoardID,
-    columns, 
-    activeTask, 
-    addTask, 
+    columns,
+    activeTask,
+    addTask,
+    insertTask,
     updateTask,
-    deleteTask,  
-    addColumn, 
+    addColumn,
     modalConfig,
     openDeleteModal,
     openRenameModal,
     modalRenameValue,
     setModalRenameValue,
     closeModal,
-    confirmDelete, 
-    handleDragOver, 
+    confirmDelete,
+    handleDragOver,
     handleDragEnd,
-    isAddingColumn, 
-    newColumnTitle, 
-    setNewColumnTitle, 
-    openColumnEditor, 
+    isAddingColumn,
+    newColumnTitle,
+    setNewColumnTitle,
+    openColumnEditor,
     closeColumnEditor,
     taskModalConfig,
     openTaskModal,
-    closeTaskModal 
+    closeTaskModal
   } = useKanban(DEFAULT_DATA)
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {activationConstraint: {distance: 8}}),
-    useSensor(KeyboardSensor, {coordinateGetter: sortableKeyboardCoordinates})
+    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   )
 
   return (
     <div className="app-layout">
-      <Sidebar 
-      boards={boards} 
-      activeBoardID={activeBoardID} 
-      onSelectBoard={setActiveBoardID}
-      onAddBoard={addBoard} 
-      onDeleteBoard={openDeleteModal}
-      onRenameBoard={openRenameModal}
+      <Sidebar
+        boards={boards}
+        activeBoardID={activeBoardID}
+        onSelectBoard={setActiveBoardID}
+        onAddBoard={addBoard}
+        onDeleteBoard={openDeleteModal}
+        onRenameBoard={openRenameModal}
       />
       <div className='kanban-container'>
-        <BoardHeader key={activeBoard?.id} className="board-header">
-          <h2>{boards.find(b => b.id === activeBoardID)?.name || "Kanban Board"}</h2>
-        </BoardHeader>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
           <div className='kanban-board'>
             {/* map through the kanban columns */}
             {columns && columns.map((column) => (
-              <Column 
+              <Column
                 key={column.id}
                 column={column}
                 onAddTask={addTask}
@@ -130,16 +126,16 @@ function App() {
             title={modalConfig.type === 'renameBoard' ? "Rename Board" : `Delete ${modalConfig.type}?`}
             confirmText={modalConfig.type === 'renameBoard' ? 'Save Changes' : "Delete"}
             message={
-              modalConfig.type === 'renameBoard' 
-                ? "Enter a new name for your workspace." 
+              modalConfig.type === 'renameBoard'
+                ? "Enter a new name for your workspace."
                 : "This action is permanent and cannot be undone."
             }
             variant={modalConfig.type === 'renameBoard' ? "confirm" : "danger"}
             onConfirm={confirmDelete}
             onCancel={closeModal}
-            >
+          >
             {modalConfig.type === 'renameBoard' && (
-              <input 
+              <input
                 className="modal-rename-input"
                 value={modalRenameValue}
                 onChange={(e) => setModalRenameValue(e.target.value)}
@@ -148,17 +144,29 @@ function App() {
               />
             )}
           </ConfirmationModal>
-          <TaskModal 
+          <TaskModal
             isOpen={taskModalConfig.isOpen}
             task={taskModalConfig.task}
             onClose={() => {
-              if (taskModalConfig.task?.isNew) {
-                deleteTask(taskModalConfig.columnID, taskModalConfig.task.id);
-              }
-              closeTaskModal();}}
-            onSave={(taskID, updatedTask) => {
-              updateTask(taskModalConfig.columnID, taskID, { ...updatedTask, isNew: false });
+              // We no longer need to run deleteTask here! 
+              // If they cancel, the draft just disappears.
               closeTaskModal();
+            }}
+            onSave={(taskID, updatedTask) => {
+              // 1. Check if the task has already been inserted into the board during this session
+              const currentColumn = columns.find(col => col.id === taskModalConfig.columnID);
+              const taskAlreadyInserted = currentColumn?.tasks.some(t => t.id === taskID);
+
+              if (taskModalConfig.task?.isNew && !taskAlreadyInserted) {
+                // First save (e.g., hitting enter on the title) -> Insert it!
+                insertTask(taskModalConfig.columnID, { ...updatedTask, isNew: true });
+              } else {
+                // Subsequent saves (e.g., saving description) -> Just update the existing task
+                updateTask(taskModalConfig.columnID, taskID, { ...updatedTask, isNew: false });
+              }
+              
+              // 2. We removed closeTaskModal() from here! 
+              // Now the modal relies entirely on onClose() to close, leaving it safely open during inline edits.
             }}
           />
           <DragOverlay>
@@ -167,13 +175,13 @@ function App() {
                 <div className='task-content'>
                   <span className='task-text'>{activeTask.text}</span>
                 </div>
-                
+
               </div>
             ) : null}
           </DragOverlay>
-        </DndContext>  
+        </DndContext>
       </div>
-    </div>   
+    </div>
   )
 }
 

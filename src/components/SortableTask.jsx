@@ -75,7 +75,6 @@ const SortableTask = memo(({id, task, columnID, onDelete, onUpdate, onOpenModal}
                     </div>
                 </div>
                 <p className='task-text'>{task.text || 'Untitled Task'}</p>
-                {task.description && (<small className='task-desc-preview'>{task.description}</small>)}
                 <div className='task-footer'>
                     <span className='timestamp'>
                         Updated: {formatTime(task.updatedAt)}

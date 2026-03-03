@@ -26,8 +26,8 @@ class ErrorBoundary extends React.Component {
           <button onClick={() => window.location.reload()}>
             Refresh System
           </button>
-          <button 
-            style={{marginTop: '10px', opacity: 0.6}} 
+          <button
+            style={{ marginTop: '10px', opacity: 0.6 }}
             onClick={() => { localStorage.clear(); window.location.reload(); }}
           >
             Reset All Data (Safe Mode)
@@ -36,7 +36,7 @@ class ErrorBoundary extends React.Component {
       );
     }
 
-    return this.props.children; 
+    return this.props.children;
   }
 }
 
