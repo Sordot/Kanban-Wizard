@@ -48,12 +48,12 @@ const SortableTask = memo(({id, task, columnID, onDelete, onUpdate, onOpenModal}
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`task-card priority-${task.priority} ${task.isNew ? 'is-new-flash' : ''}`}>
             <div className='task-content'>
                 <div className='task-header'>
-                    <span className={`priority-badge ${task.priority || 'medium'}`} 
+                    <span className={`priority-badge ${task.priority || 'Medium'}`} 
                         onPointerDown={(e) => e.stopPropagation()}onClick={cyclePriority} 
                         style={{cursor: 'pointer'}} 
                         title={'Click to cycle priority'}
                     >
-                        {(task.priority || 'medium').toUpperCase()}
+                        {(task.priority || 'Medium').toUpperCase()}
                     </span>
                     <div>
                         <button 

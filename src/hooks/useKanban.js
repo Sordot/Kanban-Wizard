@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import { arrayMove } from "@dnd-kit/sortable";
 
 export const getNextPriority = (currentPriority) => {
-  const levels = ['low', 'medium', 'high'];
-  const currentIndex = levels.indexOf(currentPriority || 'medium');
+  const levels = ['Low', 'Medium', 'High'];
+  const currentIndex = levels.indexOf(currentPriority || 'Medium');
   return levels[(currentIndex + 1) % levels.length];
 };
 
@@ -88,7 +88,7 @@ export const useKanban = (initialData) => {
     const newTask = {
       id: `task-${Date.now()}`,
       text: '',
-      priority: 'medium',
+      priority: 'Medium',
       description: '',
       isNew: true, //trigger edit mode automatically
       updatedAt: Date.now()

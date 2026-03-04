@@ -801,34 +801,34 @@ body {
     color: #ff4d4d;
 }
 
-.task-card.priority-high {
+.task-card.priority-High {
     border-left: 5px solid #ff4d4d;
     box-shadow: 0 4px 15px rgba(255, 77, 77, 0.05);
 }
 
-.task-card.priority-medium {
+.task-card.priority-Medium {
     border-left: 5px solid #fbbf24;
     box-shadow: 0 4px 15px rgba(251, 191, 36, 0.05);
 }
 
-.task-card.priority-low {
+.task-card.priority-Low {
     border-left: 5px solid #34d399;
     box-shadow: 0 4px 15px rgba(52, 211, 153, 0.05);
 }
 
-.priority-badge.high { 
+.priority-badge.High { 
     background: rgba(255, 77, 77, 0.15); 
     color: #ff8080; 
     border: 1px solid rgba(255, 77, 77, 0.3);
 }
 
-.priority-badge.medium { 
+.priority-badge.Medium { 
     background: rgba(251, 191, 36, 0.15); 
     color: #fcd34d; 
     border: 1px solid rgba(251, 191, 36, 0.3);
 }
 
-.priority-badge.low { 
+.priority-badge.Low { 
     background: rgba(52, 211, 153, 0.15); 
     color: #6ee7b7; 
     border: 1px solid rgba(52, 211, 153, 0.3);
@@ -870,7 +870,7 @@ body {
     background: rgba(15, 12, 41, 0.95);
     border: 1px solid rgba(139, 92, 246, 0.4);
     border-radius: 20px;
-    padding: 32px;
+    padding: 28px;
     width: 400px;
     text-align: center;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
@@ -1051,11 +1051,99 @@ body {
 
 /* Body Container (holds the input or preview) */
 .task-modal-body {
-    flex-grow: 1;
     display: flex;
-    flex-direction: column;
+    flex-grow: 1;
+    flex-direction: row;
+    gap: 24px;
     min-height: 0; /* Gives a good default height */
     overflow: hidden; /* Contains the scrollable areas */
+}
+
+/* 80% Column */
+.task-main-content {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+/* 20% Column with Glassmorphic styling */
+.task-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2); 
+    border: 1px solid rgba(139, 92, 246, 0.2); /* Matches your tiptap border */
+    border-radius: 12px;
+    height: fit-content;
+}
+
+.sidebar-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar-field label {
+    font-size: 11px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #a78bfa; /* Your theme's accent purple */
+    letter-spacing: 0.05em;
+}
+
+.sidebar-value {
+    color: #f1f5f9;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.sidebar-value:hover {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.3);
+}
+
+/* --- SUBTLE SIDEBAR PRIORITY STYLES --- */
+
+/* High Priority (Subdued Red) */
+.sidebar-value.High {
+    color: #ff8080; 
+}
+.sidebar-value.High:hover {
+    background: rgba(255, 77, 77, 0.08);
+    border-color: rgba(255, 77, 77, 0.3);
+}
+
+/* Medium Priority (Subdued Amber) */
+.sidebar-value.Medium {
+    color: #fcd34d; 
+}
+.sidebar-value.Medium:hover {
+    background: rgba(251, 191, 36, 0.08);
+    border-color: rgba(251, 191, 36, 0.3);
+}
+
+/* Low Priority (Subdued Green) */
+.sidebar-value.Low {
+    color: #6ee7b7; 
+}
+.sidebar-value.Low:hover {
+    background: rgba(52, 211, 153, 0.08);
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+/* Fix default button styles since we are applying sidebar-value to a <button> */
+button.sidebar-value {
+    outline: none;
+    box-sizing: border-box;
+    display: block;
 }
 
 .rich-text-editor {
@@ -1063,6 +1151,7 @@ body {
     flex-direction: column;
     flex-grow: 1;
     min-height: 0;
+    /* margin-left: 1px; prevents editor left edge from getting swallowed by padding */
 }
 
 .tiptap-wrapper {
@@ -1134,7 +1223,7 @@ body {
 
 .description-section {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex-direction: column;
     flex-grow: 1;
     min-height: 0;
@@ -1159,13 +1248,14 @@ body {
 
 /* Preview Mode Container */
 .tiptap-preview {
-    width: 80%;
+    width: 100%;
     height: 30%;
     background: rgba(255, 255, 255, 0.02);
     border: 1px dashed rgba(255, 255, 255, 0.1); /* Dashed border suggests it's clickable */
     border-radius: 12px;
     padding: 20px 24px;
     margin-top: 12px;
+    margin-left: 1px;
     color: #cbd5e1;
     line-height: 1.7;
     overflow-y: scroll;

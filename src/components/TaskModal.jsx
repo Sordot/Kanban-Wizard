@@ -135,8 +135,10 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
 
     // Save Handlers
     const handleTitleSave = () => {
+        const finalTitle = text.trim() ? text : "Untitled Task"
+        setText(finalTitle)
         setIsEditingTitle(false);
-        onSave(task.id, { ...task, text, description, priority });
+        onSave(task.id, { ...task, text: finalTitle, description, priority });
     };
 
     const handleDescriptionSave = () => {
@@ -154,7 +156,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
     const handlePriorityCycle = () => {
         const nextPriority = getNextPriority(priority);
         setPriority(nextPriority);
-        
+
         // Save immediately so the board background updates instantly
         onSave(task.id, { ...task, text, description, priority: nextPriority });
     };
@@ -164,14 +166,6 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
             <div className="modal-content task-detail-modal">
                 <div className="modal-header">
                     <div className="modal-title-wrapper" style={{ alignItems: 'center' }}>
-                        <div 
-                            className={`priority-badge ${priority}`} 
-                            onClick={handlePriorityCycle}
-                            style={{ cursor: 'pointer', userSelect: 'none', marginRight: '12px' }}
-                            title="Click to cycle priority"
-                        >
-                            {priority.toUpperCase()}
-                        </div>
                         {isEditingTitle ? (
                             <input
                                 autoFocus
@@ -196,35 +190,62 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                     <button className="modal-close-x" onClick={handleModalClose}>X</button>
                 </div>
                 <div className="task-modal-body">
-                    {/* DESCRIPTION SECTION */}
-                    <div className="description-section">
-                        <h3 className="section-label" style={{ marginBottom: '8px', color: '#5e6c84', fontSize: '14px' }}>Description</h3>
+                    <div className="task-main-content">
+                        <div className="description-section">
+                            <h3 className="section-label" style={{ marginBottom: '8px', color: '#5e6c84', fontSize: '14px' }}>Description</h3>
 
-                        {isEditingDescription ? (
-                            <div className="rich-text-editor">
-                                <div className="tiptap-wrapper">
-                                    <MenuBar editor={editor} />
-                                    <EditorContent editor={editor} className="tiptap-container" />
+                            {isEditingDescription ? (
+                                <div className="rich-text-editor">
+                                    <div className="tiptap-wrapper">
+                                        <MenuBar editor={editor} />
+                                        <EditorContent editor={editor} className="tiptap-container" />
+                                    </div>
+                                    <div className="editor-actions" style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
+                                        <button className="modal-btn confirm-green" onClick={handleDescriptionSave}>Save</button>
+                                        <button className="modal-btn cancel" onClick={handleDescriptionCancel}>Cancel</button>
+                                    </div>
                                 </div>
-                                <div className="editor-actions" style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
-                                    <button className="modal-btn confirm-green" onClick={handleDescriptionSave}>Save</button>
-                                    <button className="modal-btn cancel" onClick={handleDescriptionCancel}>Cancel</button>
+                            ) : (
+                                <div
+                                    className="tiptap-preview editable-field"
+                                    onClick={() => setIsEditingDescription(true)}
+                                    title="Click to edit description"
+                                    style={{ minHeight: '60px' }}
+                                >
+                                    {description ? (
+                                        <div dangerouslySetInnerHTML={{ __html: description }} />
+                                    ) : (
+                                        <p className="empty-state" style={{ color: '#888' }}>Add a more detailed description...</p>
+                                    )}
                                 </div>
-                            </div>
-                        ) : (
-                            <div
-                                className="tiptap-preview editable-field"
-                                onClick={() => setIsEditingDescription(true)}
-                                title="Click to edit description"
-                                style={{ minHeight: '60px' }}
-                            >
-                                {description ? (
-                                    <div dangerouslySetInnerHTML={{ __html: description }} />
-                                ) : (
-                                    <p className="empty-state" style={{ color: '#888' }}>Add a more detailed description...</p>
-                                )}
-                            </div>
-                        )}
+                            )}
+                        </div>
+                    </div>
+
+                    {/* SIDEBAR (25%) */}
+                    <div className="task-sidebar">
+                        <div className="sidebar-field">
+                            <label>Priority</label>
+                            <button
+                                className={`sidebar-value ${priority}`}
+                                onClick={handlePriorityCycle}
+                                title="Click to cycle priority"
+                                >
+                                {priority}
+                            </button>
+                        </div>
+                        <div className="sidebar-field">
+                            <label>Assignee</label>
+                            <span className="sidebar-value">Unassigned</span>
+                        </div>
+                        <div className="sidebar-field">
+                            <label>Effort</label>
+                            <span className="sidebar-value">Medium</span>
+                        </div>
+                        <div className="sidebar-field">
+                            <label>Due Date</label>
+                            <span className="sidebar-value">No date</span>
+                        </div>
                     </div>
                 </div>
 
