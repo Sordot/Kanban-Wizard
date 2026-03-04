@@ -53,7 +53,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
     const [isEditingDescription, setIsEditingDescription] = useState(false)
 
     const [text, setText] = useState("");
-    const [priority, setPriority] = useState("medium")
+    const [priority, setPriority] = useState("Medium")
     const [description, setDescription] = useState("");
 
     // Track the previous task ID to know when a new card is opened
@@ -119,6 +119,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
         if (task && isOpen) {
             setText(task.text || "");
             setDescription(task.description || "");
+            setPriority(task.priority || "Medium");
 
             // Set initial editing states based on whether data exists
             setIsEditingTitle(task.text === 'New Task' || !task.text);

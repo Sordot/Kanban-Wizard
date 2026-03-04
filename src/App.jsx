@@ -21,14 +21,14 @@ const DEFAULT_DATA = [
   {
     id: 'board-1',
     name: '🚀 Project 1',
-    columns: [{ id: 1, title: 'To Do', tasks: [{ id: 't1', text: 'Learn React', priority: 'high', description: 'Shake off the rust!', isNew: false }, { id: 't2', text: 'Set up project', priority: 'low', description: 'AI is OP', isNew: false }] },
+    columns: [{ id: 1, title: 'To Do', tasks: [{ id: 't1', text: 'Example Task', priority: 'High', description: 'Click this field to edit!', isNew: false }, { id: 't2', text: 'Drag Me', priority: 'Low', description: '', isNew: false }] },
     { id: 2, title: 'In Progress', tasks: [] },
     { id: 3, title: 'Done', tasks: [] }]
   },
   {
     id: 'board-2',
     name: '🛠️ Project 2',
-    columns: [{ id: 1, title: 'To Do', tasks: [{ id: 't1', text: 'Learn React', priority: 'high', description: 'Shake off the rust!', isNew: false }, { id: 't2', text: 'Set up project', priority: 'low', description: 'AI is OP', isNew: false }] },
+    columns: [{ id: 1, title: 'To Do', tasks: [{ id: 't1', text: 'Learn React', priority: 'High', description: 'Shake off the rust!', isNew: false }, { id: 't2', text: 'Drag Me', priority: 'Low', description: '', isNew: false }] },
     { id: 2, title: 'In Progress', tasks: [] },
     { id: 3, title: 'Done', tasks: [] }]
   }
