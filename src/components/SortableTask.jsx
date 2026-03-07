@@ -55,16 +55,24 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
             <div className='task-content'>
                 <div className='task-header'>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                    <span title={task.issueType || "User Story"}>
-                        {issueIcons[task.issueType || "User Story"]}
-                    </span>
-                    <span className={`priority-badge ${task.priority || 'Medium'}`}
-                        onPointerDown={(e) => e.stopPropagation()} onClick={cyclePriority}
-                        style={{ cursor: 'pointer' }}
-                        title={'Click to cycle priority'}
-                    >
-                        {(task.priority || 'Medium').toUpperCase()}
-                    </span>
+                        {task.assignee && (
+                            <div
+                                className="assignee-avatar"
+                                title={`Assigned to ${task.assignee}`}
+                            >
+                                {task.assignee.charAt(0).toUpperCase()}
+                            </div>
+                        )}
+                        <span className={`priority-badge ${task.priority || 'Medium'}`}
+                            onPointerDown={(e) => e.stopPropagation()} onClick={cyclePriority}
+                            style={{ cursor: 'pointer' }}
+                            title={'Click to cycle priority'}
+                        >
+                            {(task.priority || 'Medium').toUpperCase()}
+                        </span>
+                        <span title={task.issueType || "User Story"}>
+                            {issueIcons[task.issueType || "User Story"]}
+                        </span>
                     </div>
                     <div>
                         <button
