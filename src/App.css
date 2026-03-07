@@ -272,12 +272,14 @@ body {
 
 .kanban-container {
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
-    padding: 40px 20px;
+    padding: 40px 20px 10px 20px;
     min-height: 100vh;
     width: 100%;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .kanban-container h1 {
@@ -1579,4 +1581,52 @@ button.sidebar-value {
     width: 100%;
     padding: 8px 12px;
     box-sizing: border-box;
+}
+
+/* ========Site Footer Styles========== */
+
+.portfolio-footer {
+  /* This is the magic rule that pushes it to the absolute bottom of the kanban-container */
+  margin-top: auto; 
+  flex-shrink: 0;
+  width: 100%;
+  padding: 20px 0 16px 0; /* Add a bit of padding at the bottom so it breathes */
+  text-align: center;
+  border-top: 1px solid rgba(139, 92, 246, 0.1); /* Subtle violet line separating board from footer */
+  background: transparent;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px; /* Even spacing between your name and the links */
+  margin: 0;
+  color: #94a3b8;
+  font-size: 0.7rem;
+}
+
+.built-by {
+  display: flex;
+  align-items: center;
+}
+
+.built-by strong {
+  color: #f1f5f9;
+  margin-left: 6px;
+  font-weight: 600;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between the React Icon and the text */
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #8b5cf6; /* Matches the vibrant violet used in your Add Task buttons */
+  transform: translateY(-2px); /* Slight bump up on hover */
 }

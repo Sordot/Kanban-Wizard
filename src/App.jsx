@@ -10,6 +10,7 @@ import {
 import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import './App.css'
 import { useKanban } from './hooks/useKanban'
 import Column from './components/Column'
@@ -182,7 +183,25 @@ function App() {
             ) : null}
           </DragOverlay>
         </DndContext>
+        <footer className="portfolio-footer">
+          <div className="footer-content">
+            <span className="built-by">
+              Built by <strong>Theo Gevirtz</strong>
+            </span>
+
+            <a href="https://github.com/Sordot/Theo-Kanban" target="_blank" rel="noopener noreferrer" className='footer-link'>
+              <FaGithub size={18} />
+              <span>GitHub</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/theodore-gevirtz/" target="_blank" rel="noopener noreferrer" className='footer-link'>
+              <FaLinkedin size={18} />
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </footer>
       </div>
+
     </div>
   )
 }
