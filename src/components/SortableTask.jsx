@@ -3,16 +3,22 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { getNextPriority } from '../hooks/useKanban';
 
-const SortableTask = memo(({id, task, columnID, onDelete, onUpdate, onOpenModal}) => {
-    
+const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal }) => {
+
     const isNewTask = !!task.isNew;
+    const issueIcons = {
+        "User Story": "📗",
+        "Bug": "🐞",
+        "Test": "🧪",
+        "Spike": "⏱️"
+    };
 
     // Keep the flash animation effect
     useEffect(() => {
         if (isNewTask) {
             const timer = setTimeout(() => {
                 onUpdate(columnID, id, { isNew: false });
-            }, 1000); 
+            }, 1000);
             return () => clearTimeout(timer);
         }
     }, [isNewTask, columnID, id, onUpdate]);
@@ -24,7 +30,7 @@ const SortableTask = memo(({id, task, columnID, onDelete, onUpdate, onOpenModal}
         transform,
         transition,
         isDragging
-    } = useSortable({id});
+    } = useSortable({ id });
 
     const formatTime = (ts) => {
         if (!ts) return ''
@@ -34,12 +40,12 @@ const SortableTask = memo(({id, task, columnID, onDelete, onUpdate, onOpenModal}
     }
 
     const cyclePriority = (e) => {
-      e.stopPropagation()
-      onUpdate(columnID, id, { ...task, priority: getNextPriority(task.priority) })
+        e.stopPropagation()
+        onUpdate(columnID, id, { ...task, priority: getNextPriority(task.priority) })
     };
 
     const style = {
-        transform: CSS.Transform.toString(transform), 
+        transform: CSS.Transform.toString(transform),
         transition: isDragging ? 'none' : transition,
         opacity: isDragging ? 0.3 : 1
     }
@@ -48,26 +54,31 @@ const SortableTask = memo(({id, task, columnID, onDelete, onUpdate, onOpenModal}
         <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`task-card priority-${task.priority} ${task.isNew ? 'is-new-flash' : ''}`}>
             <div className='task-content'>
                 <div className='task-header'>
-                    <span className={`priority-badge ${task.priority || 'Medium'}`} 
-                        onPointerDown={(e) => e.stopPropagation()}onClick={cyclePriority} 
-                        style={{cursor: 'pointer'}} 
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    <span title={task.issueType || "User Story"}>
+                        {issueIcons[task.issueType || "User Story"]}
+                    </span>
+                    <span className={`priority-badge ${task.priority || 'Medium'}`}
+                        onPointerDown={(e) => e.stopPropagation()} onClick={cyclePriority}
+                        style={{ cursor: 'pointer' }}
                         title={'Click to cycle priority'}
                     >
                         {(task.priority || 'Medium').toUpperCase()}
                     </span>
+                    </div>
                     <div>
-                        <button 
+                        <button
                             className='edit-btn'
                             onPointerDown={(e) => e.stopPropagation()}
-                            onClick={(e) => { 
-                                e.stopPropagation(); 
-                                onOpenModal(columnID, task); 
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onOpenModal(columnID, task);
                             }}>
                             📄
                         </button>
-                        <button className='delete-btn' 
+                        <button className='delete-btn'
                             onPointerDown={(e) => e.stopPropagation()}
-                            onClick={(e) =>{e.stopPropagation(); onDelete(columnID, id);}}>
+                            onClick={(e) => { e.stopPropagation(); onDelete(columnID, id); }}>
                             x
                         </button>
                     </div>
