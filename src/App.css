@@ -1158,7 +1158,7 @@ select.sidebar-value:focus {
     color: #f1f5f9;
     font-size: 12px;
     background: rgba(255, 255, 255, 0.03);
-    padding: 8px 12px;
+    padding: 8px;
     border-radius: 6px;
     border: 1px solid transparent;
     transition: all 0.2s ease;
