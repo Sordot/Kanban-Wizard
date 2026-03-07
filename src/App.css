@@ -304,6 +304,11 @@ body {
     cursor: grabbing !important;
 }
 
+.tilt-wrapper {
+    transform: rotate(3deg) scale(1.02);
+    transition: transform 0.15s ease-out;
+}
+
 .kanban-board {
     display: flex;
     align-items: flex-start;

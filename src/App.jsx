@@ -55,6 +55,7 @@ function App() {
     closeModal,
     confirmDelete,
     handleDragOver,
+    handleDragStart,
     handleDragEnd,
     isAddingColumn,
     newColumnTitle,
@@ -82,7 +83,7 @@ function App() {
         onRenameBoard={openRenameModal}
       />
       <div className='kanban-container'>
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd}>
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
           <div className='kanban-board'>
             {/* map through the kanban columns */}
             {columns && columns.map((column) => (
@@ -163,18 +164,20 @@ function App() {
                 // Subsequent saves (e.g., saving description) -> Just update the existing task
                 updateTask(taskModalConfig.columnID, taskID, { ...updatedTask, isNew: false });
               }
-              
+
               // 2. We removed closeTaskModal() from here! 
               // Now the modal relies entirely on onClose() to close, leaving it safely open during inline edits.
             }}
           />
           <DragOverlay>
             {activeTask ? (
-              <div className={`task-card dragging-overlay priority-${activeTask.priority}`}>
-                <div className='task-content'>
-                  <span className='task-text'>{activeTask.text}</span>
-                </div>
+              <div className="tilt-wrapper">
+                <div className={`task-card dragging-overlay priority-${activeTask.priority}`}>
+                  <div className='task-content'>
+                    <span className='task-text'>{activeTask.text}</span>
+                  </div>
 
+                </div>
               </div>
             ) : null}
           </DragOverlay>
