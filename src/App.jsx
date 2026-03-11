@@ -17,6 +17,7 @@ import Column from './components/Column'
 import ConfirmationModal from './components/ConfirmationModal'
 import Sidebar from './components/Sidebar'
 import TaskModal from './components/TaskModal'
+import AnalyticsBar from './components/AnalyticsBar'
 
 const DEFAULT_DATA = [
   {
@@ -231,6 +232,7 @@ function App() {
             ) : null}
           </DragOverlay>
         </DndContext>
+        <AnalyticsBar columns={columns} />
         <footer className="portfolio-footer">
           <div className="footer-content">
             <span className="built-by">

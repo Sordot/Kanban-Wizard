@@ -414,7 +414,7 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
-    max-height: calc(100vh - 250px);
+    max-height: calc(100vh - 340px);
 }
 
 .kanban-column:has(.task-card:nth-child(5)) .task-count-badge {
@@ -442,7 +442,7 @@ body {
     min-height: 100px;
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: calc(100vh - 250px);
+    max-height: calc(100vh - 340px);
 }
 
 .task-list::-webkit-scrollbar {
@@ -1581,6 +1581,95 @@ button.sidebar-value {
     width: 100%;
     padding: 8px 12px;
     box-sizing: border-box;
+}
+
+/* =========================================
+   Analytics Bar Styles
+   ========================================= */
+.analytics-bar {
+    width: 100%;
+    max-width: 1400px;
+    height: 60px; /* Fixed height to accurately constrain the columns */
+    margin-top: 20px;
+    background: rgba(30, 30, 50, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    flex-shrink: 0; /* Prevents flexbox from squishing the bar */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.analytics-stats {
+    display: flex;
+    gap: 24px;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.analytics-stats span {
+    color: #f1f5f9;
+    font-weight: 700;
+    margin-left: 6px;
+}
+
+/* Issue Type Distribution Styles */
+.issue-distribution {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.issue-icons-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.issue-icon-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 !important; /* Overrides the default margin-left on .analytics-stats span */
+    color: #f1f5f9;
+}
+
+/* progress bar styles */
+.progress-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    max-width: 300px;
+}
+
+.progress-track {
+    flex: 1;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+    border-radius: 999px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.6); /* Glowing effect */
+}
+
+.progress-text {
+    font-size: 14px;
+    color: #a78bfa;
+    font-weight: 800;
+    min-width: 45px;
+    text-align: right;
 }
 
 /* ========Site Footer Styles========== */
