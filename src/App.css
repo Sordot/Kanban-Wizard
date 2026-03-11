@@ -1110,7 +1110,7 @@ select.sidebar-value:focus {
     flex-direction: column;
     min-height: 0;
     overflow-y: auto;
-    padding: 8px;
+    padding: 4px;
 }
 
 /* Custom scrollbar for the task main content */
@@ -1318,7 +1318,7 @@ button.sidebar-value {
 
 /* Preview Mode Container */
 .tiptap-preview {
-    width: 96%;
+    width: 100%;
     height: 40%;
     background: rgba(255, 255, 255, 0.02);
     border: 1px dashed rgba(255, 255, 255, 0.1); /* Dashed border suggests it's clickable */
@@ -1511,76 +1511,138 @@ button.sidebar-value {
     display: flex;
     justify-content: flex-end; /* Aligns the text to the bottom right */
     margin-top: 8px;
-    padding-right: 10px;
+    padding-right: 4px;
 }
 
-/* ===============================
+/* =========================================
    SUBTASKS STYLES
-   =============================== */
-
+========================================= */
 .subtasks-section {
-    flex-shrink: 0;
-    padding-bottom: 2px;
+    margin-top: 32px;
+    padding: 0 8px;
 }
 
 .subtasks-label {
-    margin-bottom: 2px;
+    margin-bottom: 12px;
     color: #5e6c84;
     font-size: 14px;
     text-align: left;
-    padding-left: 8px;
 }
 
 .subtasks-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-bottom: 16px;
+    gap: 8px;
+    margin-bottom: 12px;
 }
 
+/* Individual Subtask Row */
 .subtask-item {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 4px 8px;
+    gap: 12px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03); /* Faint glass background */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    transition: all 0.2s ease;
 }
 
+.subtask-item:hover {
+    background: rgba(139, 92, 246, 0.08); /* Subtle violet tint on hover */
+    border-color: rgba(139, 92, 246, 0.3);
+    /* Removed the translateX transform so the rows stay perfectly still */
+}
+
+/* Custom Checkbox Styling */
 .subtask-checkbox {
+    appearance: none; /* Hide default browser checkbox */
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #5e6c84;
+    border-radius: 4px;
+    background: transparent;
     cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
+.subtask-checkbox:checked {
+    background: #8b5cf6; /* Violet fill */
+    border-color: #8b5cf6;
+}
+
+.subtask-checkbox:checked::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Subtask Text */
 .subtask-text {
-    flex: 1;
+    flex-grow: 1;
+    font-size: 14px;
     color: #f1f5f9;
-    text-decoration: none;
-    opacity: 1;
-    transition: opacity 0.2s ease, text-decoration 0.2s ease;
+    transition: color 0.2s ease;
+    line-height: 1.4;
 }
 
-/* Modifier class applied when the subtask is done */
 .subtask-text.completed {
+    color: #5e6c84;
     text-decoration: line-through;
-    opacity: 0.6;
 }
 
+/* Delete Button (Hidden until hover) */
 .subtask-delete-btn {
     background: transparent;
     border: none;
     color: #ef4444;
+    font-size: 14px;
     cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s ease;
-    padding: 2px 6px;
+    opacity: 0; /* Hide by default to keep UI clean */
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+.subtask-item:hover .subtask-delete-btn {
+    opacity: 0.6; /* Reveal when hovering over the row */
 }
 
 .subtask-delete-btn:hover {
-    opacity: 1;
+    opacity: 1 !important;
+    background: rgba(239, 68, 68, 0.15); /* Red tint when hovering over the X */
 }
 
+/* New Subtask Input Field */
 .subtask-input {
     width: 100%;
-    padding: 8px 12px;
-    box-sizing: border-box;
+    text-align: left !important; /* Overrides any centered text from .sidebar-value */
+    padding: 12px 14px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px dashed rgba(255, 255, 255, 0.2) !important; /* Dashed ghost border */
+    color: #f1f5f9;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.subtask-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: #8b5cf6 !important; /* Violet solid border on focus */
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.2);
+}
+
+.subtask-input::placeholder {
+    color: #5e6c84;
 }
 
 /* =========================================
