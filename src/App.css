@@ -266,6 +266,12 @@ body {
     color: var(--text-primary);
 }
 
+.theme-toggle {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
 .board-header {
     width: 100%;
     max-width: 1400px;
