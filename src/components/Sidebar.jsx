@@ -1,6 +1,6 @@
 import logoIcon from '../assets/Kanban-Owl-removebg-preview.png'
 
-export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoard, onDeleteBoard, onRenameBoard }) {
+export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoard, onDeleteBoard, onRenameBoard, theme, toggleTheme }) {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
@@ -18,13 +18,16 @@ export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoa
                 {board.name}
               </button>
               <div className="board-actions">
-                <button onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }} className="action-btn">✏️</button>
-                <button onClick={(e) => { e.stopPropagation(); onDeleteBoard('board', { boardID: board.id }); }} className="action-btn delete">×</button>
+                <button onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }} className="edit-board-name-btn">✏️</button>
+                <button onClick={(e) => { e.stopPropagation(); onDeleteBoard('board', { boardID: board.id }); }} className="delete-board-btn">X</button>
               </div>
             </div>
           ))}
         </div>
         <button className="add-board-sidebar" onClick={onAddBoard}>+ New Board</button>
+        <button className="theme-toggle" onClick={toggleTheme}>
+          {theme === 'dark' ? '☀️' : '🌙'}
+        </button>
       </nav>
     </aside>
   );

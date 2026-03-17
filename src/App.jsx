@@ -12,6 +12,7 @@ import {
 } from '@dnd-kit/sortable'
 import { FaGithub, FaLinkedin } from 'react-icons/fa'
 import './App.css'
+import { useTheme } from './hooks/useTheme'
 import { useKanban } from './hooks/useKanban'
 import Column from './components/Column'
 import ConfirmationModal from './components/ConfirmationModal'
@@ -69,6 +70,8 @@ function App() {
     closeTaskModal
   } = useKanban(DEFAULT_DATA)
 
+  const { theme, toggleTheme } = useTheme();
+
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
@@ -97,6 +100,8 @@ function App() {
         onAddBoard={addBoard}
         onDeleteBoard={openDeleteModal}
         onRenameBoard={openRenameModal}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
       <div className='kanban-container'>
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
