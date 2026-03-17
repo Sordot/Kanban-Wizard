@@ -706,12 +706,11 @@ select.sidebar-value:focus {
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, background 0.2s;
+    transition: ease 0.2s;
 }
 
 .save-btn:hover {
     background: #8b5cf6;
-    transform: translateY(-1px);
 }
 
 .cancel-btn {
@@ -792,8 +791,7 @@ select.sidebar-value:focus {
 .add-column-btn:hover {
     background: rgba(139, 92, 246, 0.05);
     border-color: rgba(139, 92, 246, 0.5);
-    color: #fff;
-    transform: translateY(-2px);
+    color: #f1f5f9;
     box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
 }
 
@@ -1046,9 +1044,9 @@ select.sidebar-value:focus {
 }
 
 .task-detail-modal {
-    width: 700px;
+    width: 80vw;
     height: 70vh;
-    max-width: 95vw;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     min-height: 500px;
@@ -1064,16 +1062,6 @@ select.sidebar-value:focus {
     margin-bottom: 20px;
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(139, 92, 246, 0.2);
-}
-
-.modal-header .priority-badge:hover {
-    filter: brightness(1.2);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header .priority-badge:active {
-    transform: translateY(0);
 }
 
 .task-detail-modal .modal-title {
@@ -1103,9 +1091,9 @@ select.sidebar-value:focus {
     overflow: hidden; /* Contains the scrollable areas */
 }
 
-/* 80% Column */
+/* 75% Column */
 .task-main-content {
-    flex: 4;
+    flex: 3;
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -1125,58 +1113,207 @@ select.sidebar-value:focus {
     border-radius: 10px;
 }
 
-/* 20% Column with Glassmorphic styling */
+/* 25% Sidebar with Glassmorphic styling */
 .task-sidebar {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px;
+    padding: 20px; 
     background: rgba(0, 0, 0, 0.2); 
     border: 1px solid rgba(139, 92, 246, 0.2); /* Matches your tiptap border */
     border-radius: 12px;
     align-self: stretch;
+    min-width: 10vw;
+    overflow-y: auto;
+}
+
+/* Custom scrollbar for the task sidebar content */
+.task-sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+.task-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.task-sidebar::-webkit-scrollbar-thumb {
+    background-color: rgba(139, 92, 246, 0.3);
+    border-radius: 10px;
+}
+
+/* Sidebar Field Layout */
+.sidebar-field-row {
+    display: flex;
+    align-items: center; /* Use flex-start if your values might wrap to multiple lines */
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 12px; /* Spacing between rows */
+}
+
+.sidebar-label-container {
+    flex: 0 0 90px; /* Locks the label to a fixed width. Adjust based on your longest label */
+    color: #94a3b8; /* Using the slate color from your theme */
+    font-size: 13px;
+    font-weight: 600;
+    text-align: left; /* Ensures labels are left-aligned */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-value-container {
+    flex: 1; /* Expands to fill the rest of the row */
+    display: flex;
+    align-items: center;
+    margin-left: 8px;
+    justify-content: flex-start; /* Ensures values sit left-aligned next to the label space */
+    color: #f1f5f9;
     min-width: 0;
 }
 
-
+/* target custom field values specifically to make sure they dont overflow */
+span.sidebar-value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block; /* Required for overflow to work on a span */
+}
 
 .sidebar-field {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 4px;
 }
 
 .sidebar-field label {
-    font-size: 11px;
+    flex: 0 0 35%; /* Fixed proportion: Label always strictly takes 35% of the sidebar's width */
+    margin: 0; 
+    font-size: 12px;
+    font-weight: 600;
+    color: #94a3b8; 
+    text-align: left;
     text-transform: uppercase;
-    font-weight: 700;
-    color: #a78bfa; /* Your theme's accent purple */
     letter-spacing: 0.05em;
 }
 
 .sidebar-value {
-    color: #f1f5f9;
-    font-size: 12px;
+    flex: 1 1 auto; /* Fluid proportion: Input takes up all the remaining space */
+    width: 100%;
     background: rgba(255, 255, 255, 0.03);
-    padding: 8px;
+    border: 1px solid rgba(139, 92, 246, 0.2);
     border-radius: 6px;
-    border: 1px solid transparent;
+    padding: 6px 10px;
+    color: #e2e8f0;
+    font-size: 12px;
+    font-family: inherit;
     transition: all 0.2s ease;
-    cursor: pointer;
-
-    display: block;
-    width: 100%; /* ADD THIS LINE to prevent it from pushing boundaries */
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-
 }
 
-.sidebar-value:hover {
+/* --- Custom Fields Section in Task Modal --- */
+.custom-fields-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+}
+
+.custom-fields-label {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-field-add-btn {
     background: rgba(139, 92, 246, 0.1);
-    border-color: rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    border: 1px dashed rgba(139, 92, 246, 0.4);
+    border-radius: 6px;
+    height: 28px;
+    padding: 0 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.custom-field-add-btn:hover {
+    background: rgba(139, 92, 246, 0.2);
+    border-color: #8b5cf6; 
+    color: #ddd6fe; 
+}
+
+.custom-fields-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Replaces margin-bottom on items */
+    margin-top: 8px;
+}
+
+.custom-field-item {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.custom-field-key {
+    width: 40%;
+}
+
+.custom-field-value {
+    width: 50%;
+}
+
+.custom-field-delete-btn {
+    width: 10%;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #ff5630; /* Danger red */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-field-delete-btn:hover {
+    color: #de350b;
+}
+
+/* --- Saved Custom Field Styles (for when they are bounced to the hardwired fields above) --- */
+.custom-field-saved {
+    position: relative;
+}
+
+.delete-cf-btn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.2s, transform 0.2s;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Appears only when hovering over the specific row */
+.custom-field-saved:hover .delete-cf-btn {
+    opacity: 1;
+}
+
+.sidebar-value:focus,
+.sidebar-value:hover {
+    outline: none;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: #a78bfa;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.15);
 }
 
 /* --- SIDEBAR PRIORITY STYLES --- */
@@ -1510,7 +1647,7 @@ button.sidebar-value {
 .modal-footer {
     display: flex;
     justify-content: flex-end; /* Aligns the text to the bottom right */
-    margin-top: 8px;
+    margin-top: 12px;
     padding-right: 4px;
 }
 
@@ -1550,9 +1687,8 @@ button.sidebar-value {
 }
 
 .subtask-item:hover {
-    background: rgba(139, 92, 246, 0.08); /* Subtle violet tint on hover */
+    background: rgba(139, 92, 246, 0.08); 
     border-color: rgba(139, 92, 246, 0.3);
-    /* Removed the translateX transform so the rows stay perfectly still */
 }
 
 /* Custom Checkbox Styling */
@@ -1780,5 +1916,4 @@ button.sidebar-value {
 
 .footer-link:hover {
   color: #8b5cf6; /* Matches the vibrant violet used in your Add Task buttons */
-  transform: translateY(-2px); /* Slight bump up on hover */
 }

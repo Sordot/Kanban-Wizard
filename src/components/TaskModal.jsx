@@ -62,21 +62,23 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
     const [effort, setEffort] = useState("Medium")
     const [environment, setEnvironment] = useState("Dev")
     const [dueDate, setDueDate] = useState(null)
+    const [customFields, setCustomFields] = useState([])
     const [subtasks, setSubtasks] = useState([])
     const [newSubtaskText, setNewSubtaskText] = useState("")
 
-    const [isEditingAssignee, setIsEditingAssignee] = useState(false)
     const [isEditingTitle, setIsEditingTitle] = useState(false)
+    const [isEditingAssignee, setIsEditingAssignee] = useState(false)
     const [isEditingDescription, setIsEditingDescription] = useState(false)
+    const [editingCustomFieldId, setEditingCustomFieldId] = useState(null)
 
     // Track the previous task ID to know when a new card is opened
     const [prevTaskId, setPrevTaskId] = useState(null);
 
     // 1. Create a ref to track the latest state for our close handler
-    const modalStateRef = useRef({ text, description, task, priority, assignee, issueType, effort, dueDate, environment, subtasks });
+    const modalStateRef = useRef({ text, description, task, priority, assignee, issueType, effort, dueDate, environment, subtasks, customFields });
     useEffect(() => {
-        modalStateRef.current = { text, description, task, priority, assignee, issueType, effort, dueDate, environment, subtasks };
-    }, [text, description, task, priority, assignee, issueType, effort, dueDate, environment, subtasks]);
+        modalStateRef.current = { text, description, task, priority, assignee, issueType, effort, dueDate, environment, subtasks, customFields };
+    }, [text, description, task, priority, assignee, issueType, effort, dueDate, environment, subtasks, customFields]);
 
     // 2. Create a smart close handler that auto-saves if you typed anything
     const handleModalClose = useCallback(() => {
@@ -90,7 +92,8 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
             effort: currentEffort,
             dueDate: currentDueDate,
             environment: currentEnvironment,
-            subtasks: currentSubtasks
+            subtasks: currentSubtasks,
+            customFields: currentCustomFields
         } = modalStateRef.current;
 
         if (!currentTask) {
@@ -155,6 +158,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
             setEffort(task.effort || "Medium")
             setEnvironment(task.environment || "Dev")
             setDueDate(task.dueDate ? new Date(task.dueDate) : null)
+            setCustomFields((task.customFields || []).map(cf => ({ ...cf, isEditing: false })))
             setSubtasks(task.subtasks || []);
 
 
@@ -267,6 +271,66 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
         });
     };
 
+    const handleAddCustomField = () => {
+        // Add a new row with isEditing: true so it stays at the bottom
+        const newFields = [...customFields, { id: `cf-${Date.now()}`, key: "", value: "", isEditing: true }];
+        setCustomFields(newFields);
+
+        const parentFields = newFields.map(({ isEditing, ...rest }) => rest);
+        onSave(task.id, { ...task, text, description, priority, assignee, issueType, effort, environment, subtasks, customFields: parentFields });
+    };
+
+    // Only update local state while typing (no parent saving yet)
+    const handleUpdateCustomField = (id, field, newValue) => {
+        const newFields = customFields.map(cf =>
+            cf.id === id ? { ...cf, [field]: newValue } : cf
+        );
+        setCustomFields(newFields);
+    };
+
+
+    // Save to parent when Enter is pressed or input loses focus
+    const handleSaveCustomFields = (e, id) => {
+        // If the user hits Escape, remove the field entirely if they were just adding it
+        if (e && e.type === 'keydown' && e.key === 'Escape') {
+            handleRemoveCustomField(id);
+            return;
+        }
+
+        if (e && e.type === 'keydown' && e.key !== 'Enter') return;
+
+        if (e && e.key === 'Enter') {
+            e.target.blur(); // Trigger the blur event to consolidate the save logic below
+            return;
+        }
+
+        // PREVENT TAB BUG: If blurring because the user pressed Tab to go to the sibling value input,
+        // don't save yet! (We identify sibling inputs by checking for a shared custom class)
+        if (e && e.type === 'blur' && e.relatedTarget && e.relatedTarget.className.includes(`cf-input-${id}`)) {
+            return;
+        }
+
+        setEditingCustomFieldId(null);
+
+        // If a new field has a key, flip it to "saved" so it jumps to the top
+        const updatedFields = customFields.map(cf =>
+            cf.isEditing && cf.key.trim() !== "" ? { ...cf, isEditing: false } : cf
+        );
+
+        const cleanedFields = updatedFields.filter(cf => cf.key.trim() !== "" || cf.value.trim() !== "");
+        setCustomFields(cleanedFields);
+
+        // Strip the isEditing flag before sending to the database/parent
+        const parentFields = cleanedFields.map(({ isEditing, ...rest }) => rest);
+        onSave(task.id, { ...task, priority, assignee, issueType, effort, environment, subtasks, customFields: parentFields });
+    };
+
+    const handleRemoveCustomField = (id) => {
+        const newFields = customFields.filter(cf => cf.id !== id);
+        setCustomFields(newFields);
+        onSave(task.id, { ...task, priority, assignee, issueType, effort, environment, subtasks, customFields: newFields });
+    };
+
     const formatTime = (ts) => {
         if (!ts) return ''
         return new Date(ts).toLocaleString([], {
@@ -376,87 +440,203 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
 
                     {/* SIDEBAR (25%) */}
                     <div className="task-sidebar">
-                        <div className="sidebar-field">
-                            <label>Priority</label>
-                            <button
-                                className={`sidebar-value ${priority}`}
-                                onClick={handlePriorityCycle}
-                                title="Click to cycle priority"
-                            >
-                                {priority}
-                            </button>
-                        </div>
-                        <div className="sidebar-field">
-                            <label>Assignee</label>
-                            {isEditingAssignee ? (
-                                <input
-                                    autoFocus
-                                    className="sidebar-value edit-input"
-                                    value={assignee}
-                                    onChange={(e) => setAssignee(e.target.value)}
-                                    onBlur={handleAssigneeSave}
-                                    onKeyDown={(e) => e.key === 'Enter' && handleAssigneeSave()}
-                                    placeholder="Unassigned"
-                                    style={{ width: '100%', padding: '2px 4px', boxSizing: 'border-box' }}
-                                />
-                            ) : (
-                                <span
-                                    className="sidebar-value"
-                                    onClick={() => setIsEditingAssignee(true)}
-                                    title={assignee ? `Assignee: ${assignee}` : "Click to assign"}
-                                    style={{ cursor: 'pointer' }}
+
+                        <div className="sidebar-field-row">
+                            <div className="sidebar-label-container">
+                                Priority
+                            </div>
+                            <div className="sidebar-value-container">
+                                <button
+                                    className={`sidebar-value ${priority}`}
+                                    onClick={handlePriorityCycle}
+                                    title="Click to cycle priority"
                                 >
-                                    {assignee || "Unassigned"}
-                                </span>
-                            )}
+                                    {priority}
+                                </button>
+                            </div>
                         </div>
-                        <div className="sidebar-field">
-                            <label>Issue Type</label>
-                            <select
-                                className="sidebar-value"
-                                value={issueType}
-                                onChange={handleIssueTypeChange}
-                                style={{ appearance: 'auto', cursor: 'pointer' }}
-                            >
-                                <option value="User Story">User Story</option>
-                                <option value="Bug">Bug</option>
-                                <option value="Test">Test</option>
-                                <option value="Spike">Spike</option>
-                            </select>
+
+                        <div className="sidebar-field-row">
+                            <div className="sidebar-label-container">
+                                Assignee
+                            </div>
+                            <div className="sidebar-value-container">
+                                {isEditingAssignee ? (
+                                    <input
+                                        autoFocus
+                                        className="sidebar-value edit-input"
+                                        value={assignee}
+                                        onChange={(e) => setAssignee(e.target.value)}
+                                        onBlur={handleAssigneeSave}
+                                        onKeyDown={(e) => e.key === 'Enter' && handleAssigneeSave()}
+                                        placeholder="Unassigned"
+                                        style={{ width: '100%', padding: '2px 4px', boxSizing: 'border-box' }}
+                                    />
+                                ) : (
+                                    <span
+                                        className="sidebar-value"
+                                        onClick={() => setIsEditingAssignee(true)}
+                                        title={assignee ? `Assignee: ${assignee}` : "Click to assign"}
+                                        style={{ cursor: 'pointer' }}
+                                    >
+                                        {assignee || "Unassigned"}
+                                    </span>
+                                )}
+                            </div>
                         </div>
-                        <div className="sidebar-field">
-                            <label>Effort</label>
-                            <button
-                                className="sidebar-value"
-                                onClick={handleEffortCycle}
-                                title="Click to cycle effort"
-                            >
-                                {effort}
-                            </button>
+
+                        <div className="sidebar-field-row">
+                            <div className="sidebar-label-container">
+                                Issue Type
+                            </div>
+                            <div className="sidebar-value-container">
+                                <select
+                                    className="sidebar-value"
+                                    value={issueType}
+                                    onChange={handleIssueTypeChange}
+                                    style={{ appearance: 'auto', cursor: 'pointer', width: '100%' }}
+                                >
+                                    <option value="User Story">User Story</option>
+                                    <option value="Bug">Bug</option>
+                                    <option value="Test">Test</option>
+                                    <option value="Spike">Spike</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="sidebar-field">
-                            <label>Due Date</label>
-                            <DatePicker
-                                selected={dueDate}
-                                onChange={handleDueDateChange}
-                                className="sidebar-value"
-                                placeholderText="No date"
-                                dateFormat="MMM d, yyyy" // e.g., "Oct 24, 2023"
-                            />
+
+                        <div className="sidebar-field-row">
+                            <div className="sidebar-label-container">
+                                Effort
+                            </div>
+                            <div className="sidebar-value-container">
+                                <button
+                                    className="sidebar-value"
+                                    onClick={handleEffortCycle}
+                                    title="Click to cycle effort"
+                                >
+                                    {effort}
+                                </button>
+                            </div>
                         </div>
-                        <div className="sidebar-field">
-                            <label>Environment</label>
-                            <select
-                                className="sidebar-value"
-                                value={environment}
-                                onChange={handleEnvironmentChange}
-                                style={{ appearance: 'auto', cursor: 'pointer' }}
-                            >
-                                <option value="Dev">Dev</option>
-                                <option value="QA">QA</option>
-                                <option value="Staging">Staging</option>
-                                <option value="Production">Production</option>
-                            </select>
+
+                        <div className="sidebar-field-row">
+                            <div className="sidebar-label-container">
+                                Due Date
+                            </div>
+                            <div className="sidebar-value-container">
+                                <DatePicker
+                                    selected={dueDate}
+                                    onChange={handleDueDateChange}
+                                    className="sidebar-value"
+                                    placeholderText="No date"
+                                    dateFormat="MMM d, yyyy"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="sidebar-field-row">
+                            <div className="sidebar-label-container">
+                                Environment
+                            </div>
+                            <div className="sidebar-value-container">
+                                <select
+                                    className="sidebar-value"
+                                    value={environment}
+                                    onChange={handleEnvironmentChange}
+                                    style={{ appearance: 'auto', cursor: 'pointer', width: '100%' }}
+                                >
+                                    <option value="Dev">Dev</option>
+                                    <option value="QA">QA</option>
+                                    <option value="Staging">Staging</option>
+                                    <option value="Production">Production</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {/* 1. SAVED CUSTOM FIELDS (Jumps up to match hardwired fields) */}
+                        {customFields.filter(cf => !cf.isEditing).map(cf => (
+                            <div key={cf.id} className="sidebar-field-row custom-field-saved">
+                                <div className="sidebar-label-container" title={cf.key}>
+                                    {cf.key}
+                                </div>
+                                <div className="sidebar-value-container" style={{ gap: '4px' }}>
+                                    {editingCustomFieldId === cf.id ? (
+                                        <input
+                                            autoFocus
+                                            className="sidebar-value edit-input"
+                                            value={cf.value}
+                                            onChange={(e) => handleUpdateCustomField(cf.id, 'value', e.target.value)}
+                                            onBlur={(e) => handleSaveCustomFields(e, cf.id)}
+                                            onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
+                                            style={{ width: '100%', boxSizing: 'border-box', padding: '2px 4px' }}
+                                            placeholder="Empty"
+                                        />
+                                    ) : (
+                                        <span
+                                            className="sidebar-value"
+                                            onClick={() => setEditingCustomFieldId(cf.id)}
+                                            title={cf.value ? `Value: ${cf.value}` : "Click to edit"}
+                                            style={{ cursor: 'pointer', width: '100%', display: 'inline-block' }}
+                                        >
+                                            {cf.value || "Empty"}
+                                        </span>
+                                    )}
+                                    <button
+                                        className="delete-cf-btn"
+                                        onClick={() => handleRemoveCustomField(cf.id)}
+                                        title="Remove field"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+
+                        {/* 2. ADD CUSTOM FIELDS SECTION (Stays at the bottom) */}
+                        <div className="custom-fields-section">
+                            <div className="sidebar-field-row">
+                                <div className="sidebar-value-container">
+                                    <button className="custom-field-add-btn" onClick={handleAddCustomField}>
+                                        + Add Custom Field
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="custom-fields-list">
+                                {customFields.filter(cf => cf.isEditing).map(cf => (
+                                    <div key={cf.id} className="custom-field-item" style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                                        <input
+                                            type="text"
+                                            placeholder="Key..."
+                                            value={cf.key}
+                                            onChange={(e) => handleUpdateCustomField(cf.id, 'key', e.target.value)}
+                                            onBlur={(e) => handleSaveCustomFields(e, cf.id)}
+                                            onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
+                                            className={`sidebar-value edit-input cf-input-${cf.id}`}
+                                            style={{ width: '45%', padding: '2px 4px', boxSizing: 'border-box' }}
+                                            autoFocus={cf.key === "" && cf.value === ""}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Value..."
+                                            value={cf.value}
+                                            onChange={(e) => handleUpdateCustomField(cf.id, 'value', e.target.value)}
+                                            onBlur={(e) => handleSaveCustomFields(e, cf.id)}
+                                            onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
+                                            className={`sidebar-value edit-input cf-input-${cf.id}`}
+                                            style={{ width: '45%', padding: '2px 4px', boxSizing: 'border-box' }}
+                                        />
+                                        <button
+                                            className="delete-cf-btn"
+                                            onClick={() => handleRemoveCustomField(cf.id)}
+                                            title="Remove field"
+                                            style={{ opacity: 1, position: 'relative' }}
+                                        >
+                                            ✕
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
@@ -464,12 +644,11 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                 {task?.updatedAt && (
                     <div className="modal-footer">
                         <span className="footer-label">
-                            Last updated at: {formatTime(task.updatedAt)}
+                            Updated: {formatTime(task.updatedAt)}
                         </span>
                     </div>
                 )}
             </div>
-
         </div>
 
     );
