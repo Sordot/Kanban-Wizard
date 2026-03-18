@@ -182,6 +182,21 @@ export const useKanban = (initialData) => {
     closeColumnEditor()
   }
 
+  const updateColumn = useCallback((columnID, updates) => {
+    setBoards(prevBoards => prevBoards.map(board => {
+      if (board.id !== activeBoardID) return board;
+      return {
+        ...board,
+        columns: board.columns.map(col => {
+          if (col.id === columnID) {
+            return { ...col, ...updates };
+          }
+          return col;
+        })
+      };
+    }));
+  }, [activeBoardID]);
+
   const removeColumn = (columnID) => {
     setBoards(prevBoards => prevBoards.map(board => {
       if (board.id !== activeBoardID) return board;
@@ -346,6 +361,7 @@ export const useKanban = (initialData) => {
     updateTask,
     deleteTask,
     addColumn,
+    updateColumn,
     removeColumn,
     modalConfig,
     openDeleteModal,

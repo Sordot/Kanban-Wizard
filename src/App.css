@@ -19,33 +19,6 @@
   --btn-red-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
 }
 
-/* light mode overrides */
-/* :root[data-theme="light"] {
-  --bg-color: #d8dbe9; 
-  --bg-gradient-top: #c4c9dc;
-  --bg-gradient-mid: #d0d4e4;   
-  
-  --text-primary: #17182b;    
-  --text-secondary: #565b7a;  
-  
-  
-  --sidebar-bg: rgba(198, 204, 222, 0.85); 
-  --column-bg: rgba(232, 235, 245, 0.5);   
-  --column-border: rgba(139, 92, 246, 0.25); 
-  --column-shadow: 0 8px 32px rgba(23, 24, 43, 0.08); 
-  
-  
-  --accent-color: #7c3aed; 
-  --card-bg: rgba(238, 241, 248, 0.8);
-  
-  --btn-green-bg: #10b981;
-  --btn-green-hover: #059669;
-  --btn-green-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-  --btn-red-bg: #ef4444;
-  --btn-red-hover: #dc2626;
-  --btn-red-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
-} */
-
 :root[data-theme="light"] {
   /* Darkened base colors towards a slate/midnight indigo */
   --bg-color: #b3bacf; 
@@ -490,14 +463,52 @@ body {
 
 .column-title-container {
     display: flex;
+    flex: 1;
     align-items: center;
     gap: 8px;
+    min-width: 0;
 }
 
 .column-title {
     font-size: 20px;
     color: var(--text-primary);
     
+}
+
+/* --- Column Title Editing --- */
+
+.column-title-container {
+    /* Ensures the container takes up the available space so the input can expand */
+    width: 100%; 
+    display: flex;
+    align-items: center;
+}
+
+.column-title-input {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border: 1px solid var(--accent-color);
+    border-radius: 4px;
+    outline: none;
+    background: var(--bg-color);
+    color: var(--text-primary);
+    width: 100%;
+    margin-right: 8px;
+    font-family: inherit;
+}
+
+.column-title-input:focus {
+    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3); /* Subtle focus ring using your accent color */
+}
+
+.column-title.editable {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.column-title.editable:hover {
+    color: var(--accent-color);
 }
 
 .task-count-badge {
@@ -516,9 +527,78 @@ body {
     justify-content: center;
 }
 
+/* --- Column Header Controls & Dropdown Menu --- */
+
 .column-controls {
-    display: flex;
-    gap: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.column-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.column-menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.column-menu-btn:hover {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+}
+
+.column-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: var(--bg-color); /* Kept your variable */
+  border: 1px solid var(--column-border);
+  border-radius: 8px;
+  padding: 6px 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+  box-shadow: 0 8px 24px var(--column-shadow);
+}
+
+.column-dropdown-menu button {
+  background: none;
+  border: none;
+  padding: 10px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: 100%;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.column-dropdown-menu button:hover {
+  background-color: var(--column-border);
+}
+
+.delete-column-option {
+  color: var(--btn-red-bg) !important;
+}
+
+.delete-column-option:hover {
+  background-color: var(--column-bg) !important;
+  color: var(--btn-red-hover) !important;
 }
 
 .kanban-column {
@@ -1082,6 +1162,17 @@ select.sidebar-value option {
 .modal-btn.confirm-green:hover {
     background: var(--btn-green-hover);
     box-shadow: 0 0 4px var(--btn-green-shadow);
+}
+
+.modal-btn.delete-red {
+    background: var(--btn-red-bg);
+    color: var(--text-primary);
+    border: none;
+}
+
+.modal-btn.delete-red:hover {
+    background: var(--btn-red-hover);
+    box-shadow: 0 4px 12px var(--btn-red-shadow);
 }
 
 .modal-rename-input {
