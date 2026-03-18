@@ -470,7 +470,10 @@ body {
 }
 
 .column-title {
-    font-size: 20px;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: var(--text-primary);
     
 }
@@ -509,22 +512,6 @@ body {
 
 .column-title.editable:hover {
     color: var(--accent-color);
-}
-
-.task-count-badge {
-    background-color: var(--bg-color);
-    border: 1px solid var(--accent-color);
-    color: var(--text-primary);
-    min-width: 24px;
-    height: 20px;
-    padding: 8px;
-    font-size: 11px;
-    font-weight: 800;
-    line-height: 0;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
 }
 
 /* --- Column Header Controls & Dropdown Menu --- */
@@ -617,11 +604,6 @@ body {
     max-height: calc(100vh - 340px);
 }
 
-.kanban-column:has(.task-card:nth-child(5)) .task-count-badge {
-    background-color: var(--text-primary);
-    color: var(--btn-red-bg);
-}
-
 .empty-column-placeholder {
     display: flex;
     flex-direction: column;
@@ -631,6 +613,31 @@ body {
     border: 2px dashed var(--bg-gradient-top);
     border-radius: 12px;
     color: var(--text-secondary);
+}
+
+.column-footer {
+    
+    margin-top: auto; 
+    
+    
+    padding: 2px 2px;
+    
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    background: transparent;
+    border-bottom-left-radius: 8px; 
+    border-bottom-right-radius: 8px;
+}
+
+.task-count {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+    user-select: none;
 }
 
 .task-list {
@@ -910,7 +917,7 @@ select.sidebar-value option {
     to { opacity: 1; transform: scale(1); }
 }
 
-.add-task-btn {
+/* .add-task-btn {
     background: var(--bg-color);
     color: var(--text-secondary);
     border: 1px solid var(--column-border);
@@ -930,6 +937,34 @@ select.sidebar-value option {
 .add-task-btn:hover {
     border: 1px solid var(--accent-color);
     color: var(--text-primary);
+} */
+
+.add-task-btn {
+    background: transparent;
+    border: 1px solid var(--column-border); /* Subtle border when idle */
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Eye-catching hover state */
+.add-task-btn:hover {
+    background: var(--accent-color); /* Fills with violet on hover */
+    color: var(--text-primary);
+    border-color: var(--accent-color);
+}
+
+.add-task-btn span {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1;
 }
 
 .delete-btn {

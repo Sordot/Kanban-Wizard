@@ -45,6 +45,7 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                         <input
                             className="column-title-input"
                             autoFocus
+                            maxLength={40}
                             value={titleInput}
                             onChange={(e) => setTitleInput(e.target.value)}
                             onBlur={handleTitleSave}
@@ -59,11 +60,10 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                             {column.title}
                         </h3>
                     )}
-                    <span className="task-count-badge">{column.tasks.length}</span>
                 </div>
 
                 <div className="column-controls">
-                    <button className="add-task-btn" onClick={() => onAddTask(column.id)}>Add Task</button>
+                    <button className="add-task-btn" onClick={() => onAddTask(column.id)}><span>+</span></button>
 
                     <div className="column-menu-container" ref={menuRef}>
                         <button className="column-menu-btn" onClick={toggleMenu}>
@@ -73,10 +73,10 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                         {isMenuOpen && (
                             <div className="column-dropdown-menu">
                                 <button onClick={() => { setIsEditingTitle(true); setIsMenuOpen(false); }}>
-                                    Edit Column
+                                    Rename
                                 </button>
                                 <button className="delete-column-option" onClick={() => { onRemoveColumn(column.id); setIsMenuOpen(false); }}>
-                                    Delete Column
+                                    Delete
                                 </button>
                             </div>
                         )}
@@ -105,6 +105,11 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                     ))}
                 </DroppableContainer>
             </SortableContext>
+            <div className="column-footer">
+                <span className="task-count">
+                    {column.tasks.length} {column.tasks.length === 1 ? 'Task' : 'Tasks'}
+                </span>
+            </div>
         </div>
     );
 }
