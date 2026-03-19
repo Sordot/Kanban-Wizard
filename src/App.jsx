@@ -79,11 +79,11 @@ function App() {
   )
 
   const issueIcons = {
-    "User Story": "📗",
-    "Bug": "🐞",
-    "Test": "🧪",
-    "Spike": "⏱️"
-  };
+        "User Story": "📜",
+        "Bug": "🌀",
+        "Test": "🔮",
+        "Spike": "⌛"
+    };
 
   const formatTime = (ts) => {
     if (!ts) return '';

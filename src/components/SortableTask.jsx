@@ -7,10 +7,10 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
 
     const isNewTask = task.isNew === true;
     const issueIcons = {
-        "User Story": "📗",
-        "Bug": "🐞",
-        "Test": "🧪",
-        "Spike": "⏱️"
+        "User Story": "📜",
+        "Bug": "🌀",
+        "Test": "🔮",
+        "Spike": "⌛"
     };
 
     // Keep the flash animation effect
@@ -70,7 +70,7 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                         >
                             {(task.priority || 'Medium').toUpperCase()}
                         </span>
-                        <span title={task.issueType || "User Story"}>
+                        <span className="task-card-issue-icon" title={task.issueType || "User Story"}>
                             {issueIcons[task.issueType || "User Story"]}
                         </span>
                     </div>

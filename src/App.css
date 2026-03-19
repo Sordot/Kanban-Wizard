@@ -41,7 +41,7 @@
   --column-bg: rgba(255, 255, 255, 0.4);   
   --column-border: rgba(0, 115, 207, 0.35); 
   --column-shadow: 0 12px 40px rgba(0, 38, 71, 0.15); 
-  --card-bg: rgba(255, 255, 255, 0.85); 
+  --card-bg: rgba(255, 255, 255, 0.03);
   
   --accent-color: #0073cf; 
   
@@ -80,7 +80,9 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background: var(--bg-color);
+    background: radial-gradient(circle at 15% 50%, rgba(0, 115, 207, 0.15), transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.1), transparent 40%),
+                var(--bg-color);
     background-size: cover;
     background-attachment: fixed;
     min-height: 100vh;
@@ -102,11 +104,12 @@ body {
     display: flex;
     flex-direction: column;
     background: var(--sidebar-bg);
-    backdrop-filter: blur(15px);
-    border-right: 1px solid var(--accent-color);
-    /* padding: 32px 24px; */
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.02), 
+                4px 0 8px rgba(0, 0, 0, 0.2);
     padding: 40px 20px 10px;
-    box-shadow: 4px 0 24px var(--bg-color);
 }
 
 .sidebar-logo {
@@ -151,13 +154,17 @@ body {
     margin: -6px -8px;
     border-radius: 4px;
     cursor: pointer;
-    border: 1px dashed transparent;
+    border: 1px solid transparent;
     transition: all 0.2s ease;      
 }
 
 .editable-field:hover {
-    background-color: var(--bg-color);
-    border: 1px dashed var(--accent-color);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Ensure empty states still look clickable */
@@ -208,8 +215,11 @@ body {
     background: transparent;
 }
 .board-list::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color);
+    background-color: var(--column-border); /* Changed from accent-color */
     border-radius: 10px;
+}
+.board-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-secondary);
 }
 
 .board-items-container {
@@ -241,8 +251,8 @@ body {
 }
 
 .edit-board-name-btn {
-    background: var(--bg-color);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    border: 1px solid var(--column-border);
     color: var(--text-secondary);
     cursor: pointer;
     border-radius: 6px;
@@ -255,8 +265,9 @@ body {
 }
 
 .edit-board-name-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #ffffff;
 }
 
 .edit-board-name-btn.delete:hover {
@@ -264,15 +275,15 @@ body {
 }
 
 .delete-board-btn {
-    background: var(--bg-color);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    border: 1px solid var(--column-border);
     border-radius: 6px;
     color: var(--btn-red-bg);
     padding: 4px 8px;
     font-size: 12px;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, background 0.2s, color 0.2s;
 }
 
 .delete-board-btn:hover {
@@ -288,9 +299,13 @@ body {
 .add-board-sidebar {
     margin-top: 24px;
     width: 100%;
-    background: transparent;
-    border: 1px dashed var(--accent-color);
-    color: var(--accent-color);
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
     padding: 12px;
     border-radius: 8px;
     cursor: pointer;
@@ -300,13 +315,16 @@ body {
     justify-content: center;
     gap: 8px;
     transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .add-board-sidebar:hover {
-    background: var(--accent-color);
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 115, 207, 0.25);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .sidebar-footer {
@@ -323,20 +341,27 @@ body {
     gap: 12px;
     padding: 12px;
     background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     color: var(--text-secondary);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .theme-toggle-btn:hover {
-    background: var(--bg-color);
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--text-primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .theme-toggle-btn svg {
@@ -371,15 +396,21 @@ body {
 }
 
 .board-link:hover {
-    background: var(--bg-color);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
     color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .board-link.active {
-    background: var(--bg-color);
+    background: var(--card-bg);
     color: var(--text-primary);
     border-color: var(--accent-color);
-    box-shadow: 0 4px 12px var(--bg-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
 .kanban-container {
@@ -404,18 +435,19 @@ body {
 }
 
 .dragging-overlay {
-    cursor: grabbing;
-    /* Give the picked-up card a distinct violet tint */
-    background: rgba(139, 92, 246, 0.15) !important;
-    backdrop-filter: blur(12px);
-    border: 2px solid var(--accent-color) !important;
-    /* The Glow Effect */
+    cursor: grabbing !important;
+    background: rgba(59, 130, 246, 0.2) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border: 1px solid var(--accent-color) !important;
+    /* High-contrast glass edge for picked up item */
+    border-top: 1px solid rgba(255, 255, 255, 0.4) !important; 
+    border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
     box-shadow: 
-        0 0 25px rgba(139, 92, 246, 0.4), 
-        0 20px 40px rgba(0, 0, 0, 0.6) !important;
+        0 24px 48px rgba(0, 0, 0, 0.5), /* Deepest shadow underneath */
+        0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
     z-index: 9999;
     pointer-events: none;
-    cursor: grabbing !important;
 }
 
 .tilt-wrapper {
@@ -452,7 +484,7 @@ body {
 }
 
 .kanban-board::-webkit-scrollbar {
-    height: 8px;
+    height: 6px;
 }
 
 .kanban-board::-webkit-scrollbar-track {
@@ -462,18 +494,18 @@ body {
 }
 
 .kanban-board::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
+    background: var(--column-border);
     border-radius: 10px;
 }
-
 .kanban-board::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-color);
+    background: var(--text-secondary);
 }
 
 .column-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     padding-bottom: 12px;
 }
 
@@ -481,44 +513,55 @@ body {
     display: flex;
     flex: 1;
     align-items: center;
-    gap: 8px;
     min-width: 0;
 }
 
 .column-title {
-    font-size: 18px;
+    font-size: 1.1rem; 
+    font-weight: 600;
+    margin: 0; 
+    padding: 4px 8px;
+    border: 1px solid transparent;
+    border-radius: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--text-primary);
-    
+    width: 100%;
+    height: 36px;
+    line-height: 1.5; 
+    display: block;
 }
 
 /* --- Column Title Editing --- */
-
-.column-title-container {
-    /* Ensures the container takes up the available space so the input can expand */
-    width: 100%; 
-    display: flex;
-    align-items: center;
-}
 
 .column-title-input {
     font-size: 1.1rem;
     font-weight: 600;
     padding: 4px 8px;
-    border: 1px solid var(--accent-color);
+    border: 1px solid transparent;
     border-radius: 4px;
     outline: none;
-    background: var(--bg-color);
+    background: var(--card-bg);
     color: var(--text-primary);
+    height: 36px;
+    line-height: 1.5;
     width: 100%;
-    margin-right: 8px;
-    font-family: inherit;
+    /* ADDITIONS TO FIX THE SHIFT (occurs because of difference in h3 and input html web elements and their default styles) */
+    margin: 0 !important; /* Forces override of any stubborn browser defaults */
+    display: block; /* Removes baseline text-descender gaps */
+    appearance: none; /* Strips native OS/Browser styling padding/margins */
+    -webkit-appearance: none; /* For Safari/Chrome */
+    transition: border-color 0.2s ease;
 }
 
+.column-title-input:hover,
 .column-title-input:focus {
-    box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.3); /* Subtle focus ring using your accent color */
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .column-title.editable {
@@ -527,7 +570,12 @@ body {
 }
 
 .column-title.editable:hover {
-    color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    color: var(--text-primary);
 }
 
 /* --- Column Header Controls & Dropdown Menu --- */
@@ -545,12 +593,12 @@ body {
 }
 
 .column-menu-btn {
-  background: none;
-  border: none;
+  background: transparent;
+  border: 1px solid transparent;
   cursor: pointer;
   font-size: 12px;
   padding: 4px 8px;
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--text-secondary);
   display: flex;
   align-items: center;
@@ -559,8 +607,12 @@ body {
 }
 
 .column-menu-btn:hover {
-  background-color: var(--bg-color);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .column-dropdown-menu {
@@ -606,15 +658,18 @@ body {
 
 .kanban-column {
     background: var(--column-bg); 
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--column-border);
+    /* The Glass Edge: slightly brighter top/left to catch the light */
+    border-top: 1px solid rgba(255, 255, 255, 0.15); 
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     width: 320px;
     min-width: 300px;
     min-height: 600px;
     padding: 20px;
-    box-shadow: 0 2px 4px var(--column-shadow);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 340px);
@@ -625,10 +680,12 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    border: 2px dashed var(--bg-gradient-top);
+    padding: 24px 20px;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px dashed var(--column-border);
     border-radius: 12px;
     color: var(--text-secondary);
+    font-size: 0.9rem;
 }
 
 .column-footer {
@@ -669,7 +726,7 @@ body {
 }
 
 .task-list::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 .task-list::-webkit-scrollbar-track {
@@ -678,12 +735,11 @@ body {
 }
 
 .task-list::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
+    background: var(--column-border);
     border-radius: 10px;
 }
-
 .task-list::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-color);
+    background: var(--text-secondary);
 }
 
 .task-card {
@@ -694,13 +750,18 @@ body {
     min-height: 100px;
     padding: 8px;
     background: var(--card-bg);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 10px;
     color: var(--text-primary);
     position: relative;
     overflow: hidden;
     cursor: grab;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .task-card:active {
@@ -708,7 +769,12 @@ body {
 }
 
 .task-card:hover {
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .assignee-avatar {
@@ -724,6 +790,20 @@ body {
     font-weight: 800;
     box-shadow: 0 0 8px var(--column-shadow);
 }
+
+.task-card-issue-icon {
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3)); 
+}
+
+.task-card-issue-icon:hover {
+    
+    filter: drop-shadow(0 0 4px var(--accent-color)); 
+}
+
+
 
 .task-header {
   display: flex;
@@ -832,8 +912,9 @@ body {
 
 .edit-input {
     width: 100%;
-    background: var(--bg-color);
+    background: var(--card-bg);
     border: 1px solid transparent;
+    outline: none;
     border-radius: 8px;
     box-sizing: border-box;
     padding: 10px;
@@ -844,8 +925,12 @@ body {
 
 .edit-input:hover,
 .edit-input:focus {
-    outline: none;
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .edit-input.title {
@@ -913,19 +998,28 @@ select.sidebar-value option {
 }
 
 .cancel-btn {
-    background: transparent;
-    color: var(--text-secondary);
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    padding: 6px 16px;
-    border-radius: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .cancel-btn:hover {
-    border: 1px solid var(--accent-color);
-    background: rgba(0, 115, 207, 0.1);
-    color: var(--text-primary);
+    /* Shifts from neutral blue-glass to a red warning state */
+    background: var(--btn-red-bg); 
+    border-color: var(--btn-red-bg);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    box-shadow: var(--btn-red-shadow);
 }
 
 @keyframes fadeIn {
@@ -934,8 +1028,12 @@ select.sidebar-value option {
 }
 
 .add-task-btn {
-    background: transparent;
-    border: 1px solid var(--column-border); /* Subtle border when idle */
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
     color: var(--text-secondary);
     padding: 6px 14px;
     border-radius: 8px;
@@ -945,19 +1043,21 @@ select.sidebar-value option {
     display: flex;
     align-items: center;
     gap: 6px;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Eye-catching hover state */
 .add-task-btn:hover {
-    background: var(--accent-color);
-    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    box-shadow: 0 4px 12px rgba(0, 115, 207, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .add-task-btn span {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 400;
     line-height: 1;
 }
@@ -977,12 +1077,17 @@ select.sidebar-value option {
 }
 
 .add-column-btn {
-    min-width: 260px;
-    height: 150px; /* Shorter than a full column, but aligned at the top */
+    min-width: 320px; /* Matched to the actual column width */
+    height: 120px; 
     background: var(--column-bg);
-    border: 2px dashed var(--column-border);
+    backdrop-filter: blur(12px); 
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
-    color: var(--accent-color);
+    color: var(--text-secondary);
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
@@ -990,24 +1095,31 @@ select.sidebar-value option {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    backdrop-filter: blur(5px);
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .add-column-btn:hover {
+    background: rgba(255, 255, 255, 0.06); 
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
     color: var(--text-primary);
-    border: 2px dashed var(--accent-color);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
 .add-column-editor {
     min-width: 320px;
     background: var(--column-bg);
-    backdrop-filter: blur(25px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--column-border);
+    /* Glass Edge */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     padding: 20px;
     height: fit-content;
-    box-shadow: 0 0px 4px var(--accent-color);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
 }
 
 .column-title-input {
@@ -1032,33 +1144,75 @@ select.sidebar-value option {
     box-shadow: 0 4px 15px rgba(52, 211, 153, 0.05);
 }
 
-.priority-badge.High { 
-    background: rgba(255, 77, 77, 0.15); 
-    color: #ff8080; 
-    border: 1px solid rgba(255, 77, 77, 0.3);
-}
-
-.priority-badge.Medium { 
-    background: rgba(251, 191, 36, 0.15); 
-    color: #fcd34d; 
-    border: 1px solid rgba(251, 191, 36, 0.3);
-}
-
-.priority-badge.Low { 
-    background: rgba(52, 211, 153, 0.15); 
-    color: #6ee7b7; 
-    border: 1px solid rgba(52, 211, 153, 0.3);
-}
-
 .priority-badge {
     font-size: 0.65rem;
     font-weight: bold;
-    padding: 2px 8px;
+    padding: 3px 8px; /* Slightly taller */
     border-radius: 10px;
     text-transform: uppercase;
     color: var(--text-primary);
     display: inline-block;
-    
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.priority-badge.High {
+    background: rgba(255, 77, 77, 0.15);
+    color: #ff8080;
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3); /* Micro glass edge */
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 4px rgba(255, 77, 77, 0.2);
+}
+
+.priority-badge.Medium {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fcd34d;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 4px rgba(251, 191, 36, 0.15);
+}
+
+.priority-badge.Low {
+    background: rgba(52, 211, 153, 0.15);
+    color: #6ee7b7;
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 2px 4px rgba(52, 211, 153, 0.15);
+}
+
+/* --- Light Mode Priority Badges to prevent washout --- */
+:root[data-theme="light"] .priority-badge.High {
+    background: rgba(220, 38, 38, 0.15); /* Deeper, richer red */
+    color: #b91c1c;
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    /* Strong white top reflection, subtle dark bottom shadow for contrast */
+    border-top: 1px solid rgba(255, 255, 255, 0.9);
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="light"] .priority-badge.Medium {
+    background: rgba(217, 119, 6, 0.15); /* Deeper amber */
+    color: #b45309;
+    border: 1px solid rgba(217, 119, 6, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.9);
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+:root[data-theme="light"] .priority-badge.Low {
+    background: rgba(5, 150, 105, 0.15); /* Deeper green */
+    color: #047857;
+    border: 1px solid rgba(5, 150, 105, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.9);
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .modal-overlay {
@@ -1083,12 +1237,17 @@ select.sidebar-value option {
 }
 
 .modal-content {
-    background: var(--bg-color);
-    border: 1px solid var(--accent-color);
+    background: var(--sidebar-bg);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
-    padding: 28px;
+    padding: 32px;
     width: 400px;
     text-align: center;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -1142,16 +1301,30 @@ select.sidebar-value option {
 }
 
 .modal-btn.cancel {
-    background: transparent;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    color: var(--text-secondary);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--btn-red-bg);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
 }
 
 .modal-btn.cancel:hover {
-    background: var(--bg-color);
-    border: 1px solid var(--accent-color);
-    color: var(--text-primary);
+    /* Shifts to a solid red glass look */
+    background: var(--btn-red-bg);
+    border-color: var(--btn-red-hover);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    box-shadow: var(--btn-red-shadow);
 }
 
 .modal-btn.confirm-green {
@@ -1297,6 +1470,10 @@ select.sidebar-value option {
 }
 
 /* 25% Sidebar with Glassmorphic styling */
+.task-sidebar * {
+    box-sizing: border-box;
+}
+
 .task-sidebar {
     flex: 1;
     display: flex;
@@ -1374,12 +1551,13 @@ span.sidebar-value {
     flex: 1 1 auto; /* Fluid proportion: Input takes up all the remaining space */
     width: 100%;
     background: var(--card-bg);
-    border: 1px solid var(--card-bg);
+    border: 1px solid transparent;
     border-radius: 6px;
     padding: 6px 10px;
     color: var(--text-primary);
     font-size: 12px;
     font-family: inherit;
+    line-height: 1.2;
     transition: all 0.2s ease;
 }
 
@@ -1399,10 +1577,14 @@ span.sidebar-value {
 
 .custom-field-add-btn {
     background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: var(--text-primary);
-    border: 1px dashed var(--accent-color);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 6px;
-    height: 28px;
+    height: 32px;
     padding: 0 12px;
     cursor: pointer;
     font-size: 12px;
@@ -1411,12 +1593,17 @@ span.sidebar-value {
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
 }
 
 .custom-field-add-btn:hover {
-    border: 1px solid transparent;
-    box-shadow: 0px 0px 4px var(--accent-color);
+    background: rgba(255, 255, 255, 0.08); 
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .custom-fields-list {
@@ -1481,9 +1668,12 @@ span.sidebar-value {
 
 .sidebar-value:focus,
 .sidebar-value:hover {
-    outline: none;
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    box-shadow: 0 0 4px var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* --- SIDEBAR PRIORITY STYLES --- */
@@ -1629,9 +1819,14 @@ button.sidebar-value {
     width: 100%;
     height: 40%;
     background: var(--card-bg);
-    border: 1px dashed var(--accent-color); /* Dashed border suggests it's clickable */
-    border-radius: 12px;
-    padding: 20px 24px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 12px 16px;
     margin-top: 12px;
     margin-left: 1px;
     color: var(--text-secondary);
@@ -1646,8 +1841,12 @@ button.sidebar-value {
 }
 
 .tiptap-preview:hover {
-    background: var(--bg-color);
-    box-shadow: inset 0 0 8px var(--accent-color);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* =========================================
@@ -1850,15 +2049,25 @@ button.sidebar-value {
     text-align: left;
     gap: 12px;
     padding: 10px 14px;
-    background: var(--card-bg); /* Faint glass background */
-    border: 1px solid transparent;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .subtask-item:hover {
-    background: var(--bg-color); 
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--text-primary);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Custom Checkbox Styling */
@@ -1867,9 +2076,10 @@ button.sidebar-value {
     -webkit-appearance: none;
     width: 18px;
     height: 18px;
-    border: 1px solid var(--text-secondary);
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
     border-radius: 4px;
-    background: transparent;
     cursor: pointer;
     position: relative;
     transition: all 0.2s ease;
@@ -1877,8 +2087,10 @@ button.sidebar-value {
 }
 
 .subtask-checkbox:checked {
-    background: var(--accent-color); /* Violet fill */
+    background: var(--accent-color);
     border-color: var(--accent-color);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 
+                0 0 8px rgba(0, 115, 207, 0.5);
 }
 
 .subtask-checkbox:checked::after {
@@ -1932,48 +2144,60 @@ button.sidebar-value {
     width: 100%;
     text-align: left !important; /* Overrides any centered text from .sidebar-value */
     padding: 12px 14px !important;
-    background: var(--bg-color) !important;
-    border: 1px dashed var(--text-secondary) !important;
+    background: rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.2);
     color: var(--text-primary);
     font-size: 14px;
     border-radius: 8px;
+    outline: none;
     transition: all 0.2s ease;
 }
 
 .subtask-input:focus {
-    outline: none;
-    background: var(--bg-color) !important;
-    border-color: var(--accent-color) !important;
+    background: rgba(0, 0, 0, 0.25);
+    border-color: var(--accent-color);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), 
+                0 0 0 3px rgba(0, 115, 207, 0.2);
     
 }
 
 .subtask-input::placeholder {
     color: var(--text-secondary);
+    opacity: 0.6;
 }
 
 /* =========================================
    Analytics Bar Styles
    ========================================= */
-.analytics-bar {
-    width: 100%;
-    max-width: 1400px;
-    height: 60px; /* Fixed height to accurately constrain the columns */
-    margin-top: 20px;
-    background: var(--card-bg);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--column-border);
-    border-radius: 12px;
+.analytics-bar { 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
-    flex-shrink: 0; /* Prevents flexbox from squishing the bar */
+    gap: 24px;
+    width: 100%;
+    max-width: 1400px; 
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .analytics-stats {
     display: flex;
     gap: 24px;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-size: 14px;
     font-weight: 500;
 }
@@ -2000,9 +2224,15 @@ button.sidebar-value {
 .issue-icon-item {
     display: inline-flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     margin: 0 !important; /* Overrides the default margin-left on .analytics-stats span */
     color: var(--text-primary);
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+    cursor: pointer;
+}
+
+.issue-icon-item:hover {
+    filter: drop-shadow(0 0 5px var(--accent-color));
 }
 
 /* progress bar styles */
@@ -2033,7 +2263,7 @@ button.sidebar-value {
 
 .progress-text {
     font-size: 14px;
-    color: var(--accent-color);
+    color: var(--text-primary);
     font-weight: 800;
     min-width: 45px;
     text-align: right;
