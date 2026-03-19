@@ -23,6 +23,10 @@
   --btn-red-bg: #ef4444;
   --btn-red-hover: #dc2626;
   --btn-red-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+
+  /* Glassmorphism Edge Opacities */
+  --glass-edge-top: rgba(255, 255, 255, 0.15);
+  --glass-edge-left: rgba(255, 255, 255, 0.08);
 }
 
 :root[data-theme="light"] {
@@ -41,7 +45,7 @@
   --column-bg: rgba(255, 255, 255, 0.4);   
   --column-border: rgba(0, 115, 207, 0.35); 
   --column-shadow: 0 12px 40px rgba(0, 38, 71, 0.15); 
-  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-bg: rgba(255, 255, 255, 0.3);
   
   --accent-color: #0073cf; 
   
@@ -51,6 +55,10 @@
   --btn-red-bg: #ef4444;
   --btn-red-hover: #dc2626;
   --btn-red-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+
+  /* Glassmorphism Edge Opacities */
+  --glass-edge-top: rgba(255, 255, 255, 0.15);
+  --glass-edge-left: rgba(255, 255, 255, 0.08);
 }
 
 /* Light mode overrides for priority text (Included so you don't lose them) */
@@ -161,8 +169,8 @@ body {
 .editable-field:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -303,8 +311,8 @@ body {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-secondary);
     padding: 12px;
     border-radius: 8px;
@@ -321,8 +329,8 @@ body {
 .add-board-sidebar:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -344,8 +352,8 @@ body {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-radius: 8px;
     color: var(--text-secondary);
     font-weight: 600;
@@ -358,8 +366,8 @@ body {
 .theme-toggle-btn:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -398,8 +406,8 @@ body {
 .board-link:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -408,8 +416,8 @@ body {
     background: var(--card-bg);
     color: var(--text-primary);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
 }
 
@@ -441,8 +449,8 @@ body {
     -webkit-backdrop-filter: blur(24px) !important;
     border: 1px solid var(--accent-color) !important;
     /* High-contrast glass edge for picked up item */
-    border-top: 1px solid rgba(255, 255, 255, 0.4) !important; 
-    border-left: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-top: 1px solid var(--glass-edge-top) !important;
+    border-left: 1px solid var(--glass-edge-left) !important;
     box-shadow: 
         0 24px 48px rgba(0, 0, 0, 0.5), /* Deepest shadow underneath */
         0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
@@ -559,8 +567,8 @@ body {
 .column-title-input:focus {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -572,8 +580,8 @@ body {
 .column-title.editable:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     color: var(--text-primary);
 }
@@ -609,8 +617,8 @@ body {
 .column-menu-btn:hover {
   background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -662,8 +670,8 @@ body {
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--column-border);
     /* The Glass Edge: slightly brighter top/left to catch the light */
-    border-top: 1px solid rgba(255, 255, 255, 0.15); 
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-radius: 16px;
     width: 320px;
     min-width: 300px;
@@ -753,8 +761,8 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-radius: 10px;
     color: var(--text-primary);
     position: relative;
@@ -771,8 +779,8 @@ body {
 .task-card:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -927,8 +935,8 @@ body {
 .edit-input:focus {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -1002,8 +1010,8 @@ select.sidebar-value option {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-secondary);
     padding: 8px 16px;
     border-radius: 8px;
@@ -1016,8 +1024,8 @@ select.sidebar-value option {
     /* Shifts from neutral blue-glass to a red warning state */
     background: var(--btn-red-bg); 
     border-color: var(--btn-red-bg);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: #ffffff;
     box-shadow: var(--btn-red-shadow);
 }
@@ -1032,8 +1040,8 @@ select.sidebar-value option {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-secondary);
     padding: 6px 14px;
     border-radius: 8px;
@@ -1050,8 +1058,8 @@ select.sidebar-value option {
 .add-task-btn:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -1083,8 +1091,8 @@ select.sidebar-value option {
     backdrop-filter: blur(12px); 
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
     color: var(--text-secondary);
@@ -1101,8 +1109,8 @@ select.sidebar-value option {
 .add-column-btn:hover {
     background: rgba(255, 255, 255, 0.06); 
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
@@ -1114,8 +1122,8 @@ select.sidebar-value option {
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--column-border);
     /* Glass Edge */
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-radius: 16px;
     padding: 20px;
     height: fit-content;
@@ -1160,8 +1168,8 @@ select.sidebar-value option {
     background: rgba(255, 77, 77, 0.15);
     color: #ff8080;
     border: 1px solid rgba(255, 77, 77, 0.3);
-    border-top: 1px solid rgba(255, 255, 255, 0.3); /* Micro glass edge */
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 2px 4px rgba(255, 77, 77, 0.2);
 }
 
@@ -1169,8 +1177,8 @@ select.sidebar-value option {
     background: rgba(251, 191, 36, 0.15);
     color: #fcd34d;
     border: 1px solid rgba(251, 191, 36, 0.3);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 2px 4px rgba(251, 191, 36, 0.15);
 }
 
@@ -1178,8 +1186,8 @@ select.sidebar-value option {
     background: rgba(52, 211, 153, 0.15);
     color: #6ee7b7;
     border: 1px solid rgba(52, 211, 153, 0.3);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 2px 4px rgba(52, 211, 153, 0.15);
 }
 
@@ -1189,8 +1197,8 @@ select.sidebar-value option {
     color: #b91c1c;
     border: 1px solid rgba(220, 38, 38, 0.3);
     /* Strong white top reflection, subtle dark bottom shadow for contrast */
-    border-top: 1px solid rgba(255, 255, 255, 0.9);
-    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -1199,8 +1207,8 @@ select.sidebar-value option {
     background: rgba(217, 119, 6, 0.15); /* Deeper amber */
     color: #b45309;
     border: 1px solid rgba(217, 119, 6, 0.3);
-    border-top: 1px solid rgba(255, 255, 255, 0.9);
-    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -1209,8 +1217,8 @@ select.sidebar-value option {
     background: rgba(5, 150, 105, 0.15); /* Deeper green */
     color: #047857;
     border: 1px solid rgba(5, 150, 105, 0.3);
-    border-top: 1px solid rgba(255, 255, 255, 0.9);
-    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -1241,8 +1249,8 @@ select.sidebar-value option {
     backdrop-filter: blur(30px);
     -webkit-backdrop-filter: blur(30px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-radius: 20px;
     padding: 32px;
     width: 400px;
@@ -1305,8 +1313,8 @@ select.sidebar-value option {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--btn-red-bg);
     padding: 10px 20px;
     border-radius: 8px;
@@ -1321,8 +1329,8 @@ select.sidebar-value option {
     /* Shifts to a solid red glass look */
     background: var(--btn-red-bg);
     border-color: var(--btn-red-hover);
-    border-top: 1px solid rgba(255, 255, 255, 0.3);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: #ffffff;
     box-shadow: var(--btn-red-shadow);
 }
@@ -1581,8 +1589,8 @@ span.sidebar-value {
     -webkit-backdrop-filter: blur(8px);
     color: var(--text-primary);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     border-radius: 6px;
     height: 32px;
     padding: 0 12px;
@@ -1600,8 +1608,8 @@ span.sidebar-value {
 .custom-field-add-btn:hover {
     background: rgba(255, 255, 255, 0.08); 
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
@@ -1670,8 +1678,8 @@ span.sidebar-value {
 .sidebar-value:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -1822,8 +1830,8 @@ button.sidebar-value {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 12px 16px;
@@ -1843,8 +1851,8 @@ button.sidebar-value {
 .tiptap-preview:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -2053,8 +2061,8 @@ button.sidebar-value {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.03);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     transition: all 0.2s ease;
@@ -2064,8 +2072,8 @@ button.sidebar-value {
 .subtask-item:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
@@ -2188,8 +2196,8 @@ button.sidebar-value {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--column-border);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
