@@ -6,6 +6,7 @@ import { getNextPriority } from '../hooks/useKanban';
 const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal }) => {
 
     const isNewTask = task.isNew === true;
+    const isDeleting = task.isDeleting === true;
     const issueIcons = {
         "User Story": "📜",
         "Bug": "🌀",
@@ -51,7 +52,9 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
     }
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`task-card priority-${task.priority} ${isNewTask ? 'is-new-flash' : ''}`}>
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`task-card priority-${task.priority} 
+                ${isNewTask ? 'is-new' : ''} 
+                ${isDeleting ? 'is-deleting' : ''}`}>
             <div className='task-content'>
                 <div className='task-header'>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
@@ -66,7 +69,7 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                         <span className={`priority-badge ${task.priority || 'Medium'}`}
                             onPointerDown={(e) => e.stopPropagation()} onClick={cyclePriority}
                             style={{ cursor: 'pointer' }}
-                            title={'Click to cycle priority'}
+                            title={'Cycle priority'}
                         >
                             {(task.priority || 'Medium').toUpperCase()}
                         </span>
@@ -77,6 +80,7 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                     <div>
                         <button
                             className='edit-btn'
+                            title={'Edit task'}
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -85,9 +89,10 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                             🔍
                         </button>
                         <button className='delete-btn'
+                            title={'Delete task'}
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => { e.stopPropagation(); onDelete(columnID, id); }}>
-                            x
+                            ❌
                         </button>
                     </div>
                 </div>

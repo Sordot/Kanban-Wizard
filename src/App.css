@@ -2,124 +2,131 @@
 
 
 :root {
-  /* Dark Mode Colors - Derived from #0073cf */
-  --bg-color: #001221;
-  --bg-gradient-top: #002647;
-  --bg-gradient-mid: #001b33;
-  --text-primary: #e6f2ff;
-  --text-secondary: #8cbce6;
-  --sidebar-bg: rgba(0, 18, 33, 0.85);
+    /* Dark Mode Colors - Derived from #0073cf */
+    --bg-color: #001221;
+    --bg-gradient-top: #002647;
+    --bg-gradient-mid: #001b33;
+    --text-primary: #e6f2ff;
+    --text-secondary: #8cbce6;
+    --sidebar-bg: rgba(0, 18, 33, 0.85);
 
-  /* Dark Mode Magic Background */
-  --magic-dust-1: rgba(255, 255, 255, 0.4);
-  --magic-dust-2: rgba(255, 255, 255, 0.2);
-  --magic-dust-3: rgba(255, 255, 255, 0.15);
-  --nebula-glow-1: rgba(0, 115, 207, 0.15);
-  --nebula-glow-2: rgba(124, 58, 237, 0.12);
-  
-  /* Elements get progressively brighter through higher opacity overlays */
-  --column-bg: rgba(0, 115, 207, 0.06);
-  --column-border: rgba(0, 115, 207, 0.25);
-  --column-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
-  --card-bg: rgba(0, 115, 207, 0.15);
-  
-  --accent-color: #0073cf;
-  
-  /* Unchanged Green/Red Buttons (They already fit well with this blue) */
-  --btn-green-bg: #10b981;
-  --btn-green-hover: #059669;
-  --btn-green-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
-  --btn-red-bg: #ef4444;
-  --btn-red-hover: #dc2626;
-  --btn-red-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+    /* Dark Mode Magic Background */
+    --magic-dust-1: rgba(255, 255, 255, 0.4);
+    --magic-dust-2: rgba(255, 255, 255, 0.2);
+    --magic-dust-3: rgba(255, 255, 255, 0.15);
+    --nebula-glow-1: rgba(0, 115, 207, 0.15);
+    --nebula-glow-2: rgba(124, 58, 237, 0.12);
 
-  /* Glassmorphism Edge Opacities */
-  --glass-edge-top: rgba(255, 255, 255, 0.15);
-  --glass-edge-left: rgba(255, 255, 255, 0.08);
+    /* Elements get progressively brighter through higher opacity overlays */
+    --column-bg: rgba(0, 115, 207, 0.06);
+    --column-border: rgba(0, 115, 207, 0.25);
+    --column-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+    --card-bg: rgba(0, 115, 207, 0.15);
+
+    --accent-color: #0073cf;
+
+    /* Unchanged Green/Red Buttons (They already fit well with this blue) */
+    --btn-green-bg: #10b981;
+    --btn-green-hover: #059669;
+    --btn-green-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    --btn-red-bg: #ef4444;
+    --btn-red-hover: #dc2626;
+    --btn-red-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+
+    /* Glassmorphism Edge Opacities */
+    --glass-edge-top: rgba(255, 255, 255, 0.15);
+    --glass-edge-left: rgba(255, 255, 255, 0.08);
 }
 
 :root[data-theme="light"] {
-  /* Light Mode Colors - Background is darkest, top elements are brightest */
-  --bg-color: #87b9e0; 
-  --bg-gradient-top: #9dc7e8;
-  --bg-gradient-mid: #92c0e4;   
+    /* Light Mode Colors - Background is darkest, top elements are brightest */
+    --bg-color: #87b9e0;
+    --bg-gradient-top: #9dc7e8;
+    --bg-gradient-mid: #92c0e4;
 
-  /* Light Mode Magic Background - Gold motes, bright white sparks, and deep blue specks */
-  --magic-dust-1: transparent;   /* Rich, deep amber/gold */
-  --magic-dust-2: transparent; /* Stark, pure white */
-  --magic-dust-3: transparent;    /* Subtle deep blue contrast specks */
-  --nebula-glow-1: rgba(255, 255, 255, 0.6); /* Brighter sunlight aura */
-  --nebula-glow-2: rgba(124, 58, 237, 0.15);
-  
-  /* Deepened text for readability against the blue background */
-  --text-primary: #001b33;    
-  --text-secondary: #003a6e;  
-  
-  --sidebar-bg: rgba(135, 185, 224, 0.85); 
-  
-  /* Columns and cards add white to become progressively brighter than the background */
-  --column-bg: rgba(255, 255, 255, 0.4);   
-  --column-border: rgba(0, 115, 207, 0.35); 
-  --column-shadow: 0 12px 40px rgba(0, 38, 71, 0.15); 
-  --card-bg: rgba(255, 255, 255, 0.3);
-  
-  --accent-color: #0073cf; 
-  
-  --btn-green-bg: #10b981;
-  --btn-green-hover: #059669;
-  --btn-green-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
-  --btn-red-bg: #ef4444;
-  --btn-red-hover: #dc2626;
-  --btn-red-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+    /* Light Mode Magic Background - Gold motes, bright white sparks, and deep blue specks */
+    --magic-dust-1: transparent;
+    /* Rich, deep amber/gold */
+    --magic-dust-2: transparent;
+    /* Stark, pure white */
+    --magic-dust-3: transparent;
+    /* Subtle deep blue contrast specks */
+    --nebula-glow-1: rgba(255, 255, 255, 0.6);
+    /* Brighter sunlight aura */
+    --nebula-glow-2: rgba(124, 58, 237, 0.15);
 
-  /* Glassmorphism Edge Opacities */
-  --glass-edge-top: rgba(255, 255, 255, 0.15);
-  --glass-edge-left: rgba(255, 255, 255, 0.08);
+    /* Deepened text for readability against the blue background */
+    --text-primary: #001b33;
+    --text-secondary: #003a6e;
+
+    --sidebar-bg: rgba(135, 185, 224, 0.85);
+
+    /* Columns and cards add white to become progressively brighter than the background */
+    --column-bg: rgba(255, 255, 255, 0.4);
+    --column-border: rgba(0, 115, 207, 0.35);
+    --column-shadow: 0 12px 40px rgba(0, 38, 71, 0.15);
+    --card-bg: rgba(255, 255, 255, 0.3);
+
+    --accent-color: #0073cf;
+
+    --btn-green-bg: #10b981;
+    --btn-green-hover: #059669;
+    --btn-green-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    --btn-red-bg: #ef4444;
+    --btn-red-hover: #dc2626;
+    --btn-red-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+
+    /* Glassmorphism Edge Opacities */
+    --glass-edge-top: rgba(255, 255, 255, 0.15);
+    --glass-edge-left: rgba(255, 255, 255, 0.08);
 }
 
 /* Light mode overrides for priority text (Included so you don't lose them) */
 :root[data-theme="light"] .High {
-    color: #c53030; 
+    color: #c53030;
     font-weight: 800;
 }
 
 :root[data-theme="light"] .Medium {
-    color: #c05621; 
+    color: #c05621;
     font-weight: 800;
 }
 
 :root[data-theme="light"] .Low {
-    color: #276749; 
+    color: #276749;
     font-weight: 800;
 }
 
 /* rays of light for the light theme background to match the stars for night mode */
 :root[data-theme="light"] body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 0;
-  background: conic-gradient(
-    from 90deg at -5% -5%, /* Origin slightly off-screen top-left */
-    transparent 0deg,
-    rgba(255, 255, 255, 0.2) 10deg,
-    transparent 15deg,
-    rgba(255, 255, 255, 0.3) 25deg, /* Brighter, wider beam */
-    transparent 35deg,
-    rgba(255, 255, 255, 0.2) 45deg,
-    transparent 50deg,
-    rgba(255, 255, 255, 0.1) 65deg, /* Medium beam */
-    transparent 75deg
-  );
-  background-size: 200% 200%;
-  background-position: 5% 5%;
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    background: conic-gradient(from 90deg at -5% -5%,
+            /* Origin slightly off-screen top-left */
+            transparent 0deg,
+            rgba(255, 255, 255, 0.2) 10deg,
+            transparent 15deg,
+            rgba(255, 255, 255, 0.3) 25deg,
+            /* Brighter, wider beam */
+            transparent 35deg,
+            rgba(255, 255, 255, 0.2) 45deg,
+            transparent 50deg,
+            rgba(255, 255, 255, 0.1) 65deg,
+            /* Medium beam */
+            transparent 75deg);
+    background-size: 200% 200%;
+    background-position: 5% 5%;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -130,18 +137,18 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background: 
+    background:
         /* Slightly larger dust particles with harder edges */
-        radial-gradient(1.5px 1.5px at 20px 30px, var(--magic-dust-1) 50%, rgba(0,0,0,0)),
-        radial-gradient(1.5px 1.5px at 60px 80px, var(--magic-dust-2) 50%, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 120px 40px, var(--magic-dust-3) 50%, rgba(0,0,0,0)),
-        
+        radial-gradient(1.5px 1.5px at 20px 30px, var(--magic-dust-1) 50%, rgba(0, 0, 0, 0)),
+        radial-gradient(1.5px 1.5px at 60px 80px, var(--magic-dust-2) 50%, rgba(0, 0, 0, 0)),
+        radial-gradient(2px 2px at 120px 40px, var(--magic-dust-3) 50%, rgba(0, 0, 0, 0)),
+
         /* The Nebula / Sunlight Glows stay the same */
         radial-gradient(circle at 15% 50%, var(--nebula-glow-1), transparent 40%),
         radial-gradient(circle at 85% 30%, var(--nebula-glow-2), transparent 40%),
-        
+
         var(--bg-color);
-    
+
     background-size: 150px 150px, 200px 200px, 250px 250px, cover, cover, cover;
     background-attachment: fixed;
     min-height: 100vh;
@@ -155,7 +162,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    position: relative; 
+    position: relative;
     z-index: 1;
 }
 
@@ -168,35 +175,41 @@ body {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border-right: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.02), 
-                4px 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.02),
+        4px 0 8px rgba(0, 0, 0, 0.2);
     padding: 40px 20px 10px;
 }
 
 .sidebar-logo {
     display: flex;
-    flex-direction: column; /* Stacks the icon above the text */
-    align-items: center;    /* Centers everything horizontally */
+    flex-direction: column;
+    /* Stacks the icon above the text */
+    align-items: center;
+    /* Centers everything horizontally */
     justify-content: center;
-    gap: 8px;               /* Adds a clean space between the owl and the text */
-    font-size: 18px;        /* Slightly larger to anchor the sidebar */
+    gap: 8px;
+    /* Adds a clean space between the owl and the text */
+    font-size: 18px;
+    /* Slightly larger to anchor the sidebar */
     font-weight: 800;
     color: var(--text-primary);
-    letter-spacing: 0.15em; /* A slightly wider letter spacing for a premium feel */
+    letter-spacing: 0.15em;
+    /* A slightly wider letter spacing for a premium feel */
     margin-bottom: 48px;
-    margin-top: 12px;       /* Gives a little breathing room from the very top */
+    margin-top: 12px;
+    /* Gives a little breathing room from the very top */
     padding-left: 0px;
     text-transform: uppercase;
-    width: 100%;   
+    width: 100%;
     text-align: center;
 }
 
 .logo-icon {
-    width: 100px;           
+    width: 100px;
     height: auto;
     object-fit: contain;
     flex-shrink: 0;
-    margin-left: 0;         
+    margin-left: 0;
     filter: drop-shadow(0 8px 16px rgba(0, 115, 207, 0.3));
     transition: transform 0.3s ease;
 }
@@ -216,22 +229,31 @@ body {
     border-radius: 4px;
     cursor: pointer;
     border: 1px solid transparent;
-    transition: all 0.2s ease;      
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: box-shadow, transform, background;
 }
 
-.editable-field:hover {
+.editable-field:hover,
+.editable-field:focus-within {
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 
+        /* 1. Inset glow: makes the internal edge of the field "vibrate" with light */
+        inset 0 0 10px rgba(0, 115, 207, 0.2), 
+        /* 2. Outer Bloom: uses your nebula-glow variable to bleed light outward */
+        0 0 20px var(--nebula-glow-1),
+        /* 3. Drop Shadow: maintains the physical depth and lift */
+        0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 /* Ensure empty states still look clickable */
 .tiptap-preview.editable-field .empty-state {
     margin: 0;
-    pointer-events: none; /* Prevents text selection issues on click */
+    pointer-events: none;
+    /* Prevents text selection issues on click */
 }
 
 .editable-title {
@@ -272,13 +294,17 @@ body {
 .board-list::-webkit-scrollbar {
     width: 10px;
 }
+
 .board-list::-webkit-scrollbar-track {
     background: transparent;
 }
+
 .board-list::-webkit-scrollbar-thumb {
-    background-color: var(--column-border); /* Changed from accent-color */
+    background-color: var(--column-border);
+    /* Changed from accent-color */
     border-radius: 10px;
 }
+
 .board-list::-webkit-scrollbar-thumb:hover {
     background-color: var(--text-secondary);
 }
@@ -287,7 +313,8 @@ body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Keeps boards left-aligned */
+    align-items: flex-start;
+    /* Keeps boards left-aligned */
 }
 
 .board-item-wrapper {
@@ -300,7 +327,8 @@ body {
     position: absolute;
     right: 12px;
     top: 50%;
-    transform: translateY(-50%); /* Centers exactly against the height of the wrapper */
+    transform: translateY(-50%);
+    /* Centers exactly against the height of the wrapper */
     display: flex;
     gap: 6px;
     opacity: 0;
@@ -357,6 +385,88 @@ body {
     opacity: 1;
 }
 
+/* --- Refined Summoning for Sidebar --- */
+.board-item-wrapper.is-new {
+    animation: summonBoard 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    overflow: hidden;
+}
+
+.board-item-wrapper.is-new::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    /* Same wizard colors as the cards, but in a linear sweep */
+    background: linear-gradient(90deg,
+            transparent,
+            #7c3aed,
+            var(--accent-color),
+            transparent);
+    opacity: 0.4;
+    z-index: 1;
+    pointer-events: none;
+    animation: sidebarGlowSweep 0.8s ease-out forwards;
+}
+
+@keyframes summonSidebar {
+    0% {
+        opacity: 0;
+        transform: translateX(-20px);
+        background: rgba(124, 58, 237, 0.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        background: transparent;
+    }
+}
+
+@keyframes sidebarGlowSweep {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* --- Refined Sidebar Banish --- */
+.board-item-wrapper.is-deleting {
+    animation: banishSidebar 1.0s ease-in forwards !important;
+    pointer-events: none;
+}
+
+@keyframes banishSidebar {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+        max-height: 60px;
+        /* Match your item height */
+    }
+
+    40% {
+        /* Brief accent flare before it vanishes */
+        background: #7c3aed;
+        box-shadow: 0 0 20px #7c3aed;
+        transform: scale(1.02);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.9) translateX(30px);
+        opacity: 0;
+        filter: blur(10px) brightness(2);
+        max-height: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
 .add-board-sidebar {
     margin-top: 24px;
     width: 100%;
@@ -390,7 +500,8 @@ body {
 
 .sidebar-footer {
     padding: 14px 0px 10px 0px;
-    margin-top: auto; /* Ensures it stays at the bottom */
+    margin-top: auto;
+    /* Ensures it stays at the bottom */
     width: 100%;
 }
 
@@ -471,7 +582,7 @@ body {
     border-color: var(--accent-color);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .kanban-container {
@@ -489,37 +600,87 @@ body {
 .kanban-container h1 {
     font-size: 2.5rem;
     padding-bottom: 40px;
-    background:var(--accent-color);
+    background: var(--accent-color);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     font-weight: 800;
 }
 
+/* =========================================
+   Magical Dragging Overlay
+   ========================================= */
+
 .dragging-overlay {
     cursor: grabbing !important;
-    background: rgba(0, 115, 207, 0.15) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
+    background: rgba(124, 58, 237, 0.2) !important;
+    /* Slight violet tint */
     border: 1px solid var(--accent-color) !important;
-    border-top: 1px solid var(--glass-edge-top) !important;
-    border-left: 1px solid var(--glass-edge-left) !important;
     z-index: 9999;
     pointer-events: none;
-    animation: pulseGlow 1.2s infinite alternate ease-in-out;
+    /* This tilt makes it feel "lifted" by a spell */
+    transform: rotate(3deg) scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s ease-out;
 }
 
-@keyframes pulseGlow {
+/* The Constant Magical Aura (Same as Summon/Banish) */
+.dragging-overlay::before {
+    content: "";
+    position: absolute;
+    inset: -15px;
+    background: radial-gradient(circle, #7c3aed 0%, var(--accent-color) 40%, transparent 70%);
+    border-radius: 16px;
+    z-index: -1;
+    /* Looping pulse to make the mana feel alive */
+    animation: draggingAura 2s infinite alternate ease-in-out;
+}
+
+/* Shimmering Sparkles (Manual Particle System) */
+.dragging-overlay::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: white;
+    pointer-events: none;
+    /* Continuous sparkle loop */
+    animation: draggingSparkles 1.5s infinite linear;
+}
+
+@keyframes draggingAura {
     0% {
-        box-shadow: 
-            0 10px 20px rgba(0, 0, 0, 0.3), /* Base drop shadow */
-            0 0 15px 2px var(--accent-color), /* Tight, bright accent glow */
-            inset 0 0 0 1px rgba(255, 255, 255, 0.15); /* Glass edge */
+        opacity: 0.3;
+        transform: scale(0.95);
     }
+
     100% {
-        box-shadow: 
-            0 12px 24px rgba(0, 0, 0, 0.4), /* Shadow gets deeper as it "lifts" */
-            0 0 24px 8px var(--accent-color), /* Glow expands and softens */
-            inset 0 0 0 1px rgba(255, 255, 255, 0.3); /* Glass edge catches more light */
+        opacity: 0.7;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes draggingSparkles {
+    0% {
+        opacity: 0;
+        box-shadow:
+            -20px -20px 0 white, 20px 20px 0 white,
+            -30px 30px 0 #7c3aed, 30px -30px 0 var(--accent-color);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        /* Particles drift outward and rotate */
+        box-shadow:
+            -50px -50px 2px white, 50px 50px 2px white,
+            -60px 60px 4px #7c3aed, 60px -60px 4px var(--accent-color);
+        transform: rotate(180deg);
     }
 }
 
@@ -537,22 +698,20 @@ body {
     padding: 20px 40px;
     max-width: 1400px;
     max-height: 100%;
-    mask-image: linear-gradient(
-        to right, 
-        transparent, 
-        black 2%, 
-        black 98%, 
-        transparent
-    );
-    -webkit-mask-image: linear-gradient(
-        to right, 
-        transparent, 
-        black 2%, 
-        black 98%, 
-        transparent
-    );
+    margin-bottom: 12px;
+    mask-image: linear-gradient(to right,
+            transparent,
+            black 2%,
+            black 98%,
+            transparent);
+    -webkit-mask-image: linear-gradient(to right,
+            transparent,
+            black 2%,
+            black 98%,
+            transparent);
     overflow-x: auto;
-    overflow-y:hidden;
+    overflow-y: hidden;
+    contain: content;
     scroll-behavior: smooth;
 }
 
@@ -570,6 +729,7 @@ body {
     background: var(--column-border);
     border-radius: 10px;
 }
+
 .kanban-board::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
 }
@@ -590,9 +750,9 @@ body {
 }
 
 .column-title {
-    font-size: 1.1rem; 
+    font-size: 1.1rem;
     font-weight: 600;
-    margin: 0; 
+    margin: 0;
     padding: 4px 8px;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -602,7 +762,7 @@ body {
     color: var(--text-primary);
     width: 100%;
     height: 36px;
-    line-height: 1.5; 
+    line-height: 1.5;
     display: block;
 }
 
@@ -621,10 +781,14 @@ body {
     line-height: 1.5;
     width: 100%;
     /* ADDITIONS TO FIX THE SHIFT (occurs because of difference in h3 and input html web elements and their default styles) */
-    margin: 0 !important; /* Forces override of any stubborn browser defaults */
-    display: block; /* Removes baseline text-descender gaps */
-    appearance: none; /* Strips native OS/Browser styling padding/margins */
-    -webkit-appearance: none; /* For Safari/Chrome */
+    margin: 0 !important;
+    /* Forces override of any stubborn browser defaults */
+    display: block;
+    /* Removes baseline text-descender gaps */
+    appearance: none;
+    /* Strips native OS/Browser styling padding/margins */
+    -webkit-appearance: none;
+    /* For Safari/Chrome */
     transition: border-color 0.2s ease;
 }
 
@@ -654,33 +818,33 @@ body {
 /* --- Column Header Controls & Dropdown Menu --- */
 
 .column-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
 }
 
 .column-menu-container {
-  position: relative;
-  display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .column-menu-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  cursor: pointer;
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 6px;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
 }
 
 .column-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
@@ -691,33 +855,34 @@ body {
 /* --- Column Dropdown Menu & Sub-Menu Styles --- */
 
 .column-dropdown-menu {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  background: var(--bg-color); /* Kept your variable */
-  border: 1px solid var(--column-border);
-  border-radius: 8px;
-  padding: 6px 0;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  min-width: max-content;
-  width: auto;
-  box-shadow: 0 8px 24px var(--column-shadow);
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: var(--bg-color);
+    /* Kept your variable */
+    border: 1px solid var(--column-border);
+    border-radius: 8px;
+    padding: 6px 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    min-width: max-content;
+    width: auto;
+    box-shadow: 0 8px 24px var(--column-shadow);
 }
 
 .column-dropdown-menu button {
-  background: none;
-  border: none;
-  padding: 10px 16px;
-  white-space: nowrap;
-  text-align: left;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  width: 100%;
-  color: var(--text-primary);
-  transition: all 0.2s ease;
+    background: none;
+    border: none;
+    padding: 10px 16px;
+    white-space: nowrap;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: 100%;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
 }
 
 .submenu-trigger {
@@ -735,22 +900,24 @@ body {
 .submenu-content {
     position: absolute;
     /* 1. Position it to the LEFT of the main dropdown */
-    right: 100%; 
-    left: auto; 
-    top: -6px; /* Align slightly with the parent button */
-    
+    right: 100%;
+    left: auto;
+    top: -6px;
+    /* Align slightly with the parent button */
+
     background: var(--bg-color);
     border: 1px solid var(--column-border);
     border-radius: 8px;
     padding: 6px 0;
-    min-width: max-content; /* Container grows to fit the longest item */
+    min-width: max-content;
+    /* Container grows to fit the longest item */
     width: auto;
     box-shadow: 0 8px 24px var(--column-shadow);
     z-index: 999;
     margin-right: 4px;
     display: flex;
     flex-direction: column;
-    
+
     /* Animation defaults (Hidden) */
     opacity: 0;
     visibility: hidden;
@@ -762,19 +929,20 @@ body {
 .submenu-trigger:hover .submenu-content {
     opacity: 1;
     visibility: visible;
-    transform: translateX(0); /* Slide into place */
+    transform: translateX(0);
+    /* Slide into place */
 }
 
 .column-dropdown-menu button:hover {
-  background-color: var(--column-border);
+    background-color: var(--column-border);
 }
 
 .delete-column-option {
-  color: var(--btn-red-bg) !important;
+    color: var(--btn-red-bg) !important;
 }
 
 .kanban-column {
-    background: var(--column-bg); 
+    background: var(--column-bg);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--column-border);
@@ -790,6 +958,120 @@ body {
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 340px);
+    will-change: transform, opacity;
+}
+
+/* =========================================
+   Magical Column Animations
+   ========================================= */
+
+
+/* --- Column Summon (New) --- */
+.kanban-column.is-new {
+    animation: columnSummon 1.0s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    transform-origin: top center;
+}
+
+.kanban-column.is-new::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(ellipse at center, #7c3aed 0%, transparent 75%);
+    opacity: 0;
+    animation: columnGlowBurst 1.0s ease-out forwards;
+}
+
+/* --- Column Banish (Delete) --- */
+.kanban-column.is-deleting {
+    pointer-events: none;
+    animation: columnBanish 1.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    z-index: 100;
+}
+
+.kanban-column.is-deleting::after {
+    content: "";
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    animation: columnParticles 1.0s ease-out forwards;
+}
+
+/* Keyframes */
+
+@keyframes columnSummon {
+    0% {
+        opacity: 0;
+        filter: blur(20px) brightness(5);
+        box-shadow: 0 0 100px 5px #7c3aed;
+        /* Change from 200px to 40px to reduce travel distance */
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scaleY(1) translateY(0);
+        filter: brightness(1) blur(0);
+    }
+}
+
+@keyframes columnBanish {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: scale(1.02);
+        filter: brightness(1.5);
+        box-shadow: 0 0 50px rgba(124, 58, 237, 0.4);
+    }
+
+    100% {
+        transform: scale(0.5) rotateX(90deg);
+        opacity: 0;
+        filter: blur(10px);
+    }
+}
+
+@keyframes columnGlowBurst {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    40% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.2);
+    }
+}
+
+@keyframes columnParticles {
+    0% {
+        opacity: 0;
+        box-shadow: 0 0 0 white;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        box-shadow:
+            -100px 200px 4px #7c3aed,
+            100px 400px 2px var(--accent-color),
+            -80px 600px 3px white,
+            80px 100px 5px #7c3aed;
+        transform: translateY(200px);
+    }
 }
 
 .empty-column-placeholder {
@@ -806,17 +1088,17 @@ body {
 }
 
 .column-footer {
-    
-    margin-top: auto; 
-    
-    
+
+    margin-top: auto;
+
+
     padding: 2px 2px;
-    
+
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     align-items: center;
     background: transparent;
-    border-bottom-left-radius: 8px; 
+    border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
@@ -855,6 +1137,7 @@ body {
     background: var(--column-border);
     border-radius: 10px;
 }
+
 .task-list::-webkit-scrollbar-thumb:hover {
     background: var(--text-secondary);
 }
@@ -909,24 +1192,14 @@ body {
 }
 
 .task-card-issue-icon {
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.3)); 
+    font-size: 1rem;
 }
-
-.task-card-issue-icon:hover {
-    
-    filter: drop-shadow(0 0 4px var(--accent-color)); 
-}
-
-
 
 .task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
 }
 
 .task-text {
@@ -934,7 +1207,7 @@ body {
     font-size: 16px;
     font-weight: 600;
     line-height: 1.2;
-    
+
     margin: 0 0 4px 0;
     word-wrap: break-word;
 }
@@ -958,50 +1231,152 @@ body {
     flex-shrink: 0;
 }
 
-.task-card.is-new-flash {
+/* =========================================
+   Task "Summon" Animation (New Task & New Board)
+   Duration: 1.0s (Matches SortableTask.jsx timer)
+   ========================================= */
+
+.task-card.is-new {
+    animation: summonCard 1.0s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     position: relative;
-    overflow: hidden;
-    animation: borderGlow 1.5s ease-out;
+    z-index: 10;
 }
 
-.task-card.is-new-flash::after {
+/* The Summoning Circle/Glow */
+.task-card.is-new::before {
     content: "";
     position: absolute;
-    top: 0;
-    left: -150%; /* Start well off-screen to the left */
-    width: 100%;
-    height: 100%;
-    /* The "Light Beam": A tilted white gradient */
-    background: linear-gradient(
-        120deg, 
-        transparent 0%, 
-        rgba(255, 255, 255, 0.1) 30%, 
-        rgba(255, 255, 255, 0.4) 50%, 
-        rgba(255, 255, 255, 0.1) 70%, 
-        transparent 100%
-    );
-    animation: shineSweep 1.2s ease-out forwards;
+    inset: -15px;
+    background: radial-gradient(circle, #7c3aed 0%, var(--accent-color) 30%, transparent 70%);
+    border-radius: 12px;
+    opacity: 0;
+    z-index: -1;
+    animation: summonGlow 1.0s ease-out forwards;
 }
 
-/* The light sweep animation */
-@keyframes shineSweep {
+@keyframes summonCard {
     0% {
-        left: -150%;
+        transform: scale(0.6) translateY(20px);
+        filter: brightness(3) blur(10px);
+        opacity: 0;
     }
+
+    40% {
+        transform: scale(1.05) translateY(-5px);
+        filter: brightness(1.5) blur(0px);
+        opacity: 1;
+    }
+
     100% {
-        left: 150%;
+        transform: scale(1) translateY(0);
+        filter: brightness(1);
+        opacity: 1;
     }
 }
 
-/* Subtle border pulse to accompany the shine */
-@keyframes borderGlow {
-    0% { 
-        border-color: var(--accent-color);
-        box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+@keyframes summonGlow {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
     }
-    100% { 
-        border-color: var(--bg-gradient-mid);
-        box-shadow: none;
+
+    20% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+}
+
+
+/* =========================================
+   Task "Banish" Animation
+   Midpoint: 1.0s duration, 30px blur, 5px spread
+   ========================================= */
+
+.task-card.is-deleting {
+    pointer-events: none;
+    z-index: 500;
+    /* Midpoint duration: 1 second */
+    animation: balancedBanish 1.0s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Midpoint Spell Flash: -10px inset, 1.85x scale */
+.task-card.is-deleting::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    background: radial-gradient(circle, var(--accent-color) 0%, #7c3aed 40%, transparent 70%);
+    opacity: 0;
+    z-index: -1;
+    border-radius: 12px;
+    animation: midBurst 1.0s ease-out forwards;
+}
+
+/* Midpoint Sparkle: 1.6rem size */
+.task-card.is-deleting::after {
+    content: "✨";
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    font-size: 1.6rem;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: sparkleFloat 1.0s ease-out forwards;
+}
+
+@keyframes balancedBanish {
+    0% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    30% {
+        /* Midpoint swell (1.07) and shadow (30px blur, 5px spread, 0.6 opacity) */
+        transform: scale(1.07);
+        filter: brightness(1.4);
+        box-shadow: 0 0 30px 5px rgba(124, 58, 237, 0.6);
+    }
+
+    100% {
+        /* Final exit: 0 scale, 15deg rotation, 4px blur */
+        transform: scale(0) rotate(15deg);
+        filter: brightness(1.8) blur(4px);
+        opacity: 0;
+    }
+}
+
+@keyframes midBurst {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    30% {
+        opacity: 0.6;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.85);
+    }
+}
+
+@keyframes sparkleFloat {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 0) scale(0.5);
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -80px) scale(2) rotate(180deg);
     }
 }
 
@@ -1009,7 +1384,7 @@ body {
     font-size: 10px;
     color: var(--text-secondary);
     font-style: italic;
-    
+
 }
 
 .edit-btn {
@@ -1019,11 +1394,6 @@ body {
     cursor: pointer;
     font-size: 14px;
     padding: 2px 8px;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-
-.edit-btn:hover {
     opacity: 1;
 }
 
@@ -1075,7 +1445,8 @@ body {
 
 select.sidebar-value {
     text-align: center;
-    text-align-last: center; /* Required for the selected value to center in the box */
+    text-align-last: center;
+    /* Required for the selected value to center in the box */
 }
 
 /* Ensure the dropdown list items revert to left alignment */
@@ -1131,7 +1502,7 @@ select.sidebar-value option {
 
 .cancel-btn:hover {
     /* Shifts from neutral blue-glass to a red warning state */
-    background: var(--btn-red-bg); 
+    background: var(--btn-red-bg);
     border-color: var(--btn-red-bg);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
@@ -1140,8 +1511,15 @@ select.sidebar-value option {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .add-task-btn {
@@ -1183,7 +1561,7 @@ select.sidebar-value option {
     background: none;
     border: none;
     color: var(--btn-red-bg);
-    font-size: 18px;
+    font-size: 12px;
     cursor: pointer;
     padding: 0 5px;
     line-height: 1;
@@ -1193,11 +1571,13 @@ select.sidebar-value option {
     color: var(--btn-red-hover);
 }
 
+
 .add-column-btn {
-    min-width: 320px; /* Matched to the actual column width */
-    height: 120px; 
+    min-width: 320px;
+    /* Matched to the actual column width */
+    height: 120px;
     background: var(--column-bg);
-    backdrop-filter: blur(12px); 
+    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--column-border);
     border-top: 1px solid var(--glass-edge-top);
@@ -1216,7 +1596,7 @@ select.sidebar-value option {
 }
 
 .add-column-btn:hover {
-    background: rgba(255, 255, 255, 0.06); 
+    background: rgba(255, 255, 255, 0.06);
     border-color: var(--accent-color);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
@@ -1264,7 +1644,8 @@ select.sidebar-value option {
 .priority-badge {
     font-size: 0.65rem;
     font-weight: bold;
-    padding: 3px 8px; /* Slightly taller */
+    padding: 3px 8px;
+    /* Slightly taller */
     border-radius: 10px;
     text-transform: uppercase;
     color: var(--text-primary);
@@ -1302,7 +1683,8 @@ select.sidebar-value option {
 
 /* --- Light Mode Priority Badges to prevent washout --- */
 :root[data-theme="light"] .priority-badge.High {
-    background: rgba(220, 38, 38, 0.15); /* Deeper, richer red */
+    background: rgba(220, 38, 38, 0.15);
+    /* Deeper, richer red */
     color: #b91c1c;
     border: 1px solid rgba(220, 38, 38, 0.3);
     /* Strong white top reflection, subtle dark bottom shadow for contrast */
@@ -1313,7 +1695,8 @@ select.sidebar-value option {
 }
 
 :root[data-theme="light"] .priority-badge.Medium {
-    background: rgba(217, 119, 6, 0.15); /* Deeper amber */
+    background: rgba(217, 119, 6, 0.15);
+    /* Deeper amber */
     color: #b45309;
     border: 1px solid rgba(217, 119, 6, 0.3);
     border-top: 1px solid var(--glass-edge-top);
@@ -1323,7 +1706,8 @@ select.sidebar-value option {
 }
 
 :root[data-theme="light"] .priority-badge.Low {
-    background: rgba(5, 150, 105, 0.15); /* Deeper green */
+    background: rgba(5, 150, 105, 0.15);
+    /* Deeper green */
     color: #047857;
     border: 1px solid rgba(5, 150, 105, 0.3);
     border-top: 1px solid var(--glass-edge-top);
@@ -1369,8 +1753,15 @@ select.sidebar-value option {
 }
 
 @keyframes modalPop {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .modal-actions {
@@ -1385,26 +1776,27 @@ select.sidebar-value option {
     border: none;
     padding: 0;
     cursor: pointer;
-    
+
     /* 2. Set a fixed, compact size */
     width: 28px;
     height: 28px;
     flex-shrink: 0;
-    
+
     /* 3. Center the 'X' inside the 32px box */
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     /* 4. Refine look and feel */
     color: var(--text-secondary);
-    font-size: 20px; /* Reduced from 28px */
+    font-size: 20px;
+    /* Reduced from 28px */
     font-weight: 400;
     line-height: 1;
 }
 
 .modal-close-x:hover {
-    color: var(--btn-red-hover); 
+    color: var(--btn-red-hover);
 }
 
 .modal-btn {
@@ -1521,15 +1913,18 @@ select.sidebar-value option {
     display: flex;
     flex-direction: column;
     min-height: 500px;
-    max-height: 90vh; /* Prevents it from growing taller than the screen */
+    max-height: 90vh;
+    /* Prevents it from growing taller than the screen */
     overflow: hidden;
 }
 
 /* Modal Header */
 .task-detail-modal .modal-header {
     display: flex;
-    justify-content: space-between; /* Pushes title left and X right */
-    align-items: flex-start; /* Aligns them to the top */
+    justify-content: space-between;
+    /* Pushes title left and X right */
+    align-items: flex-start;
+    /* Aligns them to the top */
     margin-bottom: 20px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--accent-color);
@@ -1558,8 +1953,10 @@ select.sidebar-value option {
     flex-grow: 1;
     flex-direction: row;
     gap: 24px;
-    min-height: 0; /* Gives a good default height */
-    overflow: hidden; /* Contains the scrollable areas */
+    min-height: 0;
+    /* Gives a good default height */
+    overflow: hidden;
+    /* Contains the scrollable areas */
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -1571,8 +1968,10 @@ select.sidebar-value option {
 /* Hide scrollbar for IE, Edge and Firefox */
 .task-sidebar,
 .task-main-content {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 /* 75% Column */
@@ -1596,9 +1995,9 @@ select.sidebar-value option {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding: 20px; 
-    background: var(--column-bg); 
-    border: 1px solid var(--column-border); 
+    padding: 20px;
+    background: var(--column-bg);
+    border: 1px solid var(--column-border);
     border-radius: 12px;
     align-self: stretch;
     min-width: 10vw;
@@ -1616,22 +2015,27 @@ select.sidebar-value option {
 }
 
 .sidebar-label-container {
-    flex: 0 0 90px; /* Locks the label to a fixed width. Adjust based on your longest label */
-    color: var(--text-secondary); /* Using the slate color from your theme */
+    flex: 0 0 90px;
+    /* Locks the label to a fixed width. Adjust based on your longest label */
+    color: var(--text-secondary);
+    /* Using the slate color from your theme */
     font-size: 13px;
     font-weight: 600;
-    text-align: left; /* Ensures labels are left-aligned */
+    text-align: left;
+    /* Ensures labels are left-aligned */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .sidebar-value-container {
-    flex: 1; /* Expands to fill the rest of the row */
+    flex: 1;
+    /* Expands to fill the rest of the row */
     display: flex;
     align-items: center;
     margin-left: 8px;
-    justify-content: flex-start; /* Ensures values sit left-aligned next to the label space */
+    justify-content: flex-start;
+    /* Ensures values sit left-aligned next to the label space */
     color: var(--text-primary);
     min-width: 0;
 }
@@ -1641,7 +2045,8 @@ span.sidebar-value {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: block; /* Required for overflow to work on a span */
+    display: block;
+    /* Required for overflow to work on a span */
 }
 
 .sidebar-field {
@@ -1654,18 +2059,20 @@ span.sidebar-value {
 }
 
 .sidebar-field label {
-    flex: 0 0 35%; /* Fixed proportion: Label always strictly takes 35% of the sidebar's width */
-    margin: 0; 
+    flex: 0 0 35%;
+    /* Fixed proportion: Label always strictly takes 35% of the sidebar's width */
+    margin: 0;
     font-size: 12px;
     font-weight: 600;
-    color: var(--text-secondary); 
+    color: var(--text-secondary);
     text-align: left;
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .sidebar-value {
-    flex: 1 1 auto; /* Fluid proportion: Input takes up all the remaining space */
+    flex: 1 1 auto;
+    /* Fluid proportion: Input takes up all the remaining space */
     width: 100%;
     background: var(--card-bg);
     border: 1px solid transparent;
@@ -1715,7 +2122,7 @@ span.sidebar-value {
 }
 
 .custom-field-add-btn:hover {
-    background: rgba(255, 255, 255, 0.08); 
+    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
@@ -1726,7 +2133,8 @@ span.sidebar-value {
 .custom-fields-list {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Replaces margin-bottom on items */
+    gap: 8px;
+    /* Replaces margin-bottom on items */
     margin-top: 8px;
 }
 
@@ -1749,7 +2157,8 @@ span.sidebar-value {
     cursor: pointer;
     background: none;
     border: none;
-    color: var(--btn-red-bg); /* Danger red */
+    color: var(--btn-red-bg);
+    /* Danger red */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1770,7 +2179,8 @@ span.sidebar-value {
     color: var(--btn-red-bg);
     cursor: pointer;
     font-size: 12px;
-    opacity: 0; /* Hidden by default */
+    opacity: 0;
+    /* Hidden by default */
     transition: opacity 0.2s, transform 0.2s;
     padding: 4px;
     display: flex;
@@ -1797,8 +2207,9 @@ span.sidebar-value {
 
 /* High Priority (Subdued Red) */
 .sidebar-value.High {
-    color: #ff8080; 
+    color: #ff8080;
 }
+
 .sidebar-value.High:hover {
     background: rgba(255, 77, 77, 0.08);
     border-color: rgba(255, 77, 77, 0.3);
@@ -1806,8 +2217,9 @@ span.sidebar-value {
 
 /* Medium Priority (Subdued Amber) */
 .sidebar-value.Medium {
-    color: #fcd34d; 
+    color: #fcd34d;
 }
+
 .sidebar-value.Medium:hover {
     background: rgba(251, 191, 36, 0.08);
     border-color: rgba(251, 191, 36, 0.3);
@@ -1815,8 +2227,9 @@ span.sidebar-value {
 
 /* Low Priority (Subdued Green) */
 .sidebar-value.Low {
-    color: #6ee7b7; 
+    color: #6ee7b7;
 }
+
 .sidebar-value.Low:hover {
     background: rgba(52, 211, 153, 0.08);
     border-color: rgba(52, 211, 153, 0.3);
@@ -1850,10 +2263,10 @@ button.sidebar-value {
     flex-wrap: wrap;
     gap: 6px;
     padding: 10px 14px;
-    background: var(--bg-color); 
+    background: var(--bg-color);
     border: 1px solid var(--accent-color);
     border-bottom: none;
-    border-radius: 12px 12px 0px 0px; 
+    border-radius: 12px 12px 0px 0px;
     align-items: center;
 }
 
@@ -1897,7 +2310,8 @@ button.sidebar-value {
     flex-direction: column;
     background: var(--bg-color);
     border: 1px solid var(--accent-color);
-    border-top: none; /* Connects seamlessly to the toolbar */
+    border-top: none;
+    /* Connects seamlessly to the toolbar */
     border-radius: 0px 0px 12px 12px;
     overflow-y: auto;
     transition: all 0.3s ease;
@@ -1954,7 +2368,7 @@ button.sidebar-value {
     min-height: 0;
     text-align: left;
     flex-shrink: 0;
-    
+
 }
 
 .tiptap-preview:hover {
@@ -1970,39 +2384,49 @@ button.sidebar-value {
    RICH TEXT FORMATTING (Applies to Editor & Preview)
    ========================================= */
 
-.ProseMirror h1, .ProseMirror h2, .ProseMirror h3,
-.tiptap-preview h1, .tiptap-preview h2, .tiptap-preview h3 {
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.tiptap-preview h1,
+.tiptap-preview h2,
+.tiptap-preview h3 {
     color: var(--text-primary);
     margin-top: 24px;
     margin-bottom: 16px;
     font-weight: 700;
-    
+
 }
 
-.ProseMirror h1, .tiptap-preview h1 {
+.ProseMirror h1,
+.tiptap-preview h1 {
     font-size: 1.75em;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 8px;
 }
 
-.ProseMirror h2, .tiptap-preview h2 {
+.ProseMirror h2,
+.tiptap-preview h2 {
     font-size: 1.4em;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     padding-bottom: 6px;
 }
 
-.ProseMirror ul, .ProseMirror ol,
-.tiptap-preview ul, .tiptap-preview ol {
+.ProseMirror ul,
+.ProseMirror ol,
+.tiptap-preview ul,
+.tiptap-preview ol {
     padding-left: 24px;
     margin-bottom: 16px;
 }
 
-.ProseMirror li p, .tiptap-preview li p {
+.ProseMirror li p,
+.tiptap-preview li p {
     margin: 0;
 }
 
 /* Inline Code */
-.ProseMirror code, .tiptap-preview code {
+.ProseMirror code,
+.tiptap-preview code {
     background: rgba(139, 92, 246, 0.15);
     color: #c4b5fd;
     padding: 3px 6px;
@@ -2012,24 +2436,27 @@ button.sidebar-value {
 }
 
 /* Code Blocks */
-.ProseMirror pre, .tiptap-preview pre {
+.ProseMirror pre,
+.tiptap-preview pre {
     background: #09090b;
     padding: 16px;
     border-radius: 8px;
     overflow-x: auto;
     border: 1px solid rgba(255, 255, 255, 0.05);
     margin-bottom: 16px;
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.ProseMirror pre code, .tiptap-preview pre code {
+.ProseMirror pre code,
+.tiptap-preview pre code {
     background: transparent;
     padding: 0;
     color: #e2e8f0;
 }
 
 /* Blockquotes */
-.ProseMirror blockquote, .tiptap-preview blockquote {
+.ProseMirror blockquote,
+.tiptap-preview blockquote {
     border-left: 4px solid #8b5cf6;
     background: rgba(139, 92, 246, 0.05);
     margin: 0 0 16px 0;
@@ -2095,7 +2522,7 @@ button.sidebar-value {
     border-bottom: 1px solid var(--column-border);
 }
 
-.react-datepicker__current-month, 
+.react-datepicker__current-month,
 .react-datepicker__day-name {
     color: var(--text-primary);
 }
@@ -2132,7 +2559,8 @@ button.sidebar-value {
 
 .modal-footer {
     display: flex;
-    justify-content: flex-end; /* Aligns the text to the bottom right */
+    justify-content: flex-end;
+    /* Aligns the text to the bottom right */
     margin-top: 12px;
     padding-right: 4px;
 }
@@ -2189,7 +2617,8 @@ button.sidebar-value {
 
 /* Custom Checkbox Styling */
 .subtask-checkbox {
-    appearance: none; /* Hide default browser checkbox */
+    appearance: none;
+    /* Hide default browser checkbox */
     -webkit-appearance: none;
     width: 18px;
     height: 18px;
@@ -2206,8 +2635,8 @@ button.sidebar-value {
 .subtask-checkbox:checked {
     background: var(--accent-color);
     border-color: var(--accent-color);
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 
-                0 0 8px rgba(0, 115, 207, 0.5);
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4),
+        0 0 8px rgba(0, 115, 207, 0.5);
 }
 
 .subtask-checkbox:checked::after {
@@ -2242,14 +2671,16 @@ button.sidebar-value {
     color: var(--btn-red-bg);
     font-size: 14px;
     cursor: pointer;
-    opacity: 0; /* Hide by default to keep UI clean */
+    opacity: 0;
+    /* Hide by default to keep UI clean */
     padding: 4px 8px;
     transition: all 0.2s ease;
     border-radius: 4px;
 }
 
 .subtask-item:hover .subtask-delete-btn {
-    opacity: 0.6; /* Reveal when hovering over the row */
+    opacity: 0.6;
+    /* Reveal when hovering over the row */
 }
 
 .subtask-delete-btn:hover {
@@ -2259,7 +2690,8 @@ button.sidebar-value {
 /* New Subtask Input Field */
 .subtask-input {
     width: 100%;
-    text-align: left !important; /* Overrides any centered text from .sidebar-value */
+    text-align: left !important;
+    /* Overrides any centered text from .sidebar-value */
     padding: 12px 14px !important;
     background: rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(4px);
@@ -2278,9 +2710,9 @@ button.sidebar-value {
 .subtask-input:focus {
     background: rgba(0, 0, 0, 0.25);
     border-color: var(--accent-color);
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3), 
-                0 0 0 3px rgba(0, 115, 207, 0.2);
-    
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3),
+        0 0 0 3px rgba(0, 115, 207, 0.2);
+
 }
 
 .subtask-input::placeholder {
@@ -2291,13 +2723,13 @@ button.sidebar-value {
 /* =========================================
    Analytics Bar Styles
    ========================================= */
-.analytics-bar { 
+.analytics-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    width: 100%;
-    max-width: 1400px; 
+    gap: 18px;
+    width: 70%;
+    max-width: 1000px;
     padding: 16px 24px;
     margin-bottom: 24px;
     border-radius: 12px;
@@ -2313,9 +2745,11 @@ button.sidebar-value {
 
 .analytics-stats {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 24px;
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
@@ -2342,7 +2776,8 @@ button.sidebar-value {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    margin: 0 !important; /* Overrides the default margin-left on .analytics-stats span */
+    margin: 0 !important;
+    /* Overrides the default margin-left on .analytics-stats span */
     color: var(--text-primary);
     filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
     cursor: pointer;
@@ -2375,60 +2810,80 @@ button.sidebar-value {
     background: linear-gradient(90deg, #7c3aed, var(--accent-color));
     border-radius: 999px;
     transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 10px var(--accent-color); /* Glowing effect */
+    box-shadow: 0 0 10px var(--accent-color);
+    
 }
 
+.progress-bar:hover .progress-fill {
+    background-position: 100% 50%;
+    box-shadow: 0 0 20px var(--accent-color), 0 0 35px var(--nebula-glow-1);
+}
+
+/* @keyframes manaFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+} */
+
 .progress-text {
+    font-family: 'Cinzel', serif;
     font-size: 14px;
     color: var(--text-primary);
     font-weight: 800;
     min-width: 45px;
     text-align: right;
+    /* Subtle glow matching the bar */
+    text-shadow: 0 0 8px var(--accent-color);
+    letter-spacing: 0.05em;
 }
 
 /* ========Site Footer Styles========== */
 
 .portfolio-footer {
-  /* This is the magic rule that pushes it to the absolute bottom of the kanban-container */
-  margin-top: auto; 
-  flex-shrink: 0;
-  width: 100%;
-  padding: 20px 0 16px 0; /* Add a bit of padding at the bottom so it breathes */
-  text-align: center;
-  border-top: 1px solid var(--accent-color); /* Subtle violet line separating board from footer */
-  background: transparent;
+    /* This is the magic rule that pushes it to the absolute bottom of the kanban-container */
+    margin-top: auto;
+    flex-shrink: 0;
+    width: 100%;
+    padding: 20px 0 16px 0;
+    /* Add a bit of padding at the bottom so it breathes */
+    text-align: center;
+    border-top: 1px solid var(--accent-color);
+    /* Subtle violet line separating board from footer */
+    background: transparent;
 }
 
 .footer-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px; /* Even spacing between your name and the links */
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    /* Even spacing between your name and the links */
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
 }
 
 .built-by {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .built-by strong {
-  color: var(--text-primary);
-  margin-left: 6px;
-  font-weight: 600;
+    color: var(--text-primary);
+    margin-left: 6px;
+    font-weight: 600;
 }
 
 .footer-link {
-  display: flex;
-  align-items: center;
-  gap: 8px; /* Space between the React Icon and the text */
-  color: inherit;
-  text-decoration: none;
-  transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Space between the React Icon and the text */
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .footer-link:hover {
-  color: var(--accent-color); /* Matches the vibrant violet used in your Add Task buttons */
+    color: var(--accent-color);
+    /* Matches the vibrant violet used in your Add Task buttons */
 }

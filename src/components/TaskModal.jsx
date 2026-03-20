@@ -320,7 +320,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                             </h2>
                         )}
                     </div>
-                    <button className="modal-close-x" onClick={handleModalClose}>X</button>
+                    <button className="modal-close-x" onClick={handleModalClose}>❌</button>
                 </div>
                 <div className="task-modal-body">
                     <div className="task-main-content">

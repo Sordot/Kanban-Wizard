@@ -2,6 +2,9 @@ import logoIcon from '../assets/Kanban-Wizard-removebg-preview.png'
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoard, onDeleteBoard, onRenameBoard, theme, toggleTheme }) {
+
+  
+
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
@@ -11,7 +14,7 @@ export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoa
       <nav className="board-list">
         <div className="board-items-container">
           {boards.map(board => (
-            <div key={board.id} className="board-item-wrapper">
+            <div key={board.id} className={`board-item-wrapper ${board.isNew ? 'is-new' : ''} ${board.isDeleting ? 'is-deleting' : ''}`}>
               <button
                 className={`board-link ${board.id === activeBoardID ? 'active' : ''}`}
                 onClick={() => onSelectBoard(board.id)}

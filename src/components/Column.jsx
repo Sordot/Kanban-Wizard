@@ -12,6 +12,16 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef(null);
 
+    // Check for newly created columns and clear their isNew state 1000ms after creation to match animation timer
+    useEffect(() => {
+        if (column.isNew) {
+            const timer = setTimeout(() => {
+                onUpdateColumn(column.id, { isNew: false });
+            }, 1000);
+            return () => clearTimeout(timer);
+        }
+    }, [column.isNew, column.id, onUpdateColumn]);
+
     // 2. Add an effect to handle clicking outside the menu to close it
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -38,7 +48,7 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
     };
 
     return (
-        <div className="kanban-column" key={column.id}>
+        <div className={`kanban-column ${column.isDeleting ? 'is-deleting' : ''} ${column.isNew ? 'is-new' : ''}`} key={column.id}>
             <div className="column-header">
                 <div className="column-title-container">
                     {isEditingTitle ? (

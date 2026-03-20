@@ -57,20 +57,21 @@ export const useKanban = (initialData) => {
 
 
   //CRUD UTILITIES
-  const addBoard = () => {
-    const newBoardID = `board-${Date.now()}`
+  const addBoard = useCallback(() => {
     const newBoard = {
-      id: newBoardID,
-      name: '🌱 Untitled Project',
+      id: `board-${Date.now()}`,
+      name: "🌱 Untitled Project",
       columns: [
-        { id: `col-${Date.now()}-1`, title: 'To Do', tasks: [] },
-        { id: `col-${Date.now()}-2`, title: 'In Progress', tasks: [] },
-        { id: `col-${Date.now()}-3`, title: 'Done', tasks: [] }
-      ]
-    }
+        { id: `col-1-${Date.now()}`, title: "To Do", tasks: [] },
+        { id: `col-2-${Date.now()}`, title: "In Progress", tasks: [] },
+        { id: `col-3-${Date.now()}`, title: "Done", tasks: [] }
+      ],
+      isNew: true // Mark as new
+    };
+
     setBoards(prev => [...prev, newBoard]);
-    setActiveBoardID(newBoardID); // Automatically switch to the new board
-  }
+    setActiveBoardID(newBoard.id);
+  }, []);
 
   const updateBoard = (boardID, updates) => {
     setBoards(prev => prev.map(board =>
@@ -78,20 +79,26 @@ export const useKanban = (initialData) => {
     ));
   };
 
-  const deleteBoard = (boardID) => {
-    if (boards.length <= 1) {
-      alert("You must have at least one board!");
-      return;
-    }
+  const deleteBoard = useCallback((id) => {
+  if (boards.length <= 1) return; // Prevent deleting the last board
 
+  // 1. Mark the board for deletion
+  setBoards(prev => prev.map(board => 
+    board.id === id ? { ...board, isDeleting: true } : board
+  ));
+
+  // 2. Wait for animation (1s) then remove
+  setTimeout(() => {
     setBoards(prev => {
-      const updatedBoards = prev.filter(board => board.id !== boardID);
-      if (activeBoardID === boardID) {
-        setActiveBoardID(updatedBoards[0].id);
+      const filtered = prev.filter(board => board.id !== id);
+      // Switch active board if the one we deleted was active
+      if (activeBoardID === id && filtered.length > 0) {
+        setActiveBoardID(filtered[0].id);
       }
-      return updatedBoards;
+      return filtered;
     });
-  };
+  }, 1000);
+}, [boards.length, activeBoardID]);
 
   const addTask = (inputColumnID) => {
     //get unique task id
@@ -148,21 +155,26 @@ export const useKanban = (initialData) => {
   }, [activeBoardID]);
 
   const deleteTask = useCallback((columnID, taskID) => {
-    setBoards(prevBoards => prevBoards.map(board => {
-      // Only update columns if this is the board we are currently viewing
-      if (board.id !== activeBoardID) return board;
-      return {
-        ...board,
-        columns: board.columns.map(col => {
-          if (col.id !== columnID) return col;
-          return {
-            ...col,
-            tasks: col.tasks.filter(task => task.id !== taskID)
-          };
-        })
-      };
-    }));
-  }, [activeBoardID]);
+    // 1. First, mark the task as "deleting" to trigger the CSS
+    updateTask(columnID, taskID, { isDeleting: true });
+
+    // 2. Wait for the animation (1000ms matches the CSS duration)
+    setTimeout(() => {
+      setBoards(prevBoards => prevBoards.map(board => {
+        if (board.id !== activeBoardID) return board;
+        return {
+          ...board,
+          columns: board.columns.map(col => {
+            if (col.id !== columnID) return col;
+            return {
+              ...col,
+              tasks: col.tasks.filter(task => task.id !== taskID)
+            };
+          })
+        };
+      }));
+    }, 1000); // 1000ms delay
+  }, [activeBoardID, updateTask]);
 
   const addColumn = () => {
     const title = newColumnTitle.trim()
@@ -172,7 +184,8 @@ export const useKanban = (initialData) => {
       // eslint-disable-next-line react-hooks/purity
       id: `col-${Date.now()}`,
       title: title,
-      tasks: []
+      tasks: [],
+      isNew: true
     }
 
     setBoards(prevBoards => prevBoards.map(board => {
@@ -261,12 +274,21 @@ export const useKanban = (initialData) => {
     }));
   }, [activeBoardID]);
 
-  const removeColumn = (columnID) => {
-    setBoards(prevBoards => prevBoards.map(board => {
-      if (board.id !== activeBoardID) return board;
-      return { ...board, columns: board.columns.filter(col => col.id !== columnID) };
-    }));
-  }
+  const removeColumn = useCallback((columnID) => {
+    // Mark the column as deleting first
+    updateColumn(columnID, { isDeleting: true });
+
+    // Wait for the 1000ms animation before removing from state
+    setTimeout(() => {
+      setBoards(prev => prev.map(board => {
+        if (board.id !== activeBoardID) return board;
+        return {
+          ...board,
+          columns: board.columns.filter(col => col.id !== columnID)
+        };
+      }));
+    }, 1000);
+  }, [activeBoardID, updateColumn]);
 
   const openColumnEditor = () => setIsAddingColumn(true)
 
