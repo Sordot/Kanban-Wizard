@@ -15,6 +15,7 @@ import { FaGithub, FaLinkedin, FaSun, FaMoon } from 'react-icons/fa'
 import './App.css'
 import { useTheme } from './hooks/useTheme'
 import { useKanban } from './hooks/useKanban'
+import SearchBar from './components/SearchBar'
 import Column from './components/Column'
 import ConfirmationModal from './components/ConfirmationModal'
 import Sidebar from './components/Sidebar'
@@ -43,6 +44,7 @@ function App() {
   const {
     boards,
     addBoard,
+    exportBoard,
     activeBoardID,
     setActiveBoardID,
     columns,
@@ -50,6 +52,9 @@ function App() {
     addTask,
     insertTask,
     updateTask,
+    filteredColumns,
+    searchTerm,
+    setSearchTerm,
     addColumn,
     updateColumn,
     sortColumn,
@@ -116,14 +121,18 @@ function App() {
         onAddBoard={addBoard}
         onDeleteBoard={openDeleteModal}
         onRenameBoard={openRenameModal}
+        onExportBoard={exportBoard}
         theme={theme}
         toggleTheme={toggleTheme}
       />
       <div className='kanban-container'>
+        <div className="board-header-actions">
+           <SearchBar value={searchTerm} onChange={setSearchTerm} />
+        </div>
         <DndContext sensors={sensors} collisionDetection={customCollisionDetection} onDragOver={handleDragOver} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
           <div className='kanban-board'>
             {/* map through the kanban columns */}
-            {columns && columns.map((column) => (
+            {filteredColumns && filteredColumns.map((column) => (
               <Column
                 key={column.id}
                 column={column}
@@ -264,7 +273,7 @@ function App() {
             ) : null}
           </DragOverlay>
         </DndContext>
-        <AnalyticsBar columns={columns} />
+        <AnalyticsBar columns={filteredColumns} />
         <footer className="portfolio-footer">
           <div className="footer-content">
             <span className="built-by">

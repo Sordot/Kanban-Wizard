@@ -1,7 +1,7 @@
 import logoIcon from '../assets/Kanban-Wizard-removebg-preview.png'
 import { FaSun, FaMoon } from 'react-icons/fa';
 
-export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoard, onDeleteBoard, onRenameBoard, theme, toggleTheme }) {
+export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoard, onDeleteBoard, onRenameBoard, onExportBoard, theme, toggleTheme }) {
 
   
 
@@ -32,15 +32,18 @@ export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoa
         
       </nav>
       <div className="sidebar-footer">
+        <button className="export-btn" onClick={onExportBoard} title="Export current board as JSON">
+          <span>💾 Export Board as JSON</span>
+        </button>
           <button className="theme-toggle-btn" onClick={toggleTheme}>
             {theme === 'dark' ? (
               <>
-                <FaSun size={16} />
+                <FaSun size={12} />
                 <span>Light Mode</span>
               </>
             ) : (
               <>
-                <FaMoon size={16} />
+                <FaMoon size={12} />
                 <span>Dark Mode</span>
               </>
             )}

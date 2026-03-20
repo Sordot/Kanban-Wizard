@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { arrayMove } from "@dnd-kit/sortable";
 
 export const getNextPriority = (currentPriority) => {
@@ -30,7 +30,7 @@ export const useKanban = (initialData) => {
   const columns = activeBoard ? activeBoard.columns : []
 
 
-
+  const [searchTerm, setSearchTerm] = useState("");
   const [activeTask, setActiveTask] = useState(null)
 
   const [isAddingColumn, setIsAddingColumn] = useState(false)
@@ -80,25 +80,88 @@ export const useKanban = (initialData) => {
   };
 
   const deleteBoard = useCallback((id) => {
-  if (boards.length <= 1) return; // Prevent deleting the last board
+    if (boards.length <= 1) return; // Prevent deleting the last board
 
-  // 1. Mark the board for deletion
-  setBoards(prev => prev.map(board => 
-    board.id === id ? { ...board, isDeleting: true } : board
-  ));
+    // 1. Mark the board for deletion
+    setBoards(prev => prev.map(board =>
+      board.id === id ? { ...board, isDeleting: true } : board
+    ));
 
-  // 2. Wait for animation (1s) then remove
-  setTimeout(() => {
-    setBoards(prev => {
-      const filtered = prev.filter(board => board.id !== id);
-      // Switch active board if the one we deleted was active
-      if (activeBoardID === id && filtered.length > 0) {
-        setActiveBoardID(filtered[0].id);
-      }
-      return filtered;
-    });
-  }, 1000);
-}, [boards.length, activeBoardID]);
+    // 2. Wait for animation (1s) then remove
+    setTimeout(() => {
+      setBoards(prev => {
+        const filtered = prev.filter(board => board.id !== id);
+        // Switch active board if the one we deleted was active
+        if (activeBoardID === id && filtered.length > 0) {
+          setActiveBoardID(filtered[0].id);
+        }
+        return filtered;
+      });
+    }, 1000);
+  }, [boards.length, activeBoardID]);
+
+  //Export board logic
+  const exportBoard = useCallback(async () => {
+  const boardToExport = boards.find(b => b.id === activeBoardID);
+  if (!boardToExport) return;
+
+  // 1. Data Cleaning
+  const cleanBoard = {
+    ...boardToExport,
+    columns: boardToExport.columns.map(col => ({
+      ...col,
+      isDeleting: false,
+      isNew: false,
+      tasks: col.tasks.map(task => ({
+        ...task,
+        isDeleting: false,
+        isNew: false
+      }))
+    }))
+  };
+
+  const dataStr = JSON.stringify(cleanBoard, null, 2);
+  const fileName = `${boardToExport.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_grimoire.json`;
+
+  // 2. The Modern "Scribe's Pact" (File System Access API)
+  try {
+    // Check if the browser supports the API
+    if ('showSaveFilePicker' in window) {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: fileName,
+        types: [{
+          description: 'JSON Grimoire File',
+          accept: { 'application/json': ['.json'] },
+        }],
+      });
+
+      // Create a FileSystemWritableFileStream to write to.
+      const writable = await handle.createWritable();
+      
+      // Write the contents of our file to the stream.
+      await writable.write(dataStr);
+      
+      // Close the file and write the contents to disk.
+      await writable.close();
+      
+      console.log("Successfully crystallized the grimoire to disk.");
+    } else {
+      // 3. Fallback: The Anchor Ritual (For Safari/Older Browsers)
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+  } catch (err) {
+    // Handle user cancellation or errors
+    if (err.name !== 'AbortError') {
+      console.error("The ritual failed:", err);
+    }
+  }
+}, [boards, activeBoardID]);
 
   const addTask = (inputColumnID) => {
     //get unique task id
@@ -175,6 +238,23 @@ export const useKanban = (initialData) => {
       }));
     }, 1000); // 1000ms delay
   }, [activeBoardID, updateTask]);
+
+  const filteredColumns = useMemo(() => {
+    if (!searchTerm.trim()) return columns;
+
+    const lowerSearch = searchTerm.toLowerCase();
+
+    return columns.map(column => ({
+      ...column,
+      tasks: column.tasks.filter(task => {
+        // Ensure we have strings to search through to avoid errors
+        const textMatch = (task.text || "").toLowerCase().includes(lowerSearch);
+        const descMatch = (task.description || "").toLowerCase().includes(lowerSearch);
+
+        return textMatch || descMatch;
+      })
+    }));
+  }, [columns, searchTerm]);
 
   const addColumn = () => {
     const title = newColumnTitle.trim()
@@ -455,6 +535,7 @@ export const useKanban = (initialData) => {
     addBoard,
     updateBoard,
     deleteBoard,
+    exportBoard,
     activeBoardID,
     setActiveBoardID,
     columns,
@@ -468,6 +549,9 @@ export const useKanban = (initialData) => {
     insertTask,
     updateTask,
     deleteTask,
+    filteredColumns,
+    searchTerm,
+    setSearchTerm,
     addColumn,
     updateColumn,
     clearColumn,

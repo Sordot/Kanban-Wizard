@@ -85,7 +85,7 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                                 {/* --- Sorting SUB-MENU TRIGGER --- */}
                                 <div className="submenu-trigger">
                                     <button className="submenu-btn">
-                                        ↕️ Sort Tasks...
+                                        ↕️ Sort tasks...
                                     </button>
 
                                     {/* --- Sorting SUB-MENU CONTENT --- */}
@@ -112,10 +112,10 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                                 </div>
                                 {/* ------------------------ */}
                                 <button className="clear-column-option" onClick={() => { onClearColumn(column.id); setIsMenuOpen(false); }}>
-                                    🔄 Clear Column
+                                    🔄 Clear tasks
                                 </button>
                                 <button className="delete-column-option" onClick={() => { onRemoveColumn(column.id); setIsMenuOpen(false); }}>
-                                    💥 Delete Column
+                                    ❌ Delete column
                                 </button>
                             </div>
                         )}
