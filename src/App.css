@@ -2819,10 +2819,6 @@ button.sidebar-value {
     box-shadow: 0 0 20px var(--accent-color), 0 0 35px var(--nebula-glow-1);
 }
 
-/* @keyframes manaFlow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
-} */
 
 .progress-text {
     font-family: 'Cinzel', serif;
