@@ -7,6 +7,13 @@
   --text-primary: #e6f2ff;
   --text-secondary: #8cbce6;
   --sidebar-bg: rgba(0, 18, 33, 0.85);
+
+  /* Dark Mode Magic Background */
+  --magic-dust-1: rgba(255, 255, 255, 0.4);
+  --magic-dust-2: rgba(255, 255, 255, 0.2);
+  --magic-dust-3: rgba(255, 255, 255, 0.15);
+  --nebula-glow-1: rgba(0, 115, 207, 0.15);
+  --nebula-glow-2: rgba(124, 58, 237, 0.12);
   
   /* Elements get progressively brighter through higher opacity overlays */
   --column-bg: rgba(0, 115, 207, 0.06);
@@ -34,6 +41,13 @@
   --bg-color: #87b9e0; 
   --bg-gradient-top: #9dc7e8;
   --bg-gradient-mid: #92c0e4;   
+
+  /* Light Mode Magic Background - Gold motes, bright white sparks, and deep blue specks */
+  --magic-dust-1: transparent;   /* Rich, deep amber/gold */
+  --magic-dust-2: transparent; /* Stark, pure white */
+  --magic-dust-3: transparent;    /* Subtle deep blue contrast specks */
+  --nebula-glow-1: rgba(255, 255, 255, 0.6); /* Brighter sunlight aura */
+  --nebula-glow-2: rgba(124, 58, 237, 0.15);
   
   /* Deepened text for readability against the blue background */
   --text-primary: #001b33;    
@@ -88,10 +102,19 @@ html {
 body {
     margin: 0;
     padding: 0;
-    background: radial-gradient(circle at 15% 50%, rgba(0, 115, 207, 0.15), transparent 40%),
-                radial-gradient(circle at 85% 30%, rgba(124, 58, 237, 0.1), transparent 40%),
-                var(--bg-color);
-    background-size: cover;
+    background: 
+        /* Slightly larger dust particles with harder edges */
+        radial-gradient(1.5px 1.5px at 20px 30px, var(--magic-dust-1) 50%, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 60px 80px, var(--magic-dust-2) 50%, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 120px 40px, var(--magic-dust-3) 50%, rgba(0,0,0,0)),
+        
+        /* The Nebula / Sunlight Glows stay the same */
+        radial-gradient(circle at 15% 50%, var(--nebula-glow-1), transparent 40%),
+        radial-gradient(circle at 85% 30%, var(--nebula-glow-2), transparent 40%),
+        
+        var(--bg-color);
+    
+    background-size: 150px 150px, 200px 200px, 250px 250px, cover, cover, cover;
     background-attachment: fixed;
     min-height: 100vh;
     width: 100%;
@@ -457,6 +480,7 @@ body {
     z-index: 9999;
     pointer-events: none;
 }
+
 
 .tilt-wrapper {
     transform: rotate(3deg) scale(1.02);
