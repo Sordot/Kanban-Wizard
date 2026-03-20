@@ -217,7 +217,7 @@ body {
 }
 
 .board-list::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
 }
 .board-list::-webkit-scrollbar-track {
     background: transparent;
@@ -264,7 +264,7 @@ body {
     color: var(--text-secondary);
     cursor: pointer;
     border-radius: 6px;
-    padding: 4px 8px;
+    padding: 6px 10px;
     font-size: 12px;
     display: flex;
     align-items: center;
@@ -287,7 +287,7 @@ body {
     border: 1px solid var(--column-border);
     border-radius: 6px;
     color: var(--btn-red-bg);
-    padding: 4px 8px;
+    padding: 6px 10px;
     font-size: 12px;
     cursor: pointer;
     opacity: 0;
@@ -492,7 +492,7 @@ body {
 }
 
 .kanban-board::-webkit-scrollbar {
-    height: 6px;
+    height: 10px;
 }
 
 .kanban-board::-webkit-scrollbar-track {
@@ -605,7 +605,7 @@ body {
   border: 1px solid transparent;
   cursor: pointer;
   font-size: 12px;
-  padding: 4px 8px;
+  padding: 6px 10px;
   border-radius: 6px;
   color: var(--text-secondary);
   display: flex;
@@ -734,7 +734,7 @@ body {
 }
 
 .task-list::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
 }
 
 .task-list::-webkit-scrollbar-track {
@@ -909,7 +909,7 @@ body {
     color: var(--accent-color);
     cursor: pointer;
     font-size: 14px;
-    padding: 2px 4px;
+    padding: 2px 8px;
     opacity: 0.6;
     transition: opacity 0.2s;
 }
@@ -1933,7 +1933,7 @@ button.sidebar-value {
 /* Custom Scrollbars for Editor and Preview */
 .tiptap-container::-webkit-scrollbar,
 .tiptap-preview::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
 }
 
 .tiptap-container::-webkit-scrollbar-track,
