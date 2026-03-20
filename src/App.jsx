@@ -1,7 +1,8 @@
 import {
   DndContext,
   DragOverlay,
-  closestCenter,
+  closestCorners,
+  pointerWithin,
   KeyboardSensor,
   PointerSensor,
   useSensor,
@@ -92,6 +93,18 @@ function App() {
     });
   };
 
+  //Custom collision magic to try to prevent snapbacks
+  const customCollisionDetection = (args) => {
+    // First, verify which droppable containers the mouse pointer is literally over
+    const pointerCollisions = pointerWithin(args);
+    
+    if (pointerCollisions.length > 0) {
+      return pointerCollisions;
+    }
+    // If pointer checking fails (e.g. gaps), fallback to geometry
+    return closestCorners(args);
+  };
+
   return (
     <div className="app-layout">
       <Sidebar
@@ -105,7 +118,7 @@ function App() {
         toggleTheme={toggleTheme}
       />
       <div className='kanban-container'>
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragOver={handleDragOver} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+        <DndContext sensors={sensors} collisionDetection={customCollisionDetection} onDragOver={handleDragOver} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
           <div className='kanban-board'>
             {/* map through the kanban columns */}
             {columns && columns.map((column) => (

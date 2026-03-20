@@ -45,8 +45,8 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
     };
 
     const style = {
-        transform: CSS.Transform.toString(transform),
-        transition: isDragging ? 'none' : transition,
+        transform: CSS.Translate.toString(transform),
+        transition: transition,
         opacity: isDragging ? 0.3 : 1
     }
 

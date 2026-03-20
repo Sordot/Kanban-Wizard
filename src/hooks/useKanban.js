@@ -278,14 +278,24 @@ export const useKanban = (initialData) => {
 
         // Handle same-column reordering
         if (activeColumn.id === overColumn.id) {
+          //abort state update if dropped in original position to prevent rerender/flashing
+          if (active.id === over.id) return board;
           const oldIndex = activeColumn.tasks.findIndex(task => task.id === activeID);
-          const newIndex = activeColumn.tasks.findIndex(task => task.id === overID);
+          let newIndex = activeColumn.tasks.findIndex(task => task.id === overID);
+          // FIX: If dropped in the empty space below tasks, push to the end
+          if (newIndex === -1 && overID === overColumn.id) {
+              newIndex = activeColumn.tasks.length - 1;
+          }
 
           return {
             ...board,
             columns: board.columns.map(column => {
               if (column.id === activeColumn.id) {
-                return { ...column, tasks: arrayMove(column.tasks, oldIndex, newIndex) };
+                // FIX: Only run arrayMove if dropped over an actual task (newIndex !== -1)
+                // This hacky index check prevents the task card from snapping downward when moved between tasks
+                if (newIndex !== -1) {
+                    return { ...column, tasks: arrayMove(column.tasks, oldIndex, newIndex) };
+                }
               }
               return column;
             })
@@ -321,7 +331,19 @@ export const useKanban = (initialData) => {
         const overTasks = overColumn.tasks;
 
         const overIndex = overTasks.findIndex(t => t.id === overID);
-        let newIndex = overIndex >= 0 ? overIndex : overTasks.length;
+        let newIndex;
+        if (overIndex >= 0) {
+            // Check if active item is vertically below the over item's center
+            // helps to prevent task cards from shifting on letting go
+            const isBelowOverItem = over && active.rect.current.translated && 
+                active.rect.current.translated.top > over.rect.top + over.rect.height / 2;
+                
+            const modifier = isBelowOverItem ? 1 : 0;
+            newIndex = overIndex + modifier;
+        } else {
+            // Dropped on empty column
+            newIndex = overTasks.length; 
+        }
 
         return {
           ...board,
