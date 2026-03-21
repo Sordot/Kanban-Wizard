@@ -48,30 +48,54 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
     };
 
     return (
-        <div className={`kanban-column ${column.isDeleting ? 'is-deleting' : ''} ${column.isNew ? 'is-new' : ''}`} 
+        <div className={`kanban-column ${column.isDeleting ? 'is-deleting' : ''} ${column.isNew ? 'is-new' : ''}`}
             key={column.id}
             style={{ overflow: column.isNew ? 'hidden' : undefined }}
-            >
+        >
             <div className="column-header">
                 <div className="column-title-container">
                     {isEditingTitle ? (
                         <input
-                            className="column-title-input"
+                            className="editable-field" // Added editable-field
                             autoFocus
                             maxLength={40}
                             value={titleInput}
                             onChange={(e) => setTitleInput(e.target.value)}
                             onBlur={handleTitleSave}
                             onKeyDown={(e) => e.key === 'Enter' && handleTitleSave()}
+                            style={{
+                                display: 'block',
+                                width: '100%',
+                                boxSixing: 'border-box',
+                                fontSize: '1.2em',
+                                fontWeight: 'bold',
+                                background: 'transparent',
+                                color: 'inherit',
+                                outline: 'none',
+                                appearance: 'none',       /* Strips native browser focus shifts */
+                                WebkitAppearance: 'none', /* For Safari */
+                                lineHeight: '1.2'         /* Locks text baseline */
+                            }}
                         />
                     ) : (
-                        <h3
-                            className="column-title editable"
+                        <div
+                            className="column-title editable-field" /* Changed from editable */
                             onClick={() => setIsEditingTitle(true)}
                             title="Click to edit title"
+                            style={{
+                                display: 'block',
+                                width: '100%',
+                                boxSixing: 'border-box',
+                                fontSize: '1.2em',
+                                fontWeight: 'bold',
+                                lineHeight: '1.2',        /* Matches input baseline exactly */
+                                whiteSpace: 'nowrap',     /* Matches input's single-line behavior */
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis'
+                            }}
                         >
                             {column.title}
-                        </h3>
+                        </div>
                     )}
                 </div>
 

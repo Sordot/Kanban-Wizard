@@ -150,7 +150,8 @@ function App() {
               <div className="add-column-editor">
                 <input
                   autoFocus
-                  className="edit-input column-title-input"
+                  className="edit-input"
+                  style={{ width: '100%', fontSize: '1.1rem', boxSizing: 'border-box', padding: '6px 10px' }}
                   placeholder="Name this column..."
                   value={newColumnTitle}
                   onChange={(e) => setNewColumnTitle(e.target.value)}
@@ -240,17 +241,14 @@ function App() {
                             {activeTask.assignee.charAt(0).toUpperCase()}
                           </div>
                         )}
-                        <span className={`priority-badge ${activeTask.priority || 'Medium'}`}>
-                          {(activeTask.priority || 'Medium').toUpperCase()}
-                        </span>
                         <span>
                           {issueIcons[activeTask.issueType || "User Story"]}
                         </span>
                       </div>
                       <div>
                         {/* Inert buttons to maintain spacing parity with the real card */}
-                        <button className='edit-btn' style={{ cursor: 'grabbing' }}>📄</button>
-                        <button className='delete-btn' style={{ cursor: 'grabbing' }}>x</button>
+                        <button className='edit-btn' style={{ cursor: 'grabbing' }}>🔍</button>
+                        <button className='delete-btn' style={{ cursor: 'grabbing' }}>❌</button>
                       </div>
                     </div>
 

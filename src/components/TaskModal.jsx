@@ -316,22 +316,45 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                         {isEditingTitle ? (
                             <input
                                 autoFocus
-                                className="modal-title-input edit-input"
+                                className="editable-field"
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
                                 onBlur={handleTitleSave}
                                 onKeyDown={(e) => e.key === 'Enter' && handleTitleSave()}
                                 placeholder="Task Title..."
-                                style={{ fontSize: '1.25em', fontWeight: 'bold', width: '100%', padding: '4px' }}
+                                style={{
+                                    display: 'block',
+                                    width: '100%',
+                                    boxSixing: 'border-box',
+                                    fontSize: '1.25em',
+                                    fontWeight: 'bold',
+                                    background: 'transparent',
+                                    color: 'inherit',
+                                    outline: 'none',
+                                    appearance: 'none',
+                                    WebkitAppearance: 'none',
+                                    lineHeight: '1.2'
+                                }}
                             />
                         ) : (
-                            <h2
-                                className="modal-title editable-field"
+                            <div
+                                className="editable-field"
                                 onClick={() => setIsEditingTitle(true)}
                                 title="Click to edit title"
+                                style={{
+                                    display: 'block',
+                                    width: '100%',
+                                    boxSixing: 'border-box',
+                                    fontSize: '1.25em',
+                                    fontWeight: 'bold',
+                                    lineHeight: '1.2',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis'
+                                }}
                             >
                                 {text}
-                            </h2>
+                            </div>
                         )}
                     </div>
                     <button className="modal-close-x" onClick={handleModalClose}>❌</button>
@@ -426,28 +449,54 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                             </div>
                         </div>
 
-                        <div className="sidebar-field-row">
-                            <div className="sidebar-label-container">
-                                Assignee
-                            </div>
-                            <div className="sidebar-value-container">
+                        <div
+                            className="sidebar-item"
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                width: '100%',
+                                gap: '12px'
+                            }}
+                        >
+                            <span className="sidebar-label-container">Assignee</span>
+
+                            <div
+                                className="sidebar-value-wrapper"
+                                style={{
+                                    flex: 1,
+                                    minWidth: 0,
+                                    display: 'flex',
+                                    justifyContent: 'flex-end'
+                                }}
+                            >
                                 {isEditingAssignee ? (
                                     <input
                                         autoFocus
-                                        className="sidebar-value edit-input"
+                                        className="sidebar-value editable-field"
                                         value={assignee}
                                         onChange={(e) => setAssignee(e.target.value)}
                                         onBlur={handleAssigneeSave}
                                         onKeyDown={(e) => e.key === 'Enter' && handleAssigneeSave()}
                                         placeholder="Unassigned"
-                                        style={{ width: '100%', padding: '2px 4px', boxSizing: 'border-box' }}
+                                        style={{
+                                            width: '100%',
+                                            textAlign: 'left',
+                                            outline: 'none'
+                                        }}
                                     />
                                 ) : (
                                     <span
-                                        className="sidebar-value"
+                                        className="sidebar-value editable-field"
                                         onClick={() => setIsEditingAssignee(true)}
-                                        title={assignee ? `Assignee: ${assignee}` : "Click to assign"}
-                                        style={{ cursor: 'pointer' }}
+                                        title="Click to edit"
+                                        style={{
+                                            width: '100%',
+                                            textAlign: 'center',
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis'
+                                        }}
                                     >
                                         {assignee || "Unassigned"}
                                     </span>
@@ -531,21 +580,21 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                 <div className="sidebar-label-container" title={cf.key}>
                                     {cf.key}
                                 </div>
-                                <div className="sidebar-value-container" style={{ gap: '4px' }}>
+                                <div className="sidebar-value-container" style={{gap:'8px'}}>
                                     {editingCustomFieldId === cf.id ? (
                                         <input
                                             autoFocus
-                                            className="sidebar-value edit-input"
+                                            className="sidebar-value editable-field"
                                             value={cf.value}
                                             onChange={(e) => handleUpdateCustomField(cf.id, 'value', e.target.value)}
                                             onBlur={(e) => handleSaveCustomFields(e, cf.id)}
                                             onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
-                                            style={{ width: '100%', boxSizing: 'border-box', padding: '2px 4px' }}
+                                            style={{ width: '100%', boxSizing: 'border-box', textAlign: 'left'}}
                                             placeholder="Empty"
                                         />
                                     ) : (
                                         <span
-                                            className="sidebar-value"
+                                            className="sidebar-value editable-field"
                                             onClick={() => setEditingCustomFieldId(cf.id)}
                                             title={cf.value ? `Value: ${cf.value}` : "Click to edit"}
                                             style={{ cursor: 'pointer', width: '100%', display: 'inline-block' }}
@@ -585,7 +634,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                             onBlur={(e) => handleSaveCustomFields(e, cf.id)}
                                             onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
                                             className={`sidebar-value edit-input cf-input-${cf.id}`}
-                                            style={{ width: '45%', padding: '2px 4px', boxSizing: 'border-box' }}
+                                            style={{ width: '50%', padding: '2px 4px', boxSizing: 'border-box', textAlign: 'left'}}
                                             autoFocus={cf.key === "" && cf.value === ""}
                                         />
                                         <input
@@ -596,7 +645,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                             onBlur={(e) => handleSaveCustomFields(e, cf.id)}
                                             onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
                                             className={`sidebar-value edit-input cf-input-${cf.id}`}
-                                            style={{ width: '45%', padding: '2px 4px', boxSizing: 'border-box' }}
+                                            style={{ width: '50%', padding: '2px 4px', boxSizing: 'border-box', textAlign: 'left' }}
                                         />
                                         <button
                                             className="delete-cf-btn"
