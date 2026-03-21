@@ -329,7 +329,6 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                     fontSize: '1.25em',
                                     fontWeight: 'bold',
                                     background: 'transparent',
-                                    color: 'inherit',
                                     outline: 'none',
                                     appearance: 'none',
                                     WebkitAppearance: 'none',

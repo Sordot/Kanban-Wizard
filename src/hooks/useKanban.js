@@ -240,18 +240,29 @@ export const useKanban = (initialData) => {
   }, [activeBoardID, updateTask]);
 
   const filteredColumns = useMemo(() => {
-    if (!searchTerm.trim()) return columns;
+    // If there is no search, return columns as normal (status: 'none')
+    if (!searchTerm.trim()) {
+      return columns.map(col => ({
+        ...col,
+        tasks: col.tasks.map(task => ({ ...task, searchStatus: 'none' }))
+      }));
+    }
 
     const lowerSearch = searchTerm.toLowerCase();
-
-    return columns.map(column => ({
-      ...column,
-      tasks: column.tasks.filter(task => {
-        // Ensure we have strings to search through to avoid errors
-        const textMatch = (task.text || "").toLowerCase().includes(lowerSearch);
-        const descMatch = (task.description || "").toLowerCase().includes(lowerSearch);
-
-        return textMatch || descMatch;
+    
+    // If searching, keep ALL tasks but tag them as 'matched' or 'obscured'
+    return columns.map(col => ({
+      ...col,
+      tasks: col.tasks.map(task => {
+        // You can add more fields here like task.assignee if you want!
+        const isMatch = 
+          (task.text && task.text.toLowerCase().includes(lowerSearch)) ||
+          (task.description && task.description.toLowerCase().includes(lowerSearch));
+          
+        return { 
+          ...task, 
+          searchStatus: isMatch ? 'matched' : 'obscured' 
+        };
       })
     }));
   }, [columns, searchTerm]);

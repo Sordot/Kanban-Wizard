@@ -813,6 +813,32 @@ button, input, textarea {
   cursor: pointer;
 }
 
+/* 🌫️ The Obscuring Mist: Blur and fade tasks that don't match */
+.task-card.search-obscured {
+    opacity: 0.25;
+    filter: blur(4px) grayscale(60%);
+    /* Optional: prevents dragging or clicking on obscured tasks */
+    pointer-events: none; 
+}
+
+/* ✨ The Scrying Glow: Illuminate the tasks that DO match */
+.task-card.search-matched {
+    box-shadow: 
+        0 0 20px var(--nebula-glow-1), 
+        inset 0 0 10px rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-color);
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+/* Light mode overrides for the matched glow so it stands out on light backgrounds */
+:root[data-theme="light"] .task-card.search-matched {
+    box-shadow: 
+        0 0 20px rgba(0, 115, 207, 0.4), 
+        inset 0 0 10px rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.4);
+}
+
 .column-header {
     display: flex;
     justify-content: space-between;
@@ -1205,7 +1231,7 @@ button, input, textarea {
     overflow: hidden;
     cursor: grab;
     isolation: isolate;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .task-card:active {

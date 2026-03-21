@@ -52,10 +52,18 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
         opacity: isDragging ? 0.3 : 1
     }
 
+    // Determine the CSS class based on the search status passed from useKanban
+    const searchClass = task.searchStatus === 'matched' ? 'search-matched' : 
+                        task.searchStatus === 'obscured' ? 'search-obscured' : '';
+
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners} className={`task-card priority-${task.priority} 
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners} 
+            className={
+                `task-card priority-${task.priority} 
                 ${isNewTask ? 'is-new' : ''} 
-                ${isDeleting ? 'is-deleting' : ''}`}>
+                ${isDeleting ? 'is-deleting' : ''}
+                ${searchClass}`
+            }>
             <div className='task-content'>
                 <div className='task-header'>
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
