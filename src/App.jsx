@@ -11,7 +11,9 @@ import {
 import {
   sortableKeyboardCoordinates,
 } from '@dnd-kit/sortable'
-import { FaGithub, FaLinkedin, FaSun, FaMoon } from 'react-icons/fa'
+import { FaGithub, FaLinkedin } from 'react-icons/fa'
+import { Tooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css';
 import './App.css'
 import { useTheme } from './hooks/useTheme'
 import { useKanban } from './hooks/useKanban'
@@ -88,11 +90,11 @@ function App() {
   )
 
   const issueIcons = {
-        "User Story": "📜",
-        "Bug": "🦠",
-        "Test": "🔮",
-        "Spike": "⌛"
-    };
+    "User Story": "📜",
+    "Bug": "🦠",
+    "Test": "🔮",
+    "Spike": "⌛"
+  };
 
   const formatTime = (ts) => {
     if (!ts) return '';
@@ -105,7 +107,7 @@ function App() {
   const customCollisionDetection = (args) => {
     // First, verify which droppable containers the mouse pointer is literally over
     const pointerCollisions = pointerWithin(args);
-    
+
     if (pointerCollisions.length > 0) {
       return pointerCollisions;
     }
@@ -128,7 +130,7 @@ function App() {
       />
       <div className='kanban-container'>
         <div className="board-header-actions">
-           <FilterBar filters={filters} setFilters={setFilters} uniqueAssignees={uniqueAssignees} />
+          <FilterBar filters={filters} setFilters={setFilters} uniqueAssignees={uniqueAssignees} />
         </div>
         <DndContext sensors={sensors} collisionDetection={customCollisionDetection} onDragOver={handleDragOver} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
           <div className='kanban-board'>
@@ -200,30 +202,30 @@ function App() {
             task={taskModalConfig.task}
             onClose={() => closeTaskModal()}
             onSave={(taskID, updatedTask, isClosing = false) => {
-              
+
               const currentColumn = columns.find(col => col.id === taskModalConfig.columnID);
               const taskAlreadyInserted = currentColumn?.tasks.some(t => t.id === taskID);
-              
+
               // Check if this task was new when the modal opened
               const isOriginallyNew = taskModalConfig.task?.isNew;
 
               if (isOriginallyNew && !taskAlreadyInserted) {
                 // First edit: Insert as a draft (or true if instantly closing)
-                insertTask(taskModalConfig.columnID, { 
-                    ...updatedTask, 
-                    isNew: isClosing ? true : 'draft' 
+                insertTask(taskModalConfig.columnID, {
+                  ...updatedTask,
+                  isNew: isClosing ? true : 'draft'
                 });
               } else if (isOriginallyNew && taskAlreadyInserted) {
                 // Subsequent inline edits: Force it to stay a 'draft' until closing!
-                updateTask(taskModalConfig.columnID, taskID, { 
-                    ...updatedTask, 
-                    isNew: isClosing ? true : 'draft' 
+                updateTask(taskModalConfig.columnID, taskID, {
+                  ...updatedTask,
+                  isNew: isClosing ? true : 'draft'
                 });
               } else {
                 // Normal edits on existing old tasks
-                updateTask(taskModalConfig.columnID, taskID, { 
-                    ...updatedTask, 
-                    isNew: updatedTask.isNew 
+                updateTask(taskModalConfig.columnID, taskID, {
+                  ...updatedTask,
+                  isNew: updatedTask.isNew
                 });
               }
             }}
@@ -290,6 +292,13 @@ function App() {
             </a>
           </div>
         </footer>
+        <Tooltip
+          id="wizard-tooltip"
+          className="wizard-theme-tooltip" /* Custom class for styling */
+          place="top" /* Default placement */
+          arrowColor='#0073cf'
+          delayShow={200} /* Small delay so it doesn't flash rapidly when moving the mouse */
+        />
       </div>
 
     </div>

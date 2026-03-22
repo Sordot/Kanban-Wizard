@@ -53,11 +53,11 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
     }
 
     // Determine the CSS class based on the search status passed from useKanban
-    const searchClass = task.searchStatus === 'matched' ? 'search-matched' : 
-                        task.searchStatus === 'obscured' ? 'search-obscured' : '';
+    const searchClass = task.searchStatus === 'matched' ? 'search-matched' :
+        task.searchStatus === 'obscured' ? 'search-obscured' : '';
 
     return (
-        <div ref={setNodeRef} style={style} {...attributes} {...listeners} 
+        <div ref={setNodeRef} style={style} {...attributes} {...listeners}
             className={
                 `task-card priority-${task.priority} 
                 ${isNewTask ? 'is-new' : ''} 
@@ -69,26 +69,26 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                     <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
                         {task.assignee && (
                             // hacky fix to ensure assignee avatar can keep its overflow hidden for its circular shape while still having tooltip
-                            <div data-tooltip={`${task.assignee}`} style={{ display:'inline-flex'}}>
-                            <span
-                                className="assignee-avatar"
-                                data-tooltip={`${task.assignee}`}
-                            >
-                                {task.assignee.charAt(0).toUpperCase()}
-                            </span>
+                            <div data-tooltip-id="wizard-tooltip" data-tooltip-content={`${task.assignee}`} style={{ display: 'inline-flex' }}>
+                                <span
+                                    className="assignee-avatar"
+                                >
+                                    {task.assignee.charAt(0).toUpperCase()}
+                                </span>
                             </div>
                         )}
-                        <span className="task-card-issue-icon" data-tooltip={`${task.issueType}`}>
+                        <span className="task-card-issue-icon" data-tooltip-id="wizard-tooltip" data-tooltip-content={`${task.issueType}`}>
                             {issueIcons[task.issueType || "📜"]}
                         </span>
-                        <span className="task-card-env-icon" data-tooltip={`${task.environment}`}>
-                                {envIcons[task.environment] || "🧙‍♂️"}
-                            </span>
+                        <span className="task-card-env-icon" data-tooltip-id="wizard-tooltip" data-tooltip-content={`${task.environment}`}>
+                            {envIcons[task.environment] || "🧙‍♂️"}
+                        </span>
                     </div>
                     <div>
                         <button
                             className='edit-btn'
-                            data-tooltip={'Edit task'}
+                            data-tooltip-id="wizard-tooltip"
+                            data-tooltip-content="Edit task"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -97,7 +97,8 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                             🔍
                         </button>
                         <button className='delete-btn'
-                            data-tooltip={'Delete task'}
+                            data-tooltip-id="wizard-tooltip"
+                            data-tooltip-content="Delete task"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => { e.stopPropagation(); onDelete(columnID, id); }}>
                             ❌

@@ -1270,6 +1270,30 @@ button, input, textarea {
     color: var(--text-primary);
 }
 
+/* =========================================
+   🪄 REACT TOOLTIP STYLES 
+   ========================================= */
+
+/* Override the default react-tooltip styles */
+.wizard-theme-tooltip {
+    background-color: var(--card-bg) !important; 
+    color: var(--text-primary) !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    border: 1px solid var(--accent-color) !important;
+    font-size: 0.8rem !important;
+    font-family: var(--font-professional) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+    
+    /* 🛡️ Guardrails for long text */
+    max-width: 200px !important;
+    text-align: center !important;
+    line-height: 1.4 !important;
+    
+    /* Z-index ensures it sits above absolutely everything */
+    z-index: 9999 !important; 
+}
+
 .assignee-avatar {
     width: 24px;
     height: 24px;
@@ -1297,23 +1321,6 @@ button, input, textarea {
     cursor: help;
     overflow: hidden;
     position: relative !important;
-}
-
-.assignee-avatar[data-tooltip]:hover::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: 125%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--sidebar-bg);
-    color: var(--text-primary);
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-family: var(--font-magical);
-    white-space: nowrap;
-    z-index: 999;
-    border: 1px solid var(--accent-color);
-    box-shadow: var(--column-shadow);
 }
 
 .task-card-issue-icon,
@@ -1765,42 +1772,7 @@ select.sidebar-value option {
     box-shadow: 0 4px 15px rgba(52, 211, 153, 0.05);
 }
 
-/* custom tooltips for task icons to get around native html title hover delay and styles */
-[data-tooltip] {
-    position: relative;
-    cursor: help;
-}
 
-/* 2. Create the Tooltip Box */
-[data-tooltip]::after {
-    content: attr(data-tooltip); /* Grab the text from the data attribute */
-    position: absolute;
-    bottom: 120%; /* Float above the icon */
-    left: 50%;
-    transform: translateX(-50%);
-    
-    /* Magical Styling */
-    background: var(--sidebar-bg); /* Use your existing dark background */
-    color: var(--text-primary);
-    padding: 2px 6px;
-    border-radius: 6px;
-    border: 1px solid var(--accent-color);
-    font-size: 0.75rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    pointer-events: none; /* Make sure it doesn't block the mouse */
-    
-    /* The Speed Control */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.1s ease-in; /* Set this to 0s for truly instant */
-    z-index: 100;
-}
-
-/* 3. Reveal the Tooltip on Hover */
-[data-tooltip]:hover::after {
-    opacity: 1;
-    visibility: visible;
-}
 
 .modal-overlay {
     position: fixed;
