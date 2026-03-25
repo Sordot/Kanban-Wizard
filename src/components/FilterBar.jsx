@@ -1,6 +1,6 @@
-import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { issueIcons, envIcons, priorityColors } from '../utils/helpers';
+import CustomSelect from './CustomSelect';
 
 // Notice we now accept the 'filters' object and a 'setFilters' function
 export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
@@ -16,10 +16,45 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
 
     const hasActiveFilters = filters.text || filters.priority || filters.issueType || filters.effort || filters.environment || filters.assignee;
 
+    // --- Format Options for Radix Select ---
+    const assigneeOptions = [
+        { value: "all", label: "All Assignees" }, // Radix Select requires non-empty string values
+        ...uniqueAssignees.map(a => ({ value: a, label: `🧙‍♂️ ${a}` }))
+    ];
+
+    const priorityOptions = [
+        { value: "all", label: "All Priorities", style: { color: 'var(--text-primary)' } },
+        { value: "High", label: "High Priority", style: { color: priorityColors.High } },
+        { value: "Medium", label: "Medium Priority", style: { color: priorityColors.Medium } },
+        { value: "Low", label: "Low Priority", style: { color: priorityColors.Low } },
+    ];
+
+    // Find the style of the currently active option
+    const activePriorityStyle = priorityOptions.find(
+        opt => opt.value === (filters.priority || "all")
+    )?.style;
+
+    const issueTypeOptions = [
+        { value: "all", label: "All Types" },
+        ...Object.entries(issueIcons).map(([label, icon]) => ({
+            value: label,
+            label: <div style={{display:'flex', gap:'8px', alignItems:'center'}}>{icon} {label}</div>
+        }))
+    ];
+
+    const envOptions = [
+        { value: "all", label: "All Envs" },
+        ...Object.entries(envIcons).map(([label, icon]) => ({
+            value: label,
+            label: <div style={{display:'flex', gap:'8px', alignItems:'center'}}>{icon} {label}</div>
+        }))
+    ];
+
+    // Helper to handle the "all" value which we use to represent an empty string in state
+    const onSelectChange = (key, val) => handleFilterChange(key, val === "all" ? "" : val);
+
     return (
         <div className="filter-container">
-
-            {/* The Original Text Search */}
             <div className="search-input-wrapper">
                 <FaSearch className="search-icon" />
                 <input
@@ -31,60 +66,38 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
                 />
             </div>
 
-            {/* 👇 The Dynamic Assignee (Wizards) Dropdown */}
-            <select
-                className="filter-dropdown"
-                value={filters.assignee}
-                onChange={(e) => handleFilterChange('assignee', e.target.value)}
-            >
-                <option value="">All Assignees</option>
-                {/* Map over the unique assignees to generate the options */}
-                {uniqueAssignees.map(assignee => (
-                    <option key={assignee} value={assignee}>
-                        🧙‍♂️ {assignee}
-                    </option>
-                ))}
-            </select>
+            <CustomSelect 
+                value={filters.assignee || "all"} 
+                onValueChange={(val) => onSelectChange('assignee', val)} 
+                options={assigneeOptions} 
+                placeholder="All Assignees"
+                triggerClassName="filter-dropdown"
+            />
 
-            {/* Advanced "Scrying" Selectors */}
-            <select
-                className="filter-dropdown"
-                value={filters.priority}
-                onChange={(e) => handleFilterChange('priority', e.target.value)}
-                style={{ color: priorityColors[filters.priority] || 'var(--text-primary)' }}
-            >
-                {/* 3. Explicitly setting inherit on the default option so it doesn't grab the select's color it is reset */}
-                <option value="" style={{ color: 'var(--text-primary)' }}>All Priorities</option>
-                <option value="High" style={{ color: priorityColors.High }}>High Priority</option>
-                <option value="Medium" style={{ color: priorityColors.Medium }}>Medium Priority</option>
-                <option value="Low" style={{ color: priorityColors.Low }}>Low Priority</option>
-            </select>
+            <CustomSelect 
+                value={filters.priority || "all"} 
+                onValueChange={(val) => onSelectChange('priority', val)} 
+                options={priorityOptions} 
+                placeholder="All Priorities"
+                triggerClassName="filter-dropdown"
+                triggerStyle={activePriorityStyle}
+            />
 
-            <select
-                className="filter-dropdown"
-                value={filters.issueType}
-                onChange={(e) => handleFilterChange('issueType', e.target.value)}
-            >
-                <option value="">All Types</option>
-                {Object.entries(issueIcons).map(([label, icon]) => (
-                    <option key={label} value={label}>
-                        {icon} {label}
-                    </option>
-                ))}
-            </select>
+            <CustomSelect 
+                value={filters.issueType || "all"} 
+                onValueChange={(val) => onSelectChange('issueType', val)} 
+                options={issueTypeOptions} 
+                placeholder="All Types"
+                triggerClassName="filter-dropdown"
+            />
 
-            <select
-                className="filter-dropdown"
-                value={filters.environment}
-                onChange={(e) => handleFilterChange('environment', e.target.value)}
-            >
-                <option value="">All Envs</option>
-                {Object.entries(envIcons).map(([label, icon]) => (
-                    <option key={label} value={label}>
-                        {icon} {label}
-                    </option>
-                ))}
-            </select>
+            <CustomSelect 
+                value={filters.environment || "all"} 
+                onValueChange={(val) => onSelectChange('environment', val)} 
+                options={envOptions} 
+                placeholder="All Envs"
+                triggerClassName="filter-dropdown"
+            />
 
             <button
                 className={`clear-filters-btn ${hasActiveFilters ? 'visible' : ''}`}

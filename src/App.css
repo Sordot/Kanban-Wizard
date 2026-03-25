@@ -78,10 +78,6 @@
     /* Glassmorphism Edge Opacities */
     --glass-edge-top: rgba(255, 255, 255, 0.7);
     --glass-edge-left: rgba(255, 255, 255, 0.3);
-
-    --priority-high: #c53030;
-    --priority-medium: #c05621;
-    --priority-low: #276749;
 }
 
 /* Light mode overrides for priority text (Included so you don't lose them) */
@@ -184,6 +180,156 @@ button, input, textarea {
     overflow: hidden;
     position: relative;
     z-index: 1;
+}
+
+/* =========================================
+   RADIX UI SELECT STYLES
+   ========================================= */
+.radix-select-trigger {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: var(--card-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
+    border-radius: 8px;
+    padding: 0 12px;
+    height: 36px;
+    font-size: 0.9em;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    white-space: nowrap !important; 
+    overflow: hidden;
+}
+
+.select-value-wrapper {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.radix-select-trigger:focus,
+.radix-select-trigger[data-state="open"] {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px var(--nebula-glow-1);
+}
+
+.radix-select-icon {
+    display: flex;
+    color: var(--text-secondary);
+}
+
+/* The popup content wrapper - Now Opaque */
+.radix-select-content {
+    background-color: var(--bg-color); /* Solid background to prevent transparency */
+    border: 1px solid var(--column-border);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.radix-select-viewport {
+    padding: 6px;
+}
+
+.radix-select-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    padding-left: 32px;
+    position: relative;
+    border-radius: 6px;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 0.9em;
+    user-select: none;
+    outline: none;
+    transition: background 0.2s ease;
+}
+
+/* Hover/Highlight state using your theme's accent color */
+.radix-select-item[data-highlighted] {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+.radix-select-item-indicator {
+    position: absolute;
+    left: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Custom styling for the sidebar-specific select to keep it minimal */
+.radix-sidebar-select {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+}
+
+/* =========================================
+   RADIX UI DROPDOWN MENU STYLES
+   ========================================= */
+.radix-menu-content {
+    min-width: 180px;
+    background-color: var(--bg-color); /* Fixed transparency */
+    border: 1px solid var(--column-border);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    animation: scaleIn 0.15s ease-out;
+}
+
+.radix-menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: var(--text-primary);
+    outline: none;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.radix-menu-item[data-highlighted] {
+    background-color: var(--accent-color);
+    color: #ffffff;
+}
+
+/* Danger items (like Delete) in dropdowns */
+.radix-menu-item-danger[data-highlighted] {
+    background-color: var(--btn-red-bg);
+    color: #ffffff;
+}
+
+.radix-menu-separator {
+    height: 1px;
+    background-color: var(--column-border);
+    margin: 6px;
+    opacity: 0.5;
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 .sidebar {
@@ -799,30 +945,6 @@ button, input, textarea {
     box-shadow: 0 0 8px var(--accent-color-glow); /* Magical focus glow */
 }
 
-/* --- The Scrying Dropdowns --- */
-.filter-dropdown {
-    flex: 1;
-    padding: 10px 12px;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    border-radius: 6px;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    
-    /* 🛡️ GUARDRAILS FOR LONG WIZARD NAMES */
-    max-width: 135px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.filter-dropdown:focus {
-    outline: none;
-    border-color: var(--accent-color);
-}
-
 /* --- The Clear Spell Button (Emoji Optimized) --- */
 .clear-filters-btn {
     display: flex;
@@ -949,7 +1071,7 @@ button, input, textarea {
     border: 1px solid var(--column-border);
     border-radius: 8px;
     padding: 6px 0;
-    z-index: 10;
+    z-index: 999;
     display: flex;
     flex-direction: column;
     min-width: max-content;
@@ -1043,7 +1165,7 @@ button, input, textarea {
     z-index: 1;
     position: relative;
     overflow-y: auto;
-    overflow-x: none;
+    overflow-x: visible !important;
 }
 
 /* =========================================
@@ -1251,8 +1373,9 @@ button, input, textarea {
 }
 
 .task-list::-webkit-scrollbar-thumb:hover {
-    background: var(--text-secondary);
+    background: var(--accent-color);
 }
+
 
 .task-card {
     display: flex;
@@ -1294,7 +1417,7 @@ button, input, textarea {
 
 /* Override the default react-tooltip styles */
 .wizard-theme-tooltip {
-    background-color: var(--card-bg) !important; 
+    background-color: var(--bg-color) !important; 
     color: var(--text-primary) !important;
     padding: 4px 10px !important;
     border-radius: 6px !important;
@@ -2096,10 +2219,9 @@ select.sidebar-value option {
     flex: 1;
     /* Expands to fill the rest of the row */
     display: flex;
+    flex-direction: row;
     align-items: center;
     margin-left: 8px;
-    justify-content: flex-start;
-    /* Ensures values sit left-aligned next to the label space */
     color: var(--text-primary);
     min-width: 0;
 }
@@ -2124,7 +2246,7 @@ span.sidebar-value {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    /* gap: 12px; */
     padding-bottom: 4px;
 }
 

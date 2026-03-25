@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { useDroppable, useDndContext } from '@dnd-kit/core';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import SortableTask from "./SortableTask"
 
 export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, onUpdateColumn, onClearColumn, onSortColumn, onRemoveColumn, onOpenTaskModal }) {
@@ -19,10 +20,6 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
         column.tasks.some(task => task.id === over.id)
     );
 
-    // 1. state to manage the dropdown's visibility
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const menuRef = useRef(null);
-
     // Check for newly created columns and clear their isNew state 1000ms after creation to match animation timer
     useEffect(() => {
         if (column.isNew) {
@@ -32,22 +29,6 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
             return () => clearTimeout(timer);
         }
     }, [column.isNew, column.id, onUpdateColumn]);
-
-    // 2. Add an effect to handle clicking outside the menu to close it
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setIsMenuOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleTitleSave = () => {
         const finalTitle = titleInput.trim() ? titleInput : "Untitled Column";
@@ -113,51 +94,46 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                 <div className="column-controls">
                     <button className="add-task-btn" onClick={() => onAddTask(column.id)}><span>+</span></button>
 
-                    <div className="column-menu-container" ref={menuRef}>
-                        <button className="column-menu-btn" onClick={toggleMenu}>
-                            ⋮
-                        </button>
+                    <DropdownMenu.Root>
+                        <DropdownMenu.Trigger asChild>
+                            <button className="column-menu-btn" aria-label="Column Options">
+                                ⋮
+                            </button>
+                        </DropdownMenu.Trigger>
 
-                        {isMenuOpen && (
-                            <div className="column-dropdown-menu">
-                                {/* --- Sorting SUB-MENU TRIGGER --- */}
-                                <div className="submenu-trigger">
-                                    <button className="submenu-btn">
+                        <DropdownMenu.Portal>
+                            <DropdownMenu.Content className="radix-menu-content" sideOffset={5} align="end">
+                                
+                                {/* Sub-Menu for Sorting */}
+                                <DropdownMenu.Sub>
+                                    <DropdownMenu.SubTrigger className="radix-menu-item">
                                         ↕️ Sort tasks...
-                                    </button>
+                                        <div className="radix-menu-right-slot">▶</div>
+                                    </DropdownMenu.SubTrigger>
+                                    <DropdownMenu.Portal>
+                                        <DropdownMenu.SubContent className="radix-menu-content" sideOffset={2} alignOffset={-5}>
+                                            <DropdownMenu.Item className="radix-menu-item" onSelect={() => onSortColumn(column.id, 'newest')}>✨ Newest</DropdownMenu.Item>
+                                            <DropdownMenu.Item className="radix-menu-item" onSelect={() => onSortColumn(column.id, 'oldest')}>🕰️ Oldest</DropdownMenu.Item>
+                                            <DropdownMenu.Item className="radix-menu-item" onSelect={() => onSortColumn(column.id, 'alpha')}>📖 A-Z</DropdownMenu.Item>
+                                            <DropdownMenu.Item className="radix-menu-item" onSelect={() => onSortColumn(column.id, 'effort')}>⚡ Effort</DropdownMenu.Item>
+                                            <DropdownMenu.Item className="radix-menu-item" onSelect={() => onSortColumn(column.id, 'priority-desc')}>🔥 Highest Priority</DropdownMenu.Item>
+                                            <DropdownMenu.Item className="radix-menu-item" onSelect={() => onSortColumn(column.id, 'priority-asc')}>🕯️ Lowest Priority</DropdownMenu.Item>
+                                        </DropdownMenu.SubContent>
+                                    </DropdownMenu.Portal>
+                                </DropdownMenu.Sub>
 
-                                    {/* --- Sorting SUB-MENU CONTENT --- */}
-                                    <div className="submenu-content">
-                                        <button onClick={() => { onSortColumn(column.id, 'newest'); setIsMenuOpen(false); }}>
-                                            ✨ Newest
-                                        </button>
-                                        <button onClick={() => { onSortColumn(column.id, 'oldest'); setIsMenuOpen(false); }}>
-                                            🕰️ Oldest
-                                        </button>
-                                        <button onClick={() => { onSortColumn(column.id, 'alpha'); setIsMenuOpen(false); }}>
-                                            📖 A-Z
-                                        </button>
-                                        <button onClick={() => { onSortColumn(column.id, 'effort'); setIsMenuOpen(false); }}>
-                                            ⚡ Effort
-                                        </button>
-                                        <button onClick={() => { onSortColumn(column.id, 'priority-desc'); setIsMenuOpen(false); }}>
-                                            🔥 Highest Priority
-                                        </button>
-                                        <button onClick={() => { onSortColumn(column.id, 'priority-asc'); setIsMenuOpen(false); }}>
-                                            🕯️ Lowest Priority
-                                        </button>
-                                    </div>
-                                </div>
-                                {/* ------------------------ */}
-                                <button className="clear-column-option" onClick={() => { onClearColumn(column.id); setIsMenuOpen(false); }}>
+                                <DropdownMenu.Separator className="radix-menu-separator" />
+                                
+                                <DropdownMenu.Item className="radix-menu-item" onSelect={() => onClearColumn(column.id)}>
                                     🔄 Clear tasks
-                                </button>
-                                <button className="delete-column-option" onClick={() => { onRemoveColumn(column.id); setIsMenuOpen(false); }}>
+                                </DropdownMenu.Item>
+                                <DropdownMenu.Item className="radix-menu-item radix-menu-item-danger" onSelect={() => onRemoveColumn(column.id)}>
                                     ❌ Delete column
-                                </button>
-                            </div>
-                        )}
-                    </div>
+                                </DropdownMenu.Item>
+
+                            </DropdownMenu.Content>
+                        </DropdownMenu.Portal>
+                    </DropdownMenu.Root>
                 </div>
             </div>
 

@@ -5,6 +5,7 @@ import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import { getNextPriority, getNextEffort, envIcons, issueIcons } from '../utils/helpers';
 import TipTapMenuBar from "./TipTapMenuBar";
+import CustomSelect from "./CustomSelect";
 
 
 export default function TaskModal({ isOpen, task, onClose, onSave }) {
@@ -26,7 +27,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
     const [isEditingDescription, setIsEditingDescription] = useState(false)
     const [editingCustomFieldId, setEditingCustomFieldId] = useState(null)
 
-    
+
 
     // Track the previous task ID to know when a new card is opened
     const [prevTaskId, setPrevTaskId] = useState(null);
@@ -166,8 +167,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
         onSave(task.id, { ...task, text, description, priority: nextPriority, assignee, effort, subtasks });
     };
 
-    const handleIssueTypeChange = (e) => {
-        const newType = e.target.value;
+    const handleIssueTypeChange = (newType) => {
         setIssueType(newType);
         onSave(task.id, { ...task, text, description, priority, assignee, issueType: newType, effort, subtasks });
     };
@@ -178,8 +178,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
         onSave(task.id, { ...task, text, description, priority, assignee, issueType, effort: nextEffort, subtasks });
     };
 
-    const handleEnvironmentChange = (e) => {
-        const newEnv = e.target.value;
+    const handleEnvironmentChange = (newEnv) => {
         setEnvironment(newEnv);
         onSave(task.id, { ...task, text, description, priority, assignee, issueType, effort, environment: newEnv, subtasks });
     };
@@ -495,18 +494,16 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                 Issue Type
                             </div>
                             <div className="sidebar-value-container">
-                                <select
-                                    className="sidebar-value"
+                                <CustomSelect
                                     value={issueType}
-                                    onChange={handleIssueTypeChange}
-                                    style={{ appearance: 'auto', cursor: 'pointer', width: '100%' }}
-                                >
-                                    {Object.entries(issueIcons).map(([label, icon]) => (
-                                        <option key={label} value={label}>
-                                            {icon} {label}
-                                        </option>
-                                    ))}
-                                </select>
+                                    onValueChange={handleIssueTypeChange} // Radix passes the value directly, not an event
+                                    options={Object.entries(issueIcons).map(([label, icon]) => ({
+                                        value: label,
+                                        label: <div>{icon} {label}</div>
+                                    }))}
+                                    placeholder="Select Type..."
+                                    triggerClassName="sidebar-value radix-sidebar-select"
+                                />
                             </div>
                         </div>
 
@@ -545,18 +542,16 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                 Environment
                             </div>
                             <div className="sidebar-value-container">
-                                <select
-                                    className="sidebar-value"
+                                <CustomSelect
                                     value={environment}
-                                    onChange={handleEnvironmentChange}
-                                    style={{ appearance: 'auto', cursor: 'pointer', width: '100%' }}
-                                >
-                                    {Object.entries(envIcons).map(([label, icon]) => (
-                                        <option key={label} value={label}>
-                                            {icon} {label}
-                                        </option>
-                                    ))}
-                                </select>
+                                    onValueChange={handleEnvironmentChange} // Radix passes the value directly
+                                    options={Object.entries(envIcons).map(([label, icon]) => ({
+                                        value: label,
+                                        label: <div style={{ display: 'flex', gap: '8px' }}>{icon} {label}</div>
+                                    }))}
+                                    placeholder="Select Env..."
+                                    triggerClassName="sidebar-value radix-sidebar-select"
+                                />
                             </div>
                         </div>
 
@@ -566,7 +561,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                 <div className="sidebar-label-container" title={cf.key}>
                                     {cf.key}
                                 </div>
-                                <div className="sidebar-value-container" style={{gap:'8px'}}>
+                                <div className="sidebar-value-container" style={{ gap: '8px' }}>
                                     {editingCustomFieldId === cf.id ? (
                                         <input
                                             autoFocus
@@ -575,7 +570,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                             onChange={(e) => handleUpdateCustomField(cf.id, 'value', e.target.value)}
                                             onBlur={(e) => handleSaveCustomFields(e, cf.id)}
                                             onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
-                                            style={{ width: '100%', boxSizing: 'border-box', textAlign: 'left'}}
+                                            style={{ width: '100%', boxSizing: 'border-box', textAlign: 'left' }}
                                             placeholder="Empty"
                                         />
                                     ) : (
@@ -620,7 +615,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                             onBlur={(e) => handleSaveCustomFields(e, cf.id)}
                                             onKeyDown={(e) => handleSaveCustomFields(e, cf.id)}
                                             className={`sidebar-value edit-input cf-input-${cf.id}`}
-                                            style={{ width: '50%', padding: '2px 4px', boxSizing: 'border-box', textAlign: 'left'}}
+                                            style={{ width: '50%', padding: '2px 4px', boxSizing: 'border-box', textAlign: 'left' }}
                                             autoFocus={cf.key === "" && cf.value === ""}
                                         />
                                         <input

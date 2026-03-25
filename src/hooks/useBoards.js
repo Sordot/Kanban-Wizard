@@ -84,7 +84,7 @@ export const useBoards = (initialData) => {
         };
 
         const dataStr = JSON.stringify(cleanBoard, null, 2);
-        const fileName = `${boardToExport.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}_grimoire.json`;
+        const fileName = `${boardToExport.name.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.json`;
 
         // File System Access API
         try {
@@ -93,7 +93,7 @@ export const useBoards = (initialData) => {
                 const handle = await window.showSaveFilePicker({
                     suggestedName: fileName,
                     types: [{
-                        description: 'JSON Grimoire File',
+                        description: 'JSON File',
                         accept: { 'application/json': ['.json'] },
                     }],
                 });
@@ -107,7 +107,7 @@ export const useBoards = (initialData) => {
                 // Close the file and write the contents to disk.
                 await writable.close();
 
-                console.log("Successfully crystallized the grimoire to disk.");
+                console.log("Successfully exported board.");
             } else {
                 // 3. Fallback: The Anchor Ritual (For Safari/Older Browsers)
                 const blob = new Blob([dataStr], { type: 'application/json' });
@@ -121,7 +121,7 @@ export const useBoards = (initialData) => {
         } catch (err) {
             // Handle user cancellation or errors
             if (err.name !== 'AbortError') {
-                console.error("The ritual failed:", err);
+                console.error("Failed to export:", err);
             }
         }
     }, [boards, activeBoardID]);

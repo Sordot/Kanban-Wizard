@@ -21,7 +21,7 @@ export const getNextEffort = (currentEffort) => {
 };
 
 export const issueIcons = {
-  "User Story": "📜",
+  "Story": "📜",
   "Bug": "🦠",
   "Test": "🔮",
   "Spike": "⌛"
