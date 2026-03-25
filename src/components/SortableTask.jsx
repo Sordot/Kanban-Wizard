@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { useSortable } from '@dnd-kit/sortable';
+import { useSortable, defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
 const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal }) => {
@@ -30,6 +30,17 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
         }
     }, [isNewTask, columnID, id, onUpdate]);
 
+    // Optimize layout changes (prevents jitter when entering new columns)
+    const animateLayoutChanges = (args) => {
+        const { isSorting, wasDragging } = args;
+        // Only animate layout changes during an active drag/sort
+        if (isSorting || wasDragging) {
+            return defaultAnimateLayoutChanges(args);
+        }
+        return true;
+    };
+
+    // 2. Add the optimized physics to the hook
     const {
         attributes,
         listeners,
@@ -37,7 +48,14 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
         transform,
         transition,
         isDragging
-    } = useSortable({ id });
+    } = useSortable({ 
+        id,
+        animateLayoutChanges,
+        transition: {
+            duration: 350, // Slightly increased duration for a more visible glide
+            easing: 'cubic-bezier(0.25, 1, 0.5, 1)', // Smooth deceleration curve
+        }
+    });
 
     const formatTime = (ts) => {
         if (!ts) return ''
@@ -47,7 +65,7 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
     }
 
     const style = {
-        transform: CSS.Translate.toString(transform),
+        transform: CSS.Transform.toString(transform),
         transition: transition,
         opacity: isDragging ? 0.3 : 1
     }

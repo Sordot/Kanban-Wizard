@@ -1,12 +1,23 @@
 import { useState, useRef, useEffect } from 'react';
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import DroppableContainer from './DroppableContainer'
+import { useDroppable, useDndContext } from '@dnd-kit/core';
 import SortableTask from "./SortableTask"
 
 export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, onUpdateColumn, onClearColumn, onSortColumn, onRemoveColumn, onOpenTaskModal }) {
 
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [titleInput, setTitleInput] = useState(column.title);
+
+    // Initialize useDroppable for the entire column
+    const { setNodeRef, isOver } = useDroppable({ id: column.id });
+    // Setup useDndContext to track exactly what is being hovered globally
+    const { over } = useDndContext();
+
+    // The column glows if we are hovering the column's empty space OR any task inside this column
+    const isDragOver = over && (
+        over.id === column.id || 
+        column.tasks.some(task => task.id === over.id)
+    );
 
     // 1. state to manage the dropdown's visibility
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,7 +59,7 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
     };
 
     return (
-        <div className={`kanban-column ${column.isDeleting ? 'is-deleting' : ''} ${column.isNew ? 'is-new' : ''}`}
+        <div ref={setNodeRef} className={`kanban-column ${column.isDeleting ? 'is-deleting' : ''} ${column.isNew ? 'is-new' : ''} ${isDragOver ? 'is-drag-over' : ''}`}
             key={column.id}
             style={{ overflow: column.isNew ? 'hidden' : undefined }}
         >
@@ -153,7 +164,7 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
 
 
             <SortableContext id={column.id} items={column.tasks.map(task => task.id)} strategy={verticalListSortingStrategy}>
-                <DroppableContainer id={column.id} className="task-list">
+                <div id={column.id} className="task-list">
                     {column.tasks.length === 0 && (
                         <div className="empty-column-placeholder">
                             <h4>No tasks here yet.</h4>
@@ -170,7 +181,7 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                             onOpenModal={onOpenTaskModal}
                         />
                     ))}
-                </DroppableContainer>
+                </div>
             </SortableContext>
             <div className="column-footer">
                 <span className="task-count">

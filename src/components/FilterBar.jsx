@@ -16,7 +16,7 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
     const hasActiveFilters = filters.text || filters.priority || filters.issueType || filters.effort || filters.environment || filters.assignee;
 
     return (
-        <div className="filter-container" style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div className="filter-container">
             
             {/* The Original Text Search */}
             <div className="search-input-wrapper">

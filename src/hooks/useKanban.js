@@ -170,7 +170,7 @@ export const useKanban = (initialData) => {
     }
   }, [boards, activeBoardID]);
 
-  const addTask = (inputColumnID) => {
+  const addTask = useCallback((inputColumnID) => {
     //get unique task id
     const newTask = {
       id: `task-${Date.now()}`,
@@ -185,7 +185,7 @@ export const useKanban = (initialData) => {
       columnID: inputColumnID,
       task: newTask,
     });
-  }
+  }, []);
 
   const insertTask = useCallback((columnID, newTask) => {
     setBoards(prevBoards => prevBoards.map(board => {
@@ -422,9 +422,9 @@ export const useKanban = (initialData) => {
     setNewColumnTitle("")
   }
 
-  const openDeleteModal = (type, data) => {
+  const openDeleteModal = useCallback((type, data) => {
     setModalConfig({ isOpen: true, type, data })
-  }
+  }, []);
 
   const closeModal = () => {
     setModalConfig({ isOpen: false, type: null, data: null })
@@ -454,9 +454,9 @@ export const useKanban = (initialData) => {
     });
   };
 
-  const openTaskModal = (columnID, task) => {
+  const openTaskModal = useCallback((columnID, task) => {
     setTaskModalConfig({ isOpen: true, columnID, task });
-  };
+  }, []);
 
   const closeTaskModal = () => {
     setTaskModalConfig({ isOpen: false, columnID: null, task: null });

@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import {
   DndContext,
   DragOverlay,
@@ -115,6 +116,15 @@ function App() {
     return closestCorners(args);
   };
 
+  // Stable callbacks for deletion to prevent SortableTask re-renders
+  const handleDeleteTask = useCallback((colId, taskId) => {
+    openDeleteModal('task', { columnID: colId, taskID: taskId });
+  }, [openDeleteModal]);
+
+  const handleRemoveColumn = useCallback((columnID) => {
+    openDeleteModal('column', { columnID });
+  }, [openDeleteModal]);
+
   return (
     <div className="app-layout">
       <Sidebar
@@ -129,9 +139,7 @@ function App() {
         toggleTheme={toggleTheme}
       />
       <div className='kanban-container'>
-        <div className="board-header-actions">
           <FilterBar filters={filters} setFilters={setFilters} uniqueAssignees={uniqueAssignees} />
-        </div>
         <DndContext sensors={sensors} collisionDetection={customCollisionDetection} onDragOver={handleDragOver} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
           <div className='kanban-board'>
             {/* map through the kanban columns */}
@@ -140,12 +148,12 @@ function App() {
                 key={column.id}
                 column={column}
                 onAddTask={addTask}
-                onDeleteTask={(colId, taskId) => openDeleteModal('task', { columnID: colId, taskID: taskId })}
+                onDeleteTask={handleDeleteTask}
                 onUpdateTask={updateTask}
                 onSortColumn={sortColumn}
                 onUpdateColumn={updateColumn}
                 onClearColumn={clearColumn}
-                onRemoveColumn={() => openDeleteModal('column', { columnID: column.id })}
+                onRemoveColumn={handleRemoveColumn}
                 onOpenTaskModal={openTaskModal}
               />
             ))}

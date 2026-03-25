@@ -702,8 +702,7 @@ button, input, textarea {
 }
 
 .tilt-wrapper {
-    transform: rotate(3deg) scale(1.02);
-    transition: transform 0.15s ease-out;
+    transform: rotate(3deg);
 }
 
 .kanban-board {
@@ -745,14 +744,18 @@ button, input, textarea {
 
 .filter-container {
     display: flex;
+    flex-direction: row;
     gap: 12px;
     align-items: center;
-    flex-wrap: wrap;
     background: var(--column-bg); /* Matches your board's card/surface color */
     padding: 12px 16px;
     border-radius: 8px;
     border: 1px solid var(--column-border);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    width: 70%;
+    max-width: 1000px;
+    margin: 0 auto; /* This centers the filter bar if the container is full-width */
 }
 
 /* --- The Text Search Input --- */
@@ -1148,6 +1151,13 @@ button, input, textarea {
     }
 }
 
+/* Highlight the outer edges of the column when dragging over it */
+.kanban-column.is-drag-over {
+    /* Uses a double box-shadow trick to create a solid border + a soft glow */
+    border-color: #0073cf;
+    transition: all 0.2s ease;
+}
+
 .empty-column-placeholder {
     display: flex;
     justify-content: center;
@@ -1253,7 +1263,7 @@ button, input, textarea {
     overflow: hidden;
     cursor: grab;
     isolation: isolate;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .task-card:active {
