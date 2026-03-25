@@ -1,24 +1,12 @@
 import { memo, useEffect } from 'react';
 import { useSortable, defaultAnimateLayoutChanges } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { envIcons, issueIcons } from '../utils/helpers';
 
 const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal }) => {
 
     const isNewTask = task.isNew === true;
     const isDeleting = task.isDeleting === true;
-    const issueIcons = {
-        "User Story": "📜",
-        "Bug": "🦠",
-        "Test": "🔮",
-        "Spike": "⌛"
-    };
-
-    const envIcons = {
-        "Dev": "🧙‍♂️",
-        "QA": "🕵",
-        "Staging": "🏗️",
-        "Production": "🏰"
-    };
 
     // Keep the flash animation effect
     useEffect(() => {

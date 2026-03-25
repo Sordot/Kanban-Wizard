@@ -39,6 +39,10 @@
     /* Glassmorphism Edge Opacities */
     --glass-edge-top: rgba(255, 255, 255, 0.15);
     --glass-edge-left: rgba(255, 255, 255, 0.08);
+
+    --priority-high: #ff8080;
+    --priority-medium: #fcd34d;
+    --priority-low: #6ee7b7;
 }
 
 :root[data-theme="light"] {
@@ -74,6 +78,10 @@
     /* Glassmorphism Edge Opacities */
     --glass-edge-top: rgba(255, 255, 255, 0.7);
     --glass-edge-left: rgba(255, 255, 255, 0.3);
+
+    --priority-high: #c53030;
+    --priority-medium: #c05621;
+    --priority-low: #276749;
 }
 
 /* Light mode overrides for priority text (Included so you don't lose them) */
@@ -1896,12 +1904,8 @@ select.sidebar-value option {
 
 .modal-btn.cancel:hover {
     /* Shifts to a solid red glass look */
-    background: var(--btn-red-bg);
     border-color: var(--btn-red-hover);
-    border-top: 1px solid var(--glass-edge-top);
-    border-left: 1px solid var(--glass-edge-left);
     color: #ffffff;
-    box-shadow: var(--btn-red-shadow);
 }
 
 .modal-btn.confirm-green {

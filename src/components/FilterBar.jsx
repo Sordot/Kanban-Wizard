@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
+import { issueIcons, envIcons, priorityColors } from '../utils/helpers';
 
 // Notice we now accept the 'filters' object and a 'setFilters' function
 export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
@@ -17,7 +18,7 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
 
     return (
         <div className="filter-container">
-            
+
             {/* The Original Text Search */}
             <div className="search-input-wrapper">
                 <FaSearch className="search-icon" />
@@ -31,9 +32,9 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
             </div>
 
             {/* 👇 The Dynamic Assignee (Wizards) Dropdown */}
-            <select 
+            <select
                 className="filter-dropdown"
-                value={filters.assignee} 
+                value={filters.assignee}
                 onChange={(e) => handleFilterChange('assignee', e.target.value)}
             >
                 <option value="">All Assignees</option>
@@ -46,43 +47,47 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
             </select>
 
             {/* Advanced "Scrying" Selectors */}
-            <select 
+            <select
                 className="filter-dropdown"
-                value={filters.priority} 
+                value={filters.priority}
                 onChange={(e) => handleFilterChange('priority', e.target.value)}
+                style={{ color: priorityColors[filters.priority] || 'var(--text-primary)' }}
             >
-                <option value="">All Priorities</option>
-                <option value="High">High Priority</option>
-                <option value="Medium">Medium Priority</option>
-                <option value="Low">Low Priority</option>
+                {/* 3. Explicitly setting inherit on the default option so it doesn't grab the select's color it is reset */}
+                <option value="" style={{ color: 'var(--text-primary)' }}>All Priorities</option>
+                <option value="High" style={{ color: priorityColors.High }}>High Priority</option>
+                <option value="Medium" style={{ color: priorityColors.Medium }}>Medium Priority</option>
+                <option value="Low" style={{ color: priorityColors.Low }}>Low Priority</option>
             </select>
 
-            <select 
+            <select
                 className="filter-dropdown"
-                value={filters.issueType} 
+                value={filters.issueType}
                 onChange={(e) => handleFilterChange('issueType', e.target.value)}
             >
                 <option value="">All Types</option>
-                <option value="User Story">📜 User Story</option>
-                <option value="Bug">🦠 Bug</option>
-                <option value="Test">🔮 Test</option>
-                <option value="Spike">⌛ Spike</option>
+                {Object.entries(issueIcons).map(([label, icon]) => (
+                    <option key={label} value={label}>
+                        {icon} {label}
+                    </option>
+                ))}
             </select>
 
-            <select 
+            <select
                 className="filter-dropdown"
-                value={filters.environment} 
+                value={filters.environment}
                 onChange={(e) => handleFilterChange('environment', e.target.value)}
             >
                 <option value="">All Envs</option>
-                <option value="Dev">🧙‍♂️ Dev</option>
-                <option value="QA">🕵 QA</option>
-                <option value="Staging">🏗️ Staging</option>
-                <option value="Production">🏰 Production</option>
+                {Object.entries(envIcons).map(([label, icon]) => (
+                    <option key={label} value={label}>
+                        {icon} {label}
+                    </option>
+                ))}
             </select>
 
-            <button 
-                className={`clear-filters-btn ${hasActiveFilters ? 'visible' : ''}`} 
+            <button
+                className={`clear-filters-btn ${hasActiveFilters ? 'visible' : ''}`}
                 onClick={clearAllFilters}
                 aria-label="Clear all filters"
             >

@@ -3,8 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import { getNextPriority } from "../hooks/useKanban";
-import { getNextEffort } from "../hooks/useKanban"
+import { getNextPriority, getNextEffort, envIcons, issueIcons } from '../utils/helpers';
 import TipTapMenuBar from "./TipTapMenuBar";
 
 
@@ -27,19 +26,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
     const [isEditingDescription, setIsEditingDescription] = useState(false)
     const [editingCustomFieldId, setEditingCustomFieldId] = useState(null)
 
-    const issueIcons = {
-        "User Story": "📜",
-        "Bug": "🦠",
-        "Test": "🔮",
-        "Spike": "⌛"
-    };
-
-    const envIcons = {
-        "Dev": "🧙‍♂️",
-        "QA": "🕵",
-        "Staging": "🏗️",
-        "Production": "🏰"
-    };
+    
 
     // Track the previous task ID to know when a new card is opened
     const [prevTaskId, setPrevTaskId] = useState(null);

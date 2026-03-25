@@ -9,7 +9,7 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
     const [titleInput, setTitleInput] = useState(column.title);
 
     // Initialize useDroppable for the entire column
-    const { setNodeRef, isOver } = useDroppable({ id: column.id });
+    const { setNodeRef } = useDroppable({ id: column.id });
     // Setup useDndContext to track exactly what is being hovered globally
     const { over } = useDndContext();
 
