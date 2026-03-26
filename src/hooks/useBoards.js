@@ -14,15 +14,22 @@ export const useBoards = (initialData) => {
     const activeBoard = boards.find(board => board.id === activeBoardID)
     const columns = activeBoard ? activeBoard.columns : []
 
-    //Local Storage Effect
     useEffect(() => {
-        localStorage.setItem('theo-kanban-boards', JSON.stringify(boards))
+        // Strip out animation flags so they never trigger on a page refresh
+        const boardsToSave = boards.map(board => {
+            const cleanBoard = { ...board };
+            delete cleanBoard.isNew;
+            delete cleanBoard.isRenamed;
+            delete cleanBoard.isDeleting;
+            return cleanBoard;
+        });
+        localStorage.setItem('theo-kanban-boards', JSON.stringify(boardsToSave));
     }, [boards])
 
-    // ==============BOARD CRUD==============
     const addBoard = useCallback(() => {
+        const newBoardId = `board-${Date.now()}`;
         const newBoard = {
-            id: `board-${Date.now()}`,
+            id: newBoardId,
             name: "🌱 Untitled Project",
             columns: [
                 { id: `col-1-${Date.now()}`, title: "To Do", tasks: [] },
@@ -34,12 +41,31 @@ export const useBoards = (initialData) => {
 
         setBoards(prev => [...prev, newBoard]);
         setActiveBoardID(newBoard.id);
+
+        // Add this timeout to clear the isNew flag after the animation finishes
+        setTimeout(() => {
+            setBoards(prev => prev.map(board => 
+                board.id === newBoardId ? { ...board, isNew: false } : board
+            ));
+        }, 800);
     }, []);
 
     const updateBoard = (boardID, updates) => {
+        // Detect if the update includes a name change
+        const isRenaming = updates.name !== undefined;
+
         setBoards(prev => prev.map(board =>
-            board.id === boardID ? { ...board, ...updates } : board
+            board.id === boardID ? { ...board, ...updates, isRenamed: isRenaming } : board
         ));
+
+        // Clear the flag after the 0.8s animation finishes
+        if (isRenaming) {
+            setTimeout(() => {
+                setBoards(prev => prev.map(board =>
+                    board.id === boardID ? { ...board, isRenamed: false } : board
+                ));
+            }, 800);
+        }
     };
 
     const deleteBoard = useCallback((id) => {
@@ -435,6 +461,19 @@ export const useBoards = (initialData) => {
         });
     }
 
+    //================BOARD DRAG UTILS=================
+    const handleBoardDragEnd = useCallback((event) => {
+        const { active, over } = event;
+        
+        if (over && active.id !== over.id) {
+            setBoards((prevBoards) => {
+                const oldIndex = prevBoards.findIndex(board => board.id === active.id);
+                const newIndex = prevBoards.findIndex(board => board.id === over.id);
+                return arrayMove(prevBoards, oldIndex, newIndex);
+            });
+        }
+    }, []);
+
     return {
         boards,
         setBoards,
@@ -455,6 +494,7 @@ export const useBoards = (initialData) => {
         updateTask,
         deleteTask,
         handleDragOver,
-        handleDragEnd
+        handleDragEnd,
+        handleBoardDragEnd
     }
 }

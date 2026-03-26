@@ -123,6 +123,7 @@ function App() {
         onExportBoard={boardData.exportBoard}
         theme={theme}
         toggleTheme={toggleTheme}
+        handleBoardDragEnd={boardData.handleBoardDragEnd}
       />
       <div className='kanban-container'>
         <FilterBar

@@ -503,66 +503,49 @@ button, input, textarea {
     display: flex;
     gap: 6px;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-.board-item-wrapper:hover .board-actions {
+/* reveal the buttons when the wrapper focused or active */
+.board-actions:focus-within,
+.board-link.active + .board-actions {
     opacity: 1;
+    visibility: visible;
 }
 
 .edit-board-name-btn {
-    background: var(--card-bg);
-    border: 1px solid var(--column-border);
+    background: transparent;
+    border: none;
     color: var(--text-secondary);
     cursor: pointer;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 6px;
     font-size: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.edit-board-name-btn:hover {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    color: #ffffff;
-}
-
-.edit-board-name-btn.delete:hover {
-    color: var(--btn-red-hover);
 }
 
 .delete-board-btn {
-    background: var(--card-bg);
-    border: 1px solid var(--column-border);
+    background: transparent;
+    border: none;
     border-radius: 6px;
     color: var(--btn-red-bg);
-    padding: 6px 10px;
+    padding: 6px;
     font-size: 12px;
     cursor: pointer;
-    opacity: 0;
-    transition: opacity 0.2s, background 0.2s, color 0.2s;
-}
-
-.delete-board-btn:hover {
-    background: var(--btn-red-bg);
-    color: #ffffff;
-    border-color: var(--btn-red-bg);
-}
-
-.board-item-wrapper:hover .delete-board-btn {
-    opacity: 1;
 }
 
 /* --- Refined Summoning for Sidebar --- */
-.board-item-wrapper.is-new {
+.board-item-wrapper.is-new,
+.board-item-wrapper.is-renamed {
     animation: summonBoard 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     overflow: hidden;
 }
 
-.board-item-wrapper.is-new::before {
+.board-item-wrapper.is-new::before,
+.board-item-wrapper.is-renamed::before {
     content: "";
     position: absolute;
     top: 0;

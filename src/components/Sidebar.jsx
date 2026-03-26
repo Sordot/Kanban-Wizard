@@ -1,8 +1,28 @@
 import logoIcon from '../assets/Kanban-Wizard-removebg-preview.png'
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import SortableBoardItem from './SortableBoardItem';
 
-export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoard, onDeleteBoard, onRenameBoard, onExportBoard, theme, toggleTheme }) {
+export default function Sidebar({ 
+  boards, 
+  activeBoardID, 
+  onSelectBoard, 
+  onAddBoard, 
+  onDeleteBoard, 
+  onRenameBoard, 
+  onExportBoard, 
+  theme, 
+  toggleTheme, 
+  handleBoardDragEnd }) {
 
-  
+  //configure sensors for minimum of 5px movement before "drag" fires
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    })
+  );
 
   return (
     <aside className="sidebar">
@@ -11,24 +31,28 @@ export default function Sidebar({ boards, activeBoardID, onSelectBoard, onAddBoa
         <span>Kanban Wizard</span>
       </div>
       <nav className="board-list">
-        <div className="board-items-container">
-          {boards.map(board => (
-            <div key={board.id} className={`board-item-wrapper ${board.isNew ? 'is-new' : ''} ${board.isDeleting ? 'is-deleting' : ''}`}>
-              <button
-                className={`board-link ${board.id === activeBoardID ? 'active' : ''}`}
-                onClick={() => onSelectBoard(board.id)}
-              >
-                {board.name}
-              </button>
-              <div className="board-actions">
-                <button onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }} className="edit-board-name-btn">✏️</button>
-                <button onClick={(e) => { e.stopPropagation(); onDeleteBoard('board', { boardID: board.id }); }} className="delete-board-btn">X</button>
-              </div>
-            </div>
-          ))}
-        </div>
-        <button className="add-board-sidebar" onClick={onAddBoard}>+ New Board</button>
+        <DndContext 
+            sensors={sensors} 
+            collisionDetection={closestCenter} 
+            onDragEnd={handleBoardDragEnd}
+        >
+          <div className="board-items-container">
+            <SortableContext items={boards.map(b => b.id)} strategy={verticalListSortingStrategy}>
+              {boards.map(board => (
+                <SortableBoardItem 
+                    key={board.id} 
+                    board={board} 
+                    activeBoardID={activeBoardID}
+                    onSelectBoard={onSelectBoard}
+                    onRenameBoard={onRenameBoard}
+                    onDeleteBoard={onDeleteBoard}
+                />
+              ))}
+            </SortableContext>
+          </div>
+        </DndContext>
         
+        <button className="add-board-sidebar" onClick={onAddBoard}>+ New Board</button>
       </nav>
       <div className="sidebar-footer">
         <button className="export-btn" onClick={onExportBoard} title="Export current board as JSON">
