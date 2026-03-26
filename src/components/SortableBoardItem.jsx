@@ -10,12 +10,15 @@ export default function SortableBoardItem({ board, activeBoardID, onSelectBoard,
   };
 
   return (
-    <div 
-        ref={setNodeRef} 
-        style={style} 
-        {...attributes} 
-        {...listeners} 
-        className={`board-item-wrapper ${board.isNew ? 'is-new' : ''} ${board.isDeleting ? 'is-deleting' : ''} ${board.isRenamed ? 'is-renamed' : ''}`}
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={`board-item-wrapper 
+        ${board.isNew ? 'is-new' : ''} 
+        ${board.isDeleting ? 'is-deleting' : ''} 
+        ${board.isRenamed ? 'is-renamed' : ''} `}
     >
       <button
         className={`board-link ${board.id === activeBoardID ? 'active' : ''}`}
@@ -24,20 +27,20 @@ export default function SortableBoardItem({ board, activeBoardID, onSelectBoard,
         {board.name}
       </button>
       <div className="board-actions">
-        <button 
-          onPointerDown={(e) => e.stopPropagation()} 
-          onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }} 
+        <button
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }}
           className="edit-board-name-btn"
           data-tooltip-id="wizard-tooltip"
           data-tooltip-content="Rename board"
-          >✏️</button>
-        <button 
-          onPointerDown={(e) => e.stopPropagation()} 
-          onClick={(e) => { e.stopPropagation(); onDeleteBoard(board.id); }} 
+        >✏️</button>
+        <button
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); onDeleteBoard(board.id); }}
           className="delete-board-btn"
           data-tooltip-id="wizard-tooltip"
           data-tooltip-content="Delete board"
-          >❌</button>
+        >❌</button>
       </div>
     </div>
   );

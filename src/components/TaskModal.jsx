@@ -464,7 +464,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave, onDelete }) {
                             </div>
                             <input
                                 type="text"
-                                className="sidebar-value subtask-input"
+                                className="subtask-input"
                                 placeholder="Add a subtask and press Enter..."
                                 value={newSubtaskText}
                                 onChange={(e) => setNewSubtaskText(e.target.value)}

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import logoIcon from '../assets/Kanban-Wizard-removebg-preview.png'
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
@@ -14,6 +15,9 @@ export default function Sidebar({
   theme, 
   toggleTheme, 
   handleBoardDragEnd }) {
+
+  //track if someone is dragging a board link
+  const [isDraggingActive, setIsDraggingActive] = useState(false);
 
   //configure sensors for minimum of 5px movement before "drag" fires
   const sensors = useSensors(
@@ -33,10 +37,15 @@ export default function Sidebar({
       <nav className="board-list">
         <DndContext 
             sensors={sensors} 
-            collisionDetection={closestCenter} 
-            onDragEnd={handleBoardDragEnd}
+            collisionDetection={closestCenter}
+            onDragStart={() => setIsDraggingActive(true)} //Set to true when board link is picked up
+            onDragEnd={(event) => {
+                handleBoardDragEnd(event);
+                setIsDraggingActive(false); // Set to false when dragging ends
+            }}
+            onDragCancel={() => setIsDraggingActive(false)}
         >
-          <div className="board-items-container">
+          <div className={`board-items-container ${isDraggingActive ? 'is-drag-active' : ''}`}>
             <SortableContext items={boards.map(b => b.id)} strategy={verticalListSortingStrategy}>
               {boards.map(board => (
                 <SortableBoardItem 
