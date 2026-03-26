@@ -3,7 +3,7 @@ import { issueIcons, envIcons, priorityColors } from '../utils/helpers';
 import CustomSelect from './CustomSelect';
 
 // Notice we now accept the 'filters' object and a 'setFilters' function
-export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
+export default function FilterBar({ filters, setFilters, uniqueAssignees, currentView, setCurrentView }) {
 
     // Helper to update a single property in our filter object
     const handleFilterChange = (key, value) => {
@@ -55,6 +55,22 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
 
     return (
         <div className="filter-container">
+            {/* View Switcher Tabs */}
+            <div className="view-switcher">
+                <button 
+                    className={`view-btn ${currentView === 'board' ? 'active' : ''}`}
+                    onClick={() => setCurrentView('board')}
+                >
+                    📋 Board
+                </button>
+                <button 
+                    className={`view-btn ${currentView === 'calendar' ? 'active' : ''}`}
+                    onClick={() => setCurrentView('calendar')}
+                >
+                    📅 Calendar
+                </button>
+            </div>
+            {/* Search Bar */}
             <div className="search-input-wrapper">
                 <FaSearch className="search-icon" />
                 <input
@@ -65,7 +81,7 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
                     className="search-input"
                 />
             </div>
-
+            {/* Filters */}
             <CustomSelect 
                 value={filters.assignee || "all"} 
                 onValueChange={(val) => onSelectChange('assignee', val)} 
@@ -73,7 +89,6 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
                 placeholder="All Assignees"
                 triggerClassName="filter-dropdown"
             />
-
             <CustomSelect 
                 value={filters.priority || "all"} 
                 onValueChange={(val) => onSelectChange('priority', val)} 
@@ -82,7 +97,6 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
                 triggerClassName="filter-dropdown"
                 triggerStyle={activePriorityStyle}
             />
-
             <CustomSelect 
                 value={filters.issueType || "all"} 
                 onValueChange={(val) => onSelectChange('issueType', val)} 
@@ -90,7 +104,6 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
                 placeholder="All Types"
                 triggerClassName="filter-dropdown"
             />
-
             <CustomSelect 
                 value={filters.environment || "all"} 
                 onValueChange={(val) => onSelectChange('environment', val)} 
@@ -98,7 +111,6 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
                 placeholder="All Envs"
                 triggerClassName="filter-dropdown"
             />
-
             <button
                 className={`clear-filters-btn ${hasActiveFilters ? 'visible' : ''}`}
                 onClick={clearAllFilters}

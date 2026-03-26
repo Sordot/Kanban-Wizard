@@ -19,8 +19,8 @@ import { useTheme } from './hooks/useTheme';
 import { useBoards } from './hooks/useBoards';
 import { useFilters } from './hooks/useFilters';
 import { useUIState } from './hooks/useUIState';
-import { issueIcons } from './utils/helpers';
 import FilterBar from './components/FilterBar';
+import CalendarView from './components/CalendarView';
 import Column from './components/Column';
 import ConfirmationModal from './components/ConfirmationModal';
 import Sidebar from './components/Sidebar';
@@ -46,6 +46,8 @@ const DEFAULT_DATA = [
 
 function App() {
   const { theme, toggleTheme } = useTheme();
+  const { currentView, setCurrentView, openTaskModal } = useUIState();
+  const { columns } = useBoards();
 
   // 1. Initialize our focused hooks
   const boardData = useBoards(DEFAULT_DATA);
@@ -127,143 +129,154 @@ function App() {
       />
       <div className='kanban-container'>
         <FilterBar
+          currentView={currentView}
+          setCurrentView={setCurrentView}
           filters={filterData.filters}
           setFilters={filterData.setFilters}
           uniqueAssignees={filterData.uniqueAssignees}
         />
+        {currentView === 'board' ? (
+          <div className="kanban-board-wrapper">
+            <DndContext
+              sensors={sensors}
+              collisionDetection={customCollisionDetection}
+              onDragOver={boardData.handleDragOver}
+              onDragEnd={(e) => {
+                boardData.handleDragEnd(e);
+                uiState.setActiveTask(null);
+              }}
+              onDragStart={(e) => uiState.handleDragStart(e, boardData.columns)}
+            >
+              <div className='kanban-board'>
+                {filterData.filteredColumns && filterData.filteredColumns.map((column, index, array) => (
+                  <Column
+                    key={column.id}
+                    column={column}
+                    onAddTask={handleAddTask}
+                    onDeleteTask={handleDeleteTask}
+                    onUpdateTask={boardData.updateTask}
+                    onSortColumn={boardData.sortColumn}
+                    onUpdateColumn={boardData.updateColumn}
+                    onClearColumn={boardData.clearColumn}
+                    isFirstColumn={index === 0}
+                    isLastColumn={index === array.length - 1}
+                    onMoveColumn={boardData.moveColumn}
+                    onRemoveColumn={handleRemoveColumn}
+                    onOpenTaskModal={uiState.openTaskModal}
+                  />
+                ))}
 
-        <DndContext
-          sensors={sensors}
-          collisionDetection={customCollisionDetection}
-          onDragOver={boardData.handleDragOver}
-          onDragEnd={(e) => {
-            boardData.handleDragEnd(e);
-            uiState.setActiveTask(null);
-          }}
-          onDragStart={(e) => uiState.handleDragStart(e, boardData.columns)}
-        >
-          <div className='kanban-board'>
-            {filterData.filteredColumns && filterData.filteredColumns.map((column, index, array) => (
-              <Column
-                key={column.id}
-                column={column}
-                onAddTask={handleAddTask}
-                onDeleteTask={handleDeleteTask}
-                onUpdateTask={boardData.updateTask}
-                onSortColumn={boardData.sortColumn}
-                onUpdateColumn={boardData.updateColumn}
-                onClearColumn={boardData.clearColumn}
-                isFirstColumn={index === 0}
-                isLastColumn={index === array.length - 1}
-                onMoveColumn={boardData.moveColumn}
-                onRemoveColumn={handleRemoveColumn}
-                onOpenTaskModal={uiState.openTaskModal}
-              />
-            ))}
-
-            {uiState.isAddingColumn ? (
-              <div className="add-column-editor">
-                <input
-                  autoFocus
-                  className="edit-input"
-                  style={{ width: '100%', fontSize: '1.1rem', boxSizing: 'border-box', padding: '6px 10px' }}
-                  placeholder="Name this column..."
-                  value={uiState.newColumnTitle}
-                  onChange={(e) => uiState.setNewColumnTitle(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleAddColumn();
-                    if (e.key === 'Escape') uiState.closeColumnEditor();
-                  }}
-                />
-                <div className="edit-actions">
-                  <button className="cancel-btn" onClick={uiState.closeColumnEditor}>Cancel</button>
-                  <button className="save-btn" onClick={handleAddColumn}>Add Column</button>
-                </div>
+                {uiState.isAddingColumn ? (
+                  <div className="add-column-editor">
+                    <input
+                      autoFocus
+                      className="edit-input"
+                      style={{ width: '100%', fontSize: '1.1rem', boxSizing: 'border-box', padding: '6px 10px' }}
+                      placeholder="Name this column..."
+                      value={uiState.newColumnTitle}
+                      onChange={(e) => uiState.setNewColumnTitle(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleAddColumn();
+                        if (e.key === 'Escape') uiState.closeColumnEditor();
+                      }}
+                    />
+                    <div className="edit-actions">
+                      <button className="cancel-btn" onClick={uiState.closeColumnEditor}>Cancel</button>
+                      <button className="save-btn" onClick={handleAddColumn}>Add Column</button>
+                    </div>
+                  </div>
+                ) : (
+                  <button className="add-column-btn" onClick={uiState.openColumnEditor}>
+                    <span>+ Add Column</span>
+                  </button>
+                )}
               </div>
-            ) : (
-              <button className="add-column-btn" onClick={uiState.openColumnEditor}>
-                <span>+ Add Column</span>
-              </button>
-            )}
+
+              <ConfirmationModal
+                isOpen={uiState.modalConfig.isOpen}
+                title={uiState.modalConfig.type === 'renameBoard' ? "Rename Board" : `Delete ${uiState.modalConfig.type}?`}
+                confirmText={uiState.modalConfig.type === 'renameBoard' ? 'Save Changes' : "Delete"}
+                message={
+                  uiState.modalConfig.type === 'renameBoard'
+                    ? "Enter a new name for your workspace."
+                    : "This action is permanent and cannot be undone."
+                }
+                variant={uiState.modalConfig.type === 'renameBoard' ? "confirm" : "danger"}
+                onConfirm={confirmDelete}
+                onCancel={uiState.closeModal}
+              >
+                {uiState.modalConfig.type === 'renameBoard' && (
+                  <input
+                    className="modal-rename-input"
+                    value={uiState.modalRenameValue}
+                    onChange={(e) => uiState.setModalRenameValue(e.target.value)}
+                    onKeyDown={(e) => e.key === 'Enter' && confirmDelete()}
+                    autoFocus
+                  />
+                )}
+              </ConfirmationModal>
+
+              <DragOverlay>
+                {uiState.activeTask ? (
+                  <div className="tilt-wrapper">
+                    <div
+                      className={`task-card dragging-overlay priority-${uiState.activeTask.priority}`}
+                      style={{
+                        minHeight: '100px',
+                        border: '2px dashed #0073cf', // Bright accent outline
+                        backgroundColor: 'var(--bg-color)', // Very faint magical tint
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        pointerEvents: 'none',
+                        /* Forces the ghost card onto its own hardware-accelerated compositor layer for optimized dragging */
+                        willChange: 'transform'
+                      }}
+                    ></div>
+                  </div>
+                ) : null}
+              </DragOverlay>
+            </DndContext>
           </div>
-
-          <ConfirmationModal
-            isOpen={uiState.modalConfig.isOpen}
-            title={uiState.modalConfig.type === 'renameBoard' ? "Rename Board" : `Delete ${uiState.modalConfig.type}?`}
-            confirmText={uiState.modalConfig.type === 'renameBoard' ? 'Save Changes' : "Delete"}
-            message={
-              uiState.modalConfig.type === 'renameBoard'
-                ? "Enter a new name for your workspace."
-                : "This action is permanent and cannot be undone."
-            }
-            variant={uiState.modalConfig.type === 'renameBoard' ? "confirm" : "danger"}
-            onConfirm={confirmDelete}
-            onCancel={uiState.closeModal}
-          >
-            {uiState.modalConfig.type === 'renameBoard' && (
-              <input
-                className="modal-rename-input"
-                value={uiState.modalRenameValue}
-                onChange={(e) => uiState.setModalRenameValue(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && confirmDelete()}
-                autoFocus
-              />
-            )}
-          </ConfirmationModal>
-
-          <TaskModal
-            isOpen={uiState.taskModalConfig.isOpen}
-            task={uiState.taskModalConfig.task}
-            onClose={() => uiState.closeTaskModal()}
-            onSave={(taskID, updatedTask, isClosing = false) => {
-              const currentColumn = boardData.columns.find(col => col.id === uiState.taskModalConfig.columnID);
-              const taskAlreadyInserted = currentColumn?.tasks.some(t => t.id === taskID);
-              const isOriginallyNew = uiState.taskModalConfig.task?.isNew;
-
-              if (isOriginallyNew && !taskAlreadyInserted) {
-                boardData.insertTask(uiState.taskModalConfig.columnID, {
-                  ...updatedTask,
-                  isNew: isClosing ? true : 'draft'
-                });
-              } else if (isOriginallyNew && taskAlreadyInserted) {
-                boardData.updateTask(uiState.taskModalConfig.columnID, taskID, {
-                  ...updatedTask,
-                  isNew: isClosing ? true : 'draft'
-                });
-              } else {
-                boardData.updateTask(uiState.taskModalConfig.columnID, taskID, {
-                  ...updatedTask,
-                  isNew: updatedTask.isNew
-                });
-              }
-            }}
-            onDelete={() => {
-              uiState.closeTaskModal();
-              handleDeleteTask(uiState.taskModalConfig.columnID, uiState.taskModalConfig.task.id);
-            }}
+        ) : (
+          <CalendarView
+            columns={columns}
+            onTaskClick={(colId, task) => openTaskModal(colId, task)}
           />
+        )}
 
-          <DragOverlay>
-            {uiState.activeTask ? (
-              <div className="tilt-wrapper">
-                <div
-                  className={`task-card dragging-overlay priority-${uiState.activeTask.priority}`}
-                  style={{
-                    minHeight: '100px',
-                    border: '2px dashed #0073cf', // Bright accent outline
-                    backgroundColor: 'var(--bg-color)', // Very faint magical tint
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    pointerEvents: 'none',
-                    /* Forces the ghost card onto its own hardware-accelerated compositor layer for optimized dragging */
-                    willChange: 'transform'
-                  }}
-                ></div>
-              </div>
-            ) : null}
-          </DragOverlay>
-        </DndContext>
+
+        <TaskModal
+          isOpen={uiState.taskModalConfig.isOpen}
+          task={uiState.taskModalConfig.task}
+          onClose={() => uiState.closeTaskModal()}
+          onSave={(taskID, updatedTask, isClosing = false) => {
+            const currentColumn = boardData.columns.find(col => col.id === uiState.taskModalConfig.columnID);
+            const taskAlreadyInserted = currentColumn?.tasks.some(t => t.id === taskID);
+            const isOriginallyNew = uiState.taskModalConfig.task?.isNew;
+
+            if (isOriginallyNew && !taskAlreadyInserted) {
+              boardData.insertTask(uiState.taskModalConfig.columnID, {
+                ...updatedTask,
+                isNew: isClosing ? true : 'draft'
+              });
+            } else if (isOriginallyNew && taskAlreadyInserted) {
+              boardData.updateTask(uiState.taskModalConfig.columnID, taskID, {
+                ...updatedTask,
+                isNew: isClosing ? true : 'draft'
+              });
+            } else {
+              boardData.updateTask(uiState.taskModalConfig.columnID, taskID, {
+                ...updatedTask,
+                isNew: updatedTask.isNew
+              });
+            }
+          }}
+          onDelete={() => {
+            uiState.closeTaskModal();
+            handleDeleteTask(uiState.taskModalConfig.columnID, uiState.taskModalConfig.task.id);
+          }}
+        />
 
         <AnalyticsBar columns={filterData.filteredColumns} />
 

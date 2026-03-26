@@ -896,6 +896,47 @@ button, input, textarea {
     background: var(--accent-color);
 }
 
+/* =======VIEW SWITCHER AND CALENDAR STYLES===== */
+
+.view-switcher {
+    display: flex;
+    background: var(--sidebar-bg);
+    border-radius: 8px;
+    padding: 4px;
+    margin-right: 15px;
+}
+
+.view-btn {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.view-btn.active {
+    background: var(--card-bg);
+    color: var(--text-primary);
+}
+
+/* Calendar Theming */
+.rbc-calendar {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border-radius: 12px;
+}
+
+.rbc-event {
+    background-color: var(--accent-color) !important;
+}
+
+/* Using your existing priority colors for the calendar events */
+.rbc-event.priority-high { background-color: var(--priority-high) !important; }
+.rbc-event.priority-medium { background-color: var(--priority-medium) !important; }
+.rbc-event.priority-low { background-color: var(--priority-low) !important; }
+
 /* =========================================
    🧙‍♂️ SCRYING GLASS (FILTER BAR) STYLES
    ========================================= */

@@ -1,10 +1,12 @@
 import { useState, useCallback } from "react";
 
 export const useUIState = () => {
-    
-    const [activeTask, setActiveTask] = useState(null)
 
-    const [isAddingColumn, setIsAddingColumn] = useState(false)
+  const [currentView, setCurrentView] = useState('board')
+
+  const [activeTask, setActiveTask] = useState(null)
+
+  const [isAddingColumn, setIsAddingColumn] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState("")
 
   const [modalConfig, setModalConfig] = useState({
@@ -52,7 +54,7 @@ export const useUIState = () => {
     setTaskModalConfig({ isOpen: false, columnID: null, task: null });
   };
 
-  
+
 
   //DragStart is here instead of useBoards because it touches activeTask
   const handleDragStart = (event, columns) => {
@@ -63,12 +65,24 @@ export const useUIState = () => {
   }
 
   return {
-    activeTask, setActiveTask,
-    isAddingColumn, newColumnTitle, setNewColumnTitle,
-    openColumnEditor, closeColumnEditor,
-    modalConfig, openDeleteModal, closeModal,
-    modalRenameValue, setModalRenameValue, openRenameModal,
-    taskModalConfig, openTaskModal, closeTaskModal,
+    currentView,
+    setCurrentView,
+    activeTask, 
+    setActiveTask,
+    isAddingColumn, 
+    newColumnTitle, 
+    setNewColumnTitle,
+    openColumnEditor, 
+    closeColumnEditor,
+    modalConfig, 
+    openDeleteModal, 
+    closeModal,
+    modalRenameValue, 
+    setModalRenameValue, 
+    openRenameModal,
+    taskModalConfig, 
+    openTaskModal, 
+    closeTaskModal,
     handleDragStart
   };
 }
