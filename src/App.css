@@ -525,6 +525,13 @@ button, input, textarea {
 /* reveal the buttons when the wrapper focused or active */
 .board-actions:focus-within,
 .board-link.active + .board-actions {
+    opacity: 0.5;
+    visibility: visible;
+}
+
+/* improve visibility further on hover */
+.board-actions:focus-within,
+.board-link.active + .board-actions:hover {
     opacity: 1;
     visibility: visible;
 }
@@ -544,6 +551,7 @@ button, input, textarea {
     font-size: 16px;
     cursor: pointer; 
 }
+
 
 /* --- Refined Summoning for Sidebar --- */
 .board-item-wrapper.is-new,
