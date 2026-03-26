@@ -8,13 +8,13 @@ import TipTapMenuBar from "./TipTapMenuBar";
 import CustomSelect from "./CustomSelect";
 
 
-export default function TaskModal({ isOpen, task, onClose, onSave }) {
+export default function TaskModal({ isOpen, task, onClose, onSave, onDelete }) {
 
     const [text, setText] = useState("");
     const [priority, setPriority] = useState("Medium")
     const [description, setDescription] = useState("")
     const [assignee, setAssignee] = useState("")
-    const [issueType, setIssueType] = useState("User Story")
+    const [issueType, setIssueType] = useState("Story")
     const [effort, setEffort] = useState("Medium")
     const [environment, setEnvironment] = useState("Dev")
     const [dueDate, setDueDate] = useState(null)
@@ -112,7 +112,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
             setDescription(task.description || "")
             setPriority(task.priority || "Medium")
             setAssignee(task.assignee || "")
-            setIssueType(task.issueType || "User Story")
+            setIssueType(task.issueType || "Story")
             setEffort(task.effort || "Medium")
             setEnvironment(task.environment || "Dev")
             setDueDate(task.dueDate ? new Date(task.dueDate) : null)
@@ -342,7 +342,20 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                             </div>
                         )}
                     </div>
-                    <button className="modal-close-x" onClick={handleModalClose}>❌</button>
+                    <div className="modal-actions-wrapper">
+                        <button className='delete-btn'
+                            data-tooltip-id="wizard-tooltip"
+                            data-tooltip-content="Delete task"
+                            onPointerDown={(e) => e.stopPropagation()}
+                            onClick={() => { if (onDelete) onDelete(); }}
+                            style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.2rem', padding: '0 4px' }}>
+                            🗑️
+                        </button>
+                    <button 
+                        className="modal-close-x"
+                        onClick={handleModalClose}
+                        >❌</button>
+                    </div>
                 </div>
                 <div className="task-modal-body">
                     <div className="task-main-content">
@@ -541,7 +554,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                     onValueChange={handleIssueTypeChange} // Radix passes the value directly, not an event
                                     options={Object.entries(issueIcons).map(([label, icon]) => ({
                                         value: label,
-                                        label: <div>{icon} {label}</div>
+                                        label: <div style={{ display: 'flex', gap: '8px' }}>{icon} {label}</div>
                                     }))}
                                     placeholder="Select Type..."
                                     triggerClassName="sidebar-value radix-sidebar-select"

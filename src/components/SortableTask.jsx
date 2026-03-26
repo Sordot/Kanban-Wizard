@@ -119,13 +119,6 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                             }}>
                             🔍
                         </button>
-                        <button className='delete-btn'
-                            data-tooltip-id="wizard-tooltip"
-                            data-tooltip-content="Delete task"
-                            onPointerDown={(e) => e.stopPropagation()}
-                            onClick={(e) => { e.stopPropagation(); onDelete(columnID, id); }}>
-                            ❌
-                        </button>
                     </div>
                 </div>
                 <p className='task-text'>{task.text || 'Untitled Task'}</p>

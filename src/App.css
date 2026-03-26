@@ -517,24 +517,17 @@ button, input, textarea {
 .edit-board-name-btn {
     background: transparent;
     border: none;
-    color: var(--text-secondary);
     cursor: pointer;
-    border-radius: 6px;
-    padding: 6px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 4px;
+    font-size: 16px;   
 }
 
 .delete-board-btn {
     background: transparent;
     border: none;
-    border-radius: 6px;
-    color: var(--btn-red-bg);
-    padding: 6px;
-    font-size: 12px;
-    cursor: pointer;
+    padding: 4px;
+    font-size: 16px;
+    cursor: pointer; 
 }
 
 /* --- Refined Summoning for Sidebar --- */
@@ -1436,10 +1429,10 @@ button, input, textarea {
     
     /* Typography for Initials */
     font-family: var(--font-magical);
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 0.8rem;
+    font-weight: 800;
     color: var(--text-primary);
-    text-shadow: 0 0 5px var(--accent-color);
+    text-shadow: 0 0 3px var(--accent-color);
 
     cursor: help;
     overflow: hidden;
@@ -1449,12 +1442,12 @@ button, input, textarea {
 .task-card-issue-icon,
 .task-card-env-icon {
     cursor: help;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .task-card-issue-icon:hover,
 .task-card-env-icon:hover {
-    background: rgba(255, 255, 255, 0.15);
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
 }
 
 .task-header {
@@ -1656,9 +1649,13 @@ button, input, textarea {
     border: none;
     color: var(--accent-color);
     cursor: pointer;
-    font-size: 14px;
+    font-size: 1.2rem;
     padding: 2px 8px;
     opacity: 1;
+}
+
+.edit-btn:hover {
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
 }
 
 .edit-input {
@@ -1824,14 +1821,15 @@ select.sidebar-value option {
     background: none;
     border: none;
     color: var(--btn-red-bg);
-    font-size: 12px;
+    font-size: 0.8rem;
     cursor: pointer;
     padding: 0 5px;
     line-height: 1;
+    opacity: 0.6;
 }
 
 .delete-btn:hover {
-    color: var(--btn-red-hover);
+    opacity: 1;
 }
 
 
@@ -1954,11 +1952,11 @@ select.sidebar-value option {
     margin: 0 0 28px 0;
 }
 
-.modal-actions {
+.modal-actions-wrapper {
     display: flex;
+    align-items: center;
     justify-content: center;
     gap: 12px;
-    margin-top: 24px;
 }
 
 .modal-close-x {
@@ -1969,25 +1967,15 @@ select.sidebar-value option {
     cursor: pointer;
 
     /* 2. Set a fixed, compact size */
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     flex-shrink: 0;
 
     /* 3. Center the 'X' inside the 32px box */
     display: flex;
     align-items: center;
     justify-content: center;
-
-    /* 4. Refine look and feel */
-    color: var(--text-secondary);
-    font-size: 20px;
-    /* Reduced from 28px */
-    font-weight: 400;
-    line-height: 1;
-}
-
-.modal-close-x:hover {
-    color: var(--btn-red-hover);
+    font-size: 1.2rem;
 }
 
 .modal-btn {

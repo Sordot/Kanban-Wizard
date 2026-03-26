@@ -24,8 +24,16 @@ export default function SortableBoardItem({ board, activeBoardID, onSelectBoard,
         {board.name}
       </button>
       <div className="board-actions">
-        <button onPointerDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }} className="edit-board-name-btn">✏️</button>
-        <button onPointerDown={(e) => e.stopPropagation()} onClick={(e) => { e.stopPropagation(); onDeleteBoard(board.id); }} className="delete-board-btn">X</button>
+        <button 
+          onPointerDown={(e) => e.stopPropagation()} 
+          onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }} 
+          className="edit-board-name-btn"
+          >✏️</button>
+        <button 
+          onPointerDown={(e) => e.stopPropagation()} 
+          onClick={(e) => { e.stopPropagation(); onDeleteBoard(board.id); }} 
+          className="delete-board-btn"
+          >❌</button>
       </div>
     </div>
   );

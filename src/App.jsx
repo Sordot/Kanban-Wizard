@@ -237,6 +237,10 @@ function App() {
                 });
               }
             }}
+            onDelete={() => {
+              uiState.closeTaskModal();
+              handleDeleteTask(uiState.taskModalConfig.columnID, uiState.taskModalConfig.task.id);
+            }}
           />
 
           <DragOverlay>
