@@ -380,6 +380,48 @@ export default function TaskModal({ isOpen, task, onClose, onSave }) {
                                 Subtasks
                             </h3>
 
+                            {/* PROGRESS BAR (Only shows if subtasks exist) */}
+                            {subtasks.length > 0 && (
+                                <div className="subtask-progress-container" style={{ marginBottom: '16px' }}>
+                                    <div className="mana-tube-glass" style={{ 
+                                        height: '18px', 
+                                        minHeight: '18px', 
+                                        padding: 0,
+                                        position: 'relative',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        overflow: 'hidden'
+                                    }}>
+                                        {/* The liquid fill */}
+                                        <div
+                                            className="mana-liquid"
+                                            style={{ 
+                                                position: 'absolute',
+                                                left: 0,
+                                                top: 0,
+                                                bottom: 0,
+                                                width: `${Math.round((subtasks.filter(st => st.completed).length / subtasks.length) * 100)}%`,
+                                                zIndex: 1,
+                                                borderRadius: 'inherit'
+                                            }}
+                                        ></div>
+                                        
+                                        {/* The centered text label */}
+                                        <span style={{ 
+                                            position: 'relative', 
+                                            zIndex: 2, 
+                                            fontSize: '0.75rem', 
+                                            fontWeight: '600',
+                                            color: '#ffffff',
+                                            textShadow: '0px 1px 3px rgba(0, 0, 0, 0.9)' // Ensures readability over the liquid
+                                        }}>
+                                            {Math.round((subtasks.filter(st => st.completed).length / subtasks.length) * 100)}% Completed
+                                        </span>
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="subtasks-list">
                                 {subtasks.map(subtask => (
                                     <div key={subtask.id} className="subtask-item">

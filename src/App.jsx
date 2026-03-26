@@ -87,7 +87,7 @@ function App() {
     // Send it directly to the UI layer to open the modal
     uiState.openTaskModal(columnID, newTask);
   };
-  
+
   const handleAddColumn = () => {
     // Assuming you refactored addColumn in useBoards to accept a title string
     boardData.addColumn(uiState.newColumnTitle);
@@ -125,20 +125,20 @@ function App() {
         toggleTheme={toggleTheme}
       />
       <div className='kanban-container'>
-        <FilterBar 
-          filters={filterData.filters} 
-          setFilters={filterData.setFilters} 
-          uniqueAssignees={filterData.uniqueAssignees} 
+        <FilterBar
+          filters={filterData.filters}
+          setFilters={filterData.setFilters}
+          uniqueAssignees={filterData.uniqueAssignees}
         />
-        
-        <DndContext 
-          sensors={sensors} 
-          collisionDetection={customCollisionDetection} 
-          onDragOver={boardData.handleDragOver} 
+
+        <DndContext
+          sensors={sensors}
+          collisionDetection={customCollisionDetection}
+          onDragOver={boardData.handleDragOver}
           onDragEnd={(e) => {
             boardData.handleDragEnd(e);
             uiState.setActiveTask(null);
-          }} 
+          }}
           onDragStart={(e) => uiState.handleDragStart(e, boardData.columns)}
         >
           <div className='kanban-board'>
@@ -156,7 +156,7 @@ function App() {
                 onOpenTaskModal={uiState.openTaskModal}
               />
             ))}
-            
+
             {uiState.isAddingColumn ? (
               <div className="add-column-editor">
                 <input
@@ -182,7 +182,7 @@ function App() {
               </button>
             )}
           </div>
-          
+
           <ConfirmationModal
             isOpen={uiState.modalConfig.isOpen}
             title={uiState.modalConfig.type === 'renameBoard' ? "Rename Board" : `Delete ${uiState.modalConfig.type}?`}
@@ -206,7 +206,7 @@ function App() {
               />
             )}
           </ConfirmationModal>
-          
+
           <TaskModal
             isOpen={uiState.taskModalConfig.isOpen}
             task={uiState.taskModalConfig.task}
@@ -234,46 +234,31 @@ function App() {
               }
             }}
           />
-          
+
           <DragOverlay>
             {uiState.activeTask ? (
               <div className="tilt-wrapper">
-                <div className={`task-card dragging-overlay priority-${uiState.activeTask.priority}`}>
-                  <div className='task-content'>
-                    <div className='task-header'>
-                      <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-                        {uiState.activeTask.assignee && (
-                          <div className="assignee-avatar">
-                            {uiState.activeTask.assignee.charAt(0).toUpperCase()}
-                          </div>
-                        )}
-                        <span>
-                          {issueIcons[uiState.activeTask.issueType || "User Story"]}
-                        </span>
-                      </div>
-                      <div>
-                        <button className='edit-btn' style={{ cursor: 'grabbing' }}>🔍</button>
-                        <button className='delete-btn' style={{ cursor: 'grabbing' }}>❌</button>
-                      </div>
-                    </div>
-                    <p className='task-text'>{uiState.activeTask.text || 'Untitled Task'}</p>
-                    <div className='task-footer' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <span className='footer-label'>
-                        {uiState.activeTask.subtasks?.length || 0} {uiState.activeTask.subtasks?.length === 1 ? 'Subtask' : 'Subtasks'}
-                      </span>
-                      <span className='footer-label'>
-                        Updated: {formatTime(uiState.activeTask.updatedAt)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
+                <div
+                  className={`task-card dragging-overlay priority-${uiState.activeTask.priority}`}
+                  style={{
+                    minHeight: '100px',
+                    border: '2px dashed #0073cf', // Bright accent outline
+                    backgroundColor: 'var(--bg-color)', // Very faint magical tint
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    pointerEvents: 'none',
+                    /* Forces the ghost card onto its own hardware-accelerated compositor layer for optimized dragging */
+                    willChange: 'transform'
+                  }}
+                ></div>
               </div>
             ) : null}
           </DragOverlay>
         </DndContext>
-        
+
         <AnalyticsBar columns={filterData.filteredColumns} />
-        
+
         <footer className="portfolio-footer">
           <div className="footer-content">
             <span className="built-by">
@@ -289,7 +274,7 @@ function App() {
             </a>
           </div>
         </footer>
-        
+
         <Tooltip
           id="wizard-tooltip"
           className="wizard-theme-tooltip"

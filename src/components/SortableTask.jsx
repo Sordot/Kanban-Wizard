@@ -53,14 +53,31 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
     }
 
     const style = {
-        transform: CSS.Transform.toString(transform),
+        transform: CSS.Translate.toString(transform),
         transition: transition,
-        opacity: isDragging ? 0.3 : 1
     }
 
     // Determine the CSS class based on the search status passed from useKanban
     const searchClass = task.searchStatus === 'matched' ? 'search-matched' :
         task.searchStatus === 'obscured' ? 'search-obscured' : '';
+
+    // If the item is currently being dragged, replace its entire complex DOM structure 
+    // in the underlying list with a lightweight, empty placeholder box.
+    if (isDragging) {
+        return (
+            <div
+                ref={setNodeRef}
+                style={{
+                    ...style,
+                    height: '100px', // Approximate height to keep the list stable
+                    border: '2px dashed var(--accent-color)', // Faint magical border
+                    backgroundColor: 'var(--bg-color)', // Very faint tint
+                    borderRadius: '8px',
+                    opacity: 0.5
+                }}
+            />
+        );
+    }
 
     return (
         <div ref={setNodeRef} style={style} {...attributes} {...listeners}
@@ -112,11 +129,25 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                     </div>
                 </div>
                 <p className='task-text'>{task.text || 'Untitled Task'}</p>
-                <div className='task-footer' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span className='footer-label'>
-                        {task.subtasks?.length || 0} {task.subtasks?.length === 1 ? 'Subtask' : 'Subtasks'}
-                    </span>
-                    <span className='footer-label'>
+                <div className='task-footer' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '12px' }}>
+                    {task.subtasks?.length > 0 ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, gap: '6px' }}>
+                            <span className='footer-label'>
+                                {task.subtasks.filter(st => st.completed).length}/{task.subtasks.length} Subtasks
+                            </span>
+                            <div className="mana-tube-glass" style={{ height: '4px', minHeight: '4px', padding: 0, border: 'none' }}>
+                                <div
+                                    className="mana-liquid"
+                                    style={{ width: `${Math.round((task.subtasks.filter(st => st.completed).length / task.subtasks.length) * 100)}%` }}
+                                ></div>
+                            </div>
+                        </div>
+                    ) : (
+                        <span className='footer-label'>
+                            0 Subtasks
+                        </span>
+                    )}
+                    <span className='footer-label' style={{ whiteSpace: 'nowrap' }}>
                         Updated: {formatTime(task.updatedAt)}
                     </span>
                 </div>
