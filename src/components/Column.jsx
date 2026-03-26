@@ -4,7 +4,20 @@ import { useDroppable, useDndContext } from '@dnd-kit/core';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import SortableTask from "./SortableTask"
 
-export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, onUpdateColumn, onClearColumn, onSortColumn, onRemoveColumn, onOpenTaskModal }) {
+export default function Column({ 
+    column, 
+    onAddTask, 
+    onDeleteTask, 
+    onUpdateTask, 
+    onUpdateColumn, 
+    onClearColumn, 
+    onSortColumn, 
+    isFirstColumn, 
+    isLastColumn, 
+    onMoveColumn, 
+    onRemoveColumn, 
+    onOpenTaskModal 
+}) {
 
     const [isEditingTitle, setIsEditingTitle] = useState(false);
     const [titleInput, setTitleInput] = useState(column.title);
@@ -121,6 +134,31 @@ export default function Column({ column, onAddTask, onDeleteTask, onUpdateTask, 
                                         </DropdownMenu.SubContent>
                                     </DropdownMenu.Portal>
                                 </DropdownMenu.Sub>
+
+                                <DropdownMenu.Separator className="radix-menu-separator" />
+
+                                <DropdownMenu.Item 
+                                    className="radix-menu-item" 
+                                    disabled={isFirstColumn} 
+                                    onSelect={() => onMoveColumn(column.id, 'left')}
+                                    style={{ 
+                                        opacity: isFirstColumn ? 0.5 : 1, 
+                                        cursor: isFirstColumn ? 'not-allowed' : 'default' 
+                                    }}
+                                >
+                                    ⬅️ Move Column Left
+                                </DropdownMenu.Item>
+                                <DropdownMenu.Item 
+                                    className="radix-menu-item"
+                                    disabled={isLastColumn} 
+                                    onSelect={() => onMoveColumn(column.id, 'right')}
+                                    style={{ 
+                                        opacity: isLastColumn ? 0.5 : 1, 
+                                        cursor: isLastColumn ? 'not-allowed' : 'default' 
+                                    }}
+                                >
+                                    ➡️ Move Column Right
+                                </DropdownMenu.Item>
 
                                 <DropdownMenu.Separator className="radix-menu-separator" />
                                 

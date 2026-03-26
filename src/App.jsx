@@ -142,7 +142,7 @@ function App() {
           onDragStart={(e) => uiState.handleDragStart(e, boardData.columns)}
         >
           <div className='kanban-board'>
-            {filterData.filteredColumns && filterData.filteredColumns.map((column) => (
+            {filterData.filteredColumns && filterData.filteredColumns.map((column, index, array) => (
               <Column
                 key={column.id}
                 column={column}
@@ -152,6 +152,9 @@ function App() {
                 onSortColumn={boardData.sortColumn}
                 onUpdateColumn={boardData.updateColumn}
                 onClearColumn={boardData.clearColumn}
+                isFirstColumn={index === 0}
+                isLastColumn={index === array.length - 1}
+                onMoveColumn={boardData.moveColumn}
                 onRemoveColumn={handleRemoveColumn}
                 onOpenTaskModal={uiState.openTaskModal}
               />

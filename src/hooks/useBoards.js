@@ -224,6 +224,36 @@ export const useBoards = (initialData) => {
         }));
     }, [activeBoardID]);
 
+    const moveColumn = useCallback((columnID, direction) => {
+        setBoards(prevBoards => prevBoards.map(board => {
+            // Guardrail: only modify the active board
+            if (board.id !== activeBoardID) return board;
+
+            // Find the index of the column we want to move
+            const columnIndex = board.columns.findIndex(col => col.id === columnID);
+
+            // If column isn't found, do nothing
+            if (columnIndex === -1) return board;
+
+            // Create a shallow copy of the columns array to mutate
+            const newColumns = [...board.columns];
+
+            if (direction === 'left' && columnIndex > 0) {
+                // Swap with the left neighbor
+                [newColumns[columnIndex - 1], newColumns[columnIndex]] =
+                    [newColumns[columnIndex], newColumns[columnIndex - 1]];
+
+            } else if (direction === 'right' && columnIndex < newColumns.length - 1) {
+                // Swap with the right neighbor
+                [newColumns[columnIndex], newColumns[columnIndex + 1]] =
+                    [newColumns[columnIndex + 1], newColumns[columnIndex]];
+            }
+
+            // Return the updated board state
+            return { ...board, columns: newColumns };
+        }));
+    }, [activeBoardID]);
+
     const removeColumn = useCallback((columnID) => {
         // Mark the column as deleting first
         updateColumn(columnID, { isDeleting: true });
@@ -419,6 +449,7 @@ export const useBoards = (initialData) => {
         updateColumn,
         clearColumn,
         sortColumn,
+        moveColumn,
         removeColumn,
         insertTask,
         updateTask,

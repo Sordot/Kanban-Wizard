@@ -1170,7 +1170,7 @@ button, input, textarea {
     z-index: 1;
     position: relative;
     overflow-y: auto;
-    overflow-x: visible !important;
+    overflow-x: hidden;
 }
 
 /* =========================================
