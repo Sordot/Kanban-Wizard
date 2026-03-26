@@ -1927,6 +1927,7 @@ select.sidebar-value option {
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    animation: fadeIn 0.2s ease-out; /* Use existing fadeIn animation */
 }
 
 .modal-title-wrapper {
@@ -1934,6 +1935,16 @@ select.sidebar-value option {
     flex-grow: 1;
     text-align: left;
     margin-right: 16px;
+}
+
+.modal-title {
+    font-family: var(--font-magical);
+    color: var(--text-primary);
+    font-size: 1.6rem;
+    margin-top: 0;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); 
 }
 
 .modal-content {
@@ -1944,27 +1955,25 @@ select.sidebar-value option {
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
     border-radius: 20px;
-    padding: 32px;
-    width: 400px;
+    padding: 32px 40px; /* Slightly wider padding for breathing room */
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     text-align: center;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: translateY(0);
+    animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes modalPop {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.modal-message {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0 0 28px 0;
 }
 
 .modal-actions {
     display: flex;
+    justify-content: center;
     gap: 12px;
     margin-top: 24px;
 }
@@ -1999,57 +2008,73 @@ select.sidebar-value option {
 }
 
 .modal-btn {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
+    font-family: var(--font-professional);
+    font-size: 0.95rem;
     font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 8px;
     cursor: pointer;
-    border: 1px solid transparent;
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 120px;
 }
 
 .modal-btn.cancel {
     background: var(--card-bg);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    color: var(--text-secondary);
     border: 1px solid var(--column-border);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
-    color: var(--btn-red-bg);
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
 }
 
 .modal-btn.cancel:hover {
-    /* Shifts to a solid red glass look */
-    border-color: var(--btn-red-hover);
-    color: #ffffff;
-}
-
-.modal-btn.confirm-green {
-    background: var(--btn-green-bg);
+    background: rgba(255, 255, 255, 0.08);
     color: var(--text-primary);
-}
-
-.modal-btn.confirm-green:hover {
-    background: var(--btn-green-hover);
-    box-shadow: 0 0 4px var(--btn-green-shadow);
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .modal-btn.delete-red {
     background: var(--btn-red-bg);
-    color: var(--text-primary);
-    border: none;
+    color: #ffffff;
+    border: 1px solid transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.3); /* Gives it a tactile, 3D top edge */
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15); 
 }
 
 .modal-btn.delete-red:hover {
     background: var(--btn-red-hover);
-    box-shadow: 0 4px 12px var(--btn-red-shadow);
+    box-shadow: var(--btn-red-shadow);
+    transform: translateY(-1px); /* Gentle lift effect on hover */
+}
+
+/* Confirm Button: Using your Green variables */
+.modal-btn.confirm-green {
+    background: var(--btn-green-bg);
+    color: #ffffff;
+    border: 1px solid transparent;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.modal-btn.confirm-green:hover {
+    background: var(--btn-green-hover);
+    box-shadow: var(--btn-green-shadow);
+    transform: translateY(-1px);
+}
+
+/* Subtle entrance animation for the modal itself */
+@keyframes slideUpFade {
+    from { 
+        opacity: 0; 
+        transform: translateY(15px) scale(0.98); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0) scale(1); 
+    }
 }
 
 .modal-rename-input {
