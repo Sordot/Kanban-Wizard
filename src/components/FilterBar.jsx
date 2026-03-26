@@ -24,9 +24,9 @@ export default function FilterBar({ filters, setFilters, uniqueAssignees }) {
 
     const priorityOptions = [
         { value: "all", label: "All Priorities", style: { color: 'var(--text-primary)' } },
-        { value: "High", label: "High Priority", style: { color: priorityColors.High } },
-        { value: "Medium", label: "Medium Priority", style: { color: priorityColors.Medium } },
-        { value: "Low", label: "Low Priority", style: { color: priorityColors.Low } },
+        { value: "High", label: "High", style: { color: priorityColors.High } },
+        { value: "Medium", label: "Medium", style: { color: priorityColors.Medium } },
+        { value: "Low", label: "Low", style: { color: priorityColors.Low } },
     ];
 
     // Find the style of the currently active option

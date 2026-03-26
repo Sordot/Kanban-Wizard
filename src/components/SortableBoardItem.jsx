@@ -28,11 +28,15 @@ export default function SortableBoardItem({ board, activeBoardID, onSelectBoard,
           onPointerDown={(e) => e.stopPropagation()} 
           onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }} 
           className="edit-board-name-btn"
+          data-tooltip-id="wizard-tooltip"
+          data-tooltip-content="Rename board"
           >✏️</button>
         <button 
           onPointerDown={(e) => e.stopPropagation()} 
           onClick={(e) => { e.stopPropagation(); onDeleteBoard(board.id); }} 
           className="delete-board-btn"
+          data-tooltip-id="wizard-tooltip"
+          data-tooltip-content="Delete board"
           >❌</button>
       </div>
     </div>

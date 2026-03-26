@@ -307,6 +307,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave, onDelete }) {
                                 onChange={(e) => setText(e.target.value)}
                                 onBlur={handleTitleSave}
                                 onKeyDown={(e) => e.key === 'Enter' && handleTitleSave()}
+                                maxLength={40}
                                 placeholder="Task Title..."
                                 style={{
                                     display: 'block',
@@ -326,6 +327,7 @@ export default function TaskModal({ isOpen, task, onClose, onSave, onDelete }) {
                                 className="editable-field"
                                 onClick={() => setIsEditingTitle(true)}
                                 title="Click to edit title"
+                                maxLength={40}
                                 style={{
                                     display: 'block',
                                     width: '100%',

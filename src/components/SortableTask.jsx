@@ -111,7 +111,7 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                         <button
                             className='edit-btn'
                             data-tooltip-id="wizard-tooltip"
-                            data-tooltip-content="Edit task"
+                            data-tooltip-content="Task details"
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => {
                                 e.stopPropagation();

@@ -42,8 +42,9 @@ const AnalyticsBar = ({ columns }) => {
               return (
                 <span
                   key={type}
-                  title={type}
                   className="issue-icon-item"
+                  data-tooltip-id="wizard-tooltip" 
+                  data-tooltip-content={`${type}`}
                 >
                   {icon} {count}
                 </span>

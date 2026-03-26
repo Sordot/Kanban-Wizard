@@ -1262,11 +1262,11 @@ button, input, textarea {
     }
 }
 
-/* Highlight the outer edges of the column when dragging over it */
+/* Highlight the column when dragging over it */
 .kanban-column.is-drag-over {
-    /* Uses a double box-shadow trick to create a solid border + a soft glow */
-    border-color: #0073cf;
-    transition: all 0.2s ease;
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15), inset 0 0 15px var(--accent-color);
+    transition: border-color 0.15s ease-out, box-shadow 0.15s ease-out;
 }
 
 .empty-column-placeholder {
@@ -1950,6 +1950,13 @@ select.sidebar-value option {
     font-size: 1.05rem;
     line-height: 1.6;
     margin: 0 0 28px 0;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px
 }
 
 .modal-actions-wrapper {
@@ -2971,12 +2978,15 @@ button.sidebar-value {
 .issue-icon-item {
     display: inline-flex;
     align-items: center;
+    font-size: 1rem;
     gap: 4px;
     margin: 0 !important;
     /* Overrides the default margin-left on .analytics-stats span */
     color: var(--text-primary);
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
-    cursor: help;
+}
+
+.issue-icon-item:hover {
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.3));
 }
 
 
