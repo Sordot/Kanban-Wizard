@@ -75,6 +75,7 @@ function App() {
   // --- GLUE LOGIC ---
   // Connects the UI state variables to the Data functions
 
+  //for the + button in the columns
   const handleAddTask = (columnID) => {
     const newTask = {
       id: `task-${Date.now()}`,
@@ -86,6 +87,25 @@ function App() {
     };
     // Send it directly to the UI layer to open the modal
     uiState.openTaskModal(columnID, newTask);
+  };
+
+  //specifically covers when user clicks a calendar date to add task
+  const handleAddCalendarTask = (date) => {
+    // Default the new task to the first column (e.g., "To Do")
+    const defaultColumnID = boardData.columns[0]?.id;
+    if (!defaultColumnID) return;
+
+    const newTask = {
+      id: `task-${Date.now()}`,
+      text: '',
+      priority: 'Medium',
+      description: '',
+      isNew: true,
+      updatedAt: Date.now(),
+      dueDate: date.toISOString() // Automatically set the due date to the clicked day
+    };
+
+    uiState.openTaskModal(defaultColumnID, newTask);
   };
 
   const handleAddColumn = () => {
@@ -189,31 +209,7 @@ function App() {
                   </button>
                 )}
               </div>
-
-              <ConfirmationModal
-                isOpen={uiState.modalConfig.isOpen}
-                title={uiState.modalConfig.type === 'renameBoard' ? "Rename Board" : `Delete ${uiState.modalConfig.type}?`}
-                confirmText={uiState.modalConfig.type === 'renameBoard' ? 'Save Changes' : "Delete"}
-                message={
-                  uiState.modalConfig.type === 'renameBoard'
-                    ? "Enter a new name for your workspace."
-                    : "This action is permanent and cannot be undone."
-                }
-                variant={uiState.modalConfig.type === 'renameBoard' ? "confirm" : "danger"}
-                onConfirm={confirmDelete}
-                onCancel={uiState.closeModal}
-              >
-                {uiState.modalConfig.type === 'renameBoard' && (
-                  <input
-                    className="modal-rename-input"
-                    value={uiState.modalRenameValue}
-                    onChange={(e) => uiState.setModalRenameValue(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && confirmDelete()}
-                    autoFocus
-                  />
-                )}
-              </ConfirmationModal>
-
+              
               <DragOverlay>
                 {uiState.activeTask ? (
                   <div className="tilt-wrapper">
@@ -240,10 +236,33 @@ function App() {
           <CalendarView
             columns={boardData.columns}
             onTaskClick={(colId, task) => uiState.openTaskModal(colId, task)}
+            onDateClick={handleAddCalendarTask}
           />
         )}
 
-
+        <ConfirmationModal
+          isOpen={uiState.modalConfig.isOpen}
+          title={uiState.modalConfig.type === 'renameBoard' ? "Rename Board" : `Delete ${uiState.modalConfig.type}?`}
+          confirmText={uiState.modalConfig.type === 'renameBoard' ? 'Save Changes' : "Delete"}
+          message={
+            uiState.modalConfig.type === 'renameBoard'
+              ? "Enter a new name for your workspace."
+              : "This action is permanent and cannot be undone."
+          }
+          variant={uiState.modalConfig.type === 'renameBoard' ? "confirm" : "danger"}
+          onConfirm={confirmDelete}
+          onCancel={uiState.closeModal}
+        >
+          {uiState.modalConfig.type === 'renameBoard' && (
+            <input
+              className="modal-rename-input"
+              value={uiState.modalRenameValue}
+              onChange={(e) => uiState.setModalRenameValue(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && confirmDelete()}
+              autoFocus
+            />
+          )}
+        </ConfirmationModal>
         <TaskModal
           isOpen={uiState.taskModalConfig.isOpen}
           task={uiState.taskModalConfig.task}

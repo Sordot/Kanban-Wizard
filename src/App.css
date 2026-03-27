@@ -202,21 +202,21 @@ button, input, textarea {
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
     border-radius: 8px;
-    padding: 0 12px;
+    padding: 0px 4px !important;
     height: 36px;
-    font-size: 0.9em;
     color: var(--text-primary);
     cursor: pointer;
     transition: all 0.2s ease;
 
     white-space: nowrap !important; 
+    text-overflow: ellipsis !important;
     overflow: hidden;
 }
 
 .select-value-wrapper {
-  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: block;
 }
 
 .radix-select-trigger:focus,
@@ -923,19 +923,172 @@ button, input, textarea {
 
 /* Calendar Theming */
 .rbc-calendar {
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    border-radius: 12px;
+  font-family: inherit;
+  border-radius: 12px;
+  color: var(--text-primary) !important;
+  background-color: var(--column-bg) !important;
 }
 
+/* Calendar Toolbar styling (Today, Back, Next buttons) */
+.rbc-toolbar button {
+  color: var(--text-primary) !important;
+  border-color: var(--column-border) !important;
+  background-color: var(--column-bg) !important;
+  padding: 8px 16px !important;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.rbc-toolbar button:hover,
+.rbc-toolbar button:active,
+.rbc-toolbar button.rbc-active {
+    outline: none !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 0 4px var(--accent-color) !important;
+}
+
+/* Header row (Days of the week: Mon, Tue, etc.) */
+.rbc-header {
+  padding: 12px 0;
+  font-weight: 600;
+  background-color: var(--card-bg) !important;
+}
+
+/* Cell borders */
+.rbc-month-view,
+.rbc-month-row,
+.rbc-day-bg,
+.rbc-header {
+  border-color: var(--column-border) !important;
+}
+
+/* highlight fix for calendar bottom row, do not mess with this! */
+/* 1. Tell the mouse to ignore the invisible foreground grid wrappers */
+.rbc-row-content,
+.rbc-row,
+.rbc-row-segment {
+    pointer-events: none !important;
+}
+
+/* 2. Re-enable pointer events for the actual visible elements so you can still click them */
+.rbc-event,
+.rbc-show-more,
+.rbc-date-cell {
+    pointer-events: auto !important;
+}
+
+
+/* Add a smooth transition and hover color for calendar days */
+.rbc-day-bg {
+    transition: background-color 0.2s ease !important;
+}
+
+.rbc-day-bg:hover {
+    background-color: rgba(0, 115, 207, 0.3) !important; /* a light tint of accent color */
+    cursor: pointer !important;
+}
+
+/* Ensure today's highlight remains visible but can also be hovered */
+.rbc-day-bg.rbc-today {
+    background-color: rgba(0, 115, 207, 0.1) !important;
+}
+.rbc-day-bg.rbc-today:hover {
+    background-color: rgba(0, 115, 207, 0.3) !important;
+}
+
+/* Calendar Events (Tasks) */
 .rbc-event {
-    background-color: var(--accent-color) !important;
+  background-color: var(--sidebar-bg) !important;
+
+  border: 1px solid var(--accent-color) !important;
+  border-radius: 4px !important;
+  color: #f8fafc !important;
+  transition: background-color 0.2s ease !important;
 }
 
-/* Using your existing priority colors for the calendar events */
-.rbc-event.priority-high { background-color: var(--priority-high) !important; }
-.rbc-event.priority-medium { background-color: var(--priority-medium) !important; }
-.rbc-event.priority-low { background-color: var(--priority-low) !important; }
+.rbc-event:hover {
+    outline: none !important;
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 0 4px var(--accent-color) !important;
+}
+
+/* Off-range days (dates belonging to the previous/next month) */
+/* Dark Mode (Default) - Off-range background */
+.rbc-off-range-bg {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Dark Mode (Default) - Off-range text */
+.rbc-off-range {
+    color: var(--text-secondary) !important;
+    opacity: 0.4;
+}
+
+/* Light Mode - Off-range background */
+:root[data-theme="light"] .rbc-off-range-bg {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Light Mode - Off-range text */
+:root[data-theme="light"] .rbc-off-range {
+    color: var(--text-secondary) !important;
+    opacity: 0.6;
+}
+
+.rbc-show-more {
+    background-color: rgba(0, 115, 207, 0.15) !important; /* Faint wizard blue tint */
+    color: var(--accent-color) !important; /* Bright accent color */
+    font-weight: bold !important;
+    font-size: 0.8rem !important;
+    padding: 3px 6px !important;
+    border-radius: 6px !important;
+    margin: 2px 4px !important;
+    transition: all 0.2s ease !important;
+    text-align: center !important;
+    display: block !important;
+    text-decoration: none !important;
+}
+
+.rbc-show-more:hover {
+    background-color: var(--accent-color) !important;
+    color: #f8fafc !important;
+}
+
+/* Light Mode Adjustments */
+:root[data-theme="light"] .rbc-show-more {
+    background-color: rgba(0, 115, 207, 0.1);
+}
+
+/* show more modal styles */
+/* Dark Mode (Default) */
+.rbc-overlay {
+    background: var(--sidebar-bg) !important; /* Deep dark glass */
+    border: 1px solid var(--column-border) !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px var(--column-shadow) !important;
+    padding: 10px !important;
+    z-index: 50 !important; /* Ensure it floats above calendar cells */
+}
+
+/* The header of the popup (shows the date) */
+.rbc-overlay-header {
+    font-weight: bold !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--accent-color) !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+}
+
+/* Light Mode Overrides */
+:root[data-theme="light"] .rbc-overlay {
+    background: var(--sidebar-bg) !important;
+    border: 1px solid var(--column-border) !important;
+    box-shadow: 0 4px 16px var(--column-shadow) !important;
+}
+
 
 /* =========================================
    🧙‍♂️ SCRYING GLASS (FILTER BAR) STYLES
@@ -1966,8 +2119,9 @@ select.sidebar-value option {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1992,21 +2146,41 @@ select.sidebar-value option {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); 
 }
 
-.modal-content {
-    background: var(--sidebar-bg);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+.modal-content.confirmation-modal {
+    background: var(--bg-color);
     border: 1px solid var(--column-border);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
-    border-radius: 20px;
-    padding: 32px 40px; /* Slightly wider padding for breathing room */
-    width: 100%;
-    max-width: 440px;
-    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    text-align: center;
-    transform: translateY(0);
-    animation: slideUpFade 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 20px var(--nebula-glow-1);
+    border-radius: 16px;
+    width: fit-content;
+    max-height: fit-content;
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--text-primary);
+    animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-content.task-detail-modal {
+    background: var(--bg-color);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 20px var(--nebula-glow-1);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 85vh;
+    padding: 32px 40px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: var(--text-primary);
+    animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-message {
@@ -2182,9 +2356,7 @@ select.sidebar-value option {
 .task-detail-modal .modal-header {
     display: flex;
     justify-content: space-between;
-    /* Pushes title left and X right */
     align-items: flex-start;
-    /* Aligns them to the top */
     margin-bottom: 20px;
     padding-bottom: 16px;
     border-bottom: 1px solid var(--accent-color);
@@ -2234,7 +2406,6 @@ select.sidebar-value option {
     min-height: 0;
     overflow-y: auto;
     padding: 4px;
-    padding-right: 12px;
 }
 
 /* 25% Sidebar with Glassmorphic styling */
@@ -2248,7 +2419,7 @@ select.sidebar-value option {
     flex-direction: column;
     gap: 20px;
     padding: 24px 16px 12px 16px;
-    background: var(--column-bg);
+    background: var(--sidebar-bg);
     border: 1px solid var(--column-border);
     border-radius: 12px;
     align-self: stretch;
@@ -2278,6 +2449,7 @@ select.sidebar-value option {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: block;
 }
 
 .sidebar-value-container {
@@ -2336,11 +2508,16 @@ span.sidebar-value {
     border-radius: 6px;
     padding: 10px;
     color: var(--text-primary);
-    font-size: 12px;
+    font-size: 14px;
     font-family: inherit;
-    line-height: 1.2;
+    line-height: 1;
     transition: all 0.2s ease;
-    text-align: center;
+    text-align: center; 
+
+    white-space: nowrap;
+    overflow: hidden;           
+    text-overflow: ellipsis;    
+    display: block;
 }
 
 /* --- Custom Fields Section in Task Modal --- */
@@ -2446,12 +2623,10 @@ span.sidebar-value {
 .sidebar-value:focus,
 .sidebar-value:hover {
     outline: none;
-    background: rgba(255, 255, 255, 0.08);
     border-color: var(--accent-color);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* --- SIDEBAR PRIORITY STYLES --- */
@@ -2464,8 +2639,8 @@ span.sidebar-value {
 .sidebar-value.High:hover,
 .sidebar-value.High:focus,
 .sidebar-value.High:active {
-    background: rgba(255, 77, 77, 0.08) !important;
-    border-color: rgba(255, 77, 77, 0.3) !important;
+    color: #ff8080 !important;
+    border-color: #ff8080 !important;
 }
 
 /* Medium Priority (Subdued Amber) */
@@ -2476,8 +2651,8 @@ span.sidebar-value {
 .sidebar-value.Medium:hover,
 .sidebar-value.Medium:focus,
 .sidebar-value.Medium:active {
-    background: rgba(251, 191, 36, 0.08) !important;
-    border-color: rgba(251, 191, 36, 0.3) !important;
+    color: #fcd34d !important;
+    border-color: #fcd34d !important;
 }
 
 /* Low Priority (Subdued Green) */
@@ -2488,8 +2663,8 @@ span.sidebar-value {
 .sidebar-value.Low:hover,
 .sidebar-value.Low:focus,
 .sidebar-value.Low:active {
-    background: rgba(52, 211, 153, 0.08) !important;
-    border-color: rgba(52, 211, 153, 0.3) !important;
+    color: #6ee7b7 !important;
+    border-color: #6ee7b7 !important;
 }
 
 /* Fix default button styles since we are applying sidebar-value to a <button> */

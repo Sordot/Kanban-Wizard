@@ -25,7 +25,7 @@ export default function ConfirmationModal({ isOpen, title, message, onConfirm, o
 
     return (
         <div className="modal-overlay" onMouseDown={handleOverlayClick}>
-            <div className="modal-content" onClick={(event) => event.stopPropagation()}>
+            <div className="modal-content confirmation-modal" onClick={(event) => event.stopPropagation()}>
                 <h2 className="modal-title">{title}</h2>
                 {message && <p className="modal-message">{message}</p>}
 
