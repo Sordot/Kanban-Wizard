@@ -46,8 +46,6 @@ const DEFAULT_DATA = [
 
 function App() {
   const { theme, toggleTheme } = useTheme();
-  const { currentView, setCurrentView, openTaskModal } = useUIState();
-  const { columns } = useBoards();
 
   // 1. Initialize our focused hooks
   const boardData = useBoards(DEFAULT_DATA);
@@ -129,13 +127,13 @@ function App() {
       />
       <div className='kanban-container'>
         <FilterBar
-          currentView={currentView}
-          setCurrentView={setCurrentView}
+          currentView={uiState.currentView}
+          setCurrentView={uiState.setCurrentView}
           filters={filterData.filters}
           setFilters={filterData.setFilters}
           uniqueAssignees={filterData.uniqueAssignees}
         />
-        {currentView === 'board' ? (
+        {uiState.currentView === 'board' ? (
           <div className="kanban-board-wrapper">
             <DndContext
               sensors={sensors}
@@ -240,8 +238,8 @@ function App() {
           </div>
         ) : (
           <CalendarView
-            columns={columns}
-            onTaskClick={(colId, task) => openTaskModal(colId, task)}
+            columns={boardData.columns}
+            onTaskClick={(colId, task) => uiState.openTaskModal(colId, task)}
           />
         )}
 

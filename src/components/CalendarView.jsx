@@ -13,14 +13,20 @@ const localizer = dateFnsLocalizer({ format, parse, startOfWeek, getDay, locales
 export default function CalendarView({ columns, onTaskClick }) {
     // Flatten tasks from columns into a format react-big-calendar understands
     const events = columns.flatMap(column => 
-        column.tasks.map(task => ({
-            id: task.id,
-            title: task.text,
-            start: task.dueDate ? new Date(task.dueDate) : new Date(),
-            end: task.dueDate ? new Date(task.dueDate) : new Date(),
-            allDay: true,
-            resource: task // Keep the original task object for the click handler
-        }))
+        column.tasks
+            // only render tasks that actually have due dates
+            .filter(task => task.dueDate) 
+            .map(task => ({
+                id: task.id,
+                title: task.text,
+                start: new Date(task.dueDate),
+                end: new Date(task.dueDate),
+                allDay: true,
+                resource: { 
+                    ...task, 
+                    columnId: column.id // Inject the columnId so the click handler can read it
+                } 
+            }))
     );
 
     return (
