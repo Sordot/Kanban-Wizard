@@ -14,17 +14,32 @@ export const useBoards = (initialData) => {
     const activeBoard = boards.find(board => board.id === activeBoardID)
     const columns = activeBoard ? activeBoard.columns : []
 
+    // Strip out animation flags so they never trigger on a page refresh
     useEffect(() => {
-        // Strip out animation flags so they never trigger on a page refresh
+        // Deep copy to pull out animation flags so they never trigger on a page refresh
         const boardsToSave = boards.map(board => {
-            const cleanBoard = { ...board };
-            delete cleanBoard.isNew;
-            delete cleanBoard.isRenamed;
-            delete cleanBoard.isDeleting;
-            return cleanBoard;
+            return {
+                ...board,
+                isNew: false,
+                isRenamed: false,
+                isDeleting: false,
+                // Map through columns to clean them
+                columns: board.columns.map(col => ({
+                    ...col,
+                    isNew: false,
+                    isDeleting: false,
+                    // Map through tasks to clean them
+                    tasks: col.tasks.map(task => ({
+                        ...task,
+                        isNew: false,
+                        isDeleting: false
+                    }))
+                }))
+            };
         });
+        
         localStorage.setItem('theo-kanban-boards', JSON.stringify(boardsToSave));
-    }, [boards])
+    }, [boards]);
 
     const addBoard = useCallback(() => {
         const newBoardId = `board-${Date.now()}`;
@@ -313,6 +328,7 @@ export const useBoards = (initialData) => {
         }));
     }, [activeBoardID]);
 
+    
     const updateTask = useCallback((columnID, taskID, updates) => {
         setBoards(prevBoards => prevBoards.map(board => {
             if (board.id !== activeBoardID) return board;

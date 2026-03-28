@@ -1110,6 +1110,123 @@ button, input, textarea {
     /* These will automatically inherit the beautiful glass .rbc-event styles we wrote earlier! */
 }
 
+/* =========================================
+   CALENDAR EVENT CREATION ANIMATION (Matches Board Summon)
+   ========================================= */
+
+.rbc-event.is-new-calendar-event {
+    /* Match the 0.8s cubic-bezier timing of your board items */
+    animation: summonCalendarEvent 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+    overflow: hidden !important; /* Crucial: keeps the magic sweep inside the task bubble */
+    position: relative; /* Required for the absolute ::before element */
+}
+
+/* The Magical Gradient Sweep */
+.rbc-event.is-new-calendar-event::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    /* Same wizard colors as the sidebar/board cards */
+    background: linear-gradient(90deg,
+            transparent,
+            #7c3aed,
+            var(--accent-color),
+            transparent);
+    opacity: 0.6;
+    z-index: 1;
+    pointer-events: none;
+    animation: calendarGlowSweep 0.8s ease-out forwards;
+}
+
+/* The Slide & Fade (Matches your summonSidebar/summonBoard logic) */
+@keyframes summonCalendarEvent {
+    0% {
+        opacity: 0;
+        transform: translateX(-15px);
+        background-color: rgba(124, 58, 237, 0.3) !important;
+        border-color: #7c3aed !important;
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+        /* Settles beautifully into your glassmorphism standard */
+        background-color: var(--sidebar-bg) !important;
+        border-color: var(--column-border) !important;
+        box-shadow: 
+            0 4px 12px rgba(0, 0, 0, 0.3), 
+            0 0 10px var(--nebula-glow-1) !important;
+    }
+}
+
+/* The Sweep Animation */
+@keyframes calendarGlowSweep {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* =========================================
+   CALENDAR EVENT DELETION ANIMATION (Matches Sidebar Banish)
+   ========================================= */
+
+.rbc-event.is-deleting-calendar-event {
+    /* 1.0s ease-in perfectly matches your banishSidebar timing */
+    animation: banishCalendarEvent 1.0s ease-in forwards !important;
+    pointer-events: none !important; 
+    z-index: 0 !important; 
+    position: relative; /* Required so the ::after element stays inside */
+    overflow: hidden !important; 
+}
+
+/* The Violet Flare Overlay */
+.rbc-event.is-deleting-calendar-event::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #7c3aed; /* The magic violet */
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.4); /* Inner glow */
+    z-index: 2;
+    animation: banishFlareOpacity 1.0s ease-in forwards;
+}
+
+@keyframes banishCalendarEvent {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    40% {
+        /* The signature violet accent flare before it vanishes */
+        background-color: #7c3aed !important;
+        border-color: #7c3aed !important;
+        box-shadow: 0 0 20px #7c3aed !important;
+        transform: scale(1.02);
+        opacity: 1;
+    }
+
+    100% {
+        /* Slide to the right, shrink, blur, and blow out the brightness */
+        transform: scale(0.9) translateX(30px);
+        opacity: 0;
+        filter: blur(10px) brightness(2);
+    }
+}
+
+@keyframes banishFlareOpacity {
+    0% { opacity: 0; }
+    40% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
 
 /* =========================================
    🧙‍♂️ SCRYING GLASS (FILTER BAR) STYLES
@@ -1566,7 +1683,7 @@ button, input, textarea {
     margin-bottom: 8px;
     min-height: 100px;
     overflow-y: auto;
-    overflow-x: visible !important;
+    overflow-x: none !important;
     max-height: calc(100vh - 340px);
 }
 
@@ -2312,7 +2429,7 @@ select.sidebar-value option {
     }
 }
 
-.modal-rename-input {
+/* .modal-rename-input {
     width: 100%;
     padding: 12px;
     background: var(--bg-color);
@@ -2326,6 +2443,37 @@ select.sidebar-value option {
 
 .modal-rename-input:focus {
     box-shadow: 0 0 4px var(--accent-color);
+} */
+
+.modal-rename-input {
+    width: 100%;
+    box-sizing: border-box;
+    /* This margin is the key! It adds the exact vertical spacing needed to match the standard modal */
+    margin: 16px 0 24px 0; 
+    padding: 10px 14px;
+    font-family: var(--font-professional, sans-serif);
+    font-size: 1rem;
+    color: var(--text-primary);
+    background-color: rgba(0, 0, 0, 0.1); 
+    border: 1px solid var(--column-border);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Light mode specific adjustment for the input background */
+:root[data-theme="light"] .modal-rename-input {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.modal-rename-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.1),
+        0 0 0 2px rgba(0, 115, 207, 0.2), /* Soft focus ring */
+        inset 0 0 10px var(--nebula-glow-1);
 }
 
 .error-fallback {

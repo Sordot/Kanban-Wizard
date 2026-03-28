@@ -68,6 +68,20 @@ export default function CalendarView({ columns, onTaskClick, onDateClick }) {
             }))
     );
 
+    // Add this prop getter function to style the specific event blocks
+    const eventPropGetter = (event) => {
+        let className = '';
+        
+        // Prioritize the deleting animation so it overrides anything else
+        if (event.resource.isDeleting === true) {
+            className = 'is-deleting-calendar-event';
+        } else if (event.resource.isNew === true) {
+            className = 'is-new-calendar-event';
+        }
+
+        return { className };
+    };
+
     return (
         <div 
             className="calendar-wrapper" 
@@ -100,6 +114,7 @@ export default function CalendarView({ columns, onTaskClick, onDateClick }) {
                     }, 10);
                 }}
                 components={{ toolbar: CustomToolbar }}
+                eventPropGetter={eventPropGetter}
             />
         </div>
     );

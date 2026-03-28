@@ -138,7 +138,7 @@ function App() {
         activeBoardID={boardData.activeBoardID}
         onSelectBoard={boardData.setActiveBoardID}
         onAddBoard={boardData.addBoard}
-        onDeleteBoard={uiState.openDeleteModal}
+        onDeleteBoard={(boardID) => uiState.openDeleteModal('board', { boardID })}
         onRenameBoard={uiState.openRenameModal}
         onExportBoard={boardData.exportBoard}
         theme={theme}
