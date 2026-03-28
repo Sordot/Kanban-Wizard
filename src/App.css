@@ -921,172 +921,193 @@ button, input, textarea {
     color: var(--text-primary);
 }
 
-/* Calendar Theming */
+/* =========================================
+   CALENDAR STYLES (Magical Glassmorphism)
+   ========================================= */
+
+/* Main Calendar Container */
 .rbc-calendar {
-  font-family: inherit;
-  border-radius: 12px;
-  color: var(--text-primary) !important;
-  background-color: var(--column-bg) !important;
+    font-family: var(--font-professional);
+    background: var(--card-bg) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--column-border);
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    color: var(--text-primary) !important;
+    overflow: hidden; /* Keeps the glass borders clean */
+    padding: 16px;
 }
 
-/* Calendar Toolbar styling (Today, Back, Next buttons) */
+/* Toolbar (Month/Year Title) */
+.rbc-toolbar .rbc-toolbar-label {
+    font-family: var(--font-magical);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+}
+
+/* Calendar Toolbar Buttons (Today, Back, Next) */
 .rbc-toolbar button {
-  color: var(--text-primary) !important;
-  border-color: var(--column-border) !important;
-  background-color: var(--column-bg) !important;
-  padding: 8px 16px !important;
-  transition: all 0.2s ease;
-  cursor: pointer;
+    color: var(--text-secondary) !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 6px;
+    padding: 8px 16px !important;
+    font-family: var(--font-professional);
+    transition: all 0.2s ease;
+    cursor: pointer;
 }
 
 .rbc-toolbar button:hover,
 .rbc-toolbar button:active,
 .rbc-toolbar button.rbc-active {
-    outline: none !important;
+    background: rgba(255, 255, 255, 0.08) !important;
     border-color: var(--accent-color) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 0 4px var(--accent-color) !important;
+    border-top: 1px solid var(--glass-edge-top) !important;
+    border-left: 1px solid var(--glass-edge-left) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+    outline: none !important;
 }
 
 /* Header row (Days of the week: Mon, Tue, etc.) */
 .rbc-header {
-  padding: 12px 0;
-  font-weight: 600;
-  background-color: var(--card-bg) !important;
+    padding: 12px 0;
+    font-family: var(--font-magical);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    background-color: transparent !important;
+    border-bottom: 1px solid var(--column-border) !important;
 }
 
 /* Cell borders */
-.rbc-month-view,
-.rbc-month-row,
-.rbc-day-bg,
-.rbc-header {
-  border-color: var(--column-border) !important;
+.rbc-month-view, .rbc-month-row, .rbc-day-bg, .rbc-header {
+    border-color: var(--column-border) !important;
 }
-
-/* highlight fix for calendar bottom row, do not mess with this! */
-/* 1. Tell the mouse to ignore the invisible foreground grid wrappers */
-.rbc-row-content,
-.rbc-row,
-.rbc-row-segment {
-    pointer-events: none !important;
-}
-
-/* 2. Re-enable pointer events for the actual visible elements so you can still click them */
-.rbc-event,
-.rbc-show-more,
-.rbc-date-cell {
-    pointer-events: auto !important;
-}
-
 
 /* Add a smooth transition and hover color for calendar days */
 .rbc-day-bg {
-    transition: background-color 0.2s ease !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
 }
 
 .rbc-day-bg:hover {
-    background-color: rgba(0, 115, 207, 0.3) !important; /* a light tint of accent color */
+    background-color: rgba(255, 255, 255, 0.05) !important; 
+    box-shadow: inset 0 0 20px var(--nebula-glow-1);
     cursor: pointer !important;
 }
 
-/* Ensure today's highlight remains visible but can also be hovered */
+/* Today's Highlight - Give it the "Magic Aura" treatment */
 .rbc-day-bg.rbc-today {
-    background-color: rgba(0, 115, 207, 0.1) !important;
+    background-color: rgba(0, 115, 207, 0.08) !important;
+    box-shadow: inset 0 0 15px rgba(0, 115, 207, 0.3) !important;
 }
+
 .rbc-day-bg.rbc-today:hover {
-    background-color: rgba(0, 115, 207, 0.3) !important;
+    background-color: rgba(0, 115, 207, 0.15) !important;
+    box-shadow: inset 0 0 25px var(--nebula-glow-1) !important;
 }
 
 /* Calendar Events (Tasks) */
 .rbc-event {
-  background-color: var(--sidebar-bg) !important;
-
-  border: 1px solid var(--accent-color) !important;
-  border-radius: 4px !important;
-  color: #f8fafc !important;
-  transition: background-color 0.2s ease !important;
+    background-color: var(--sidebar-bg) !important;
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--column-border) !important;
+    border-top: 1px solid var(--glass-edge-top) !important;
+    border-left: 1px solid var(--glass-edge-left) !important;
+    border-radius: 6px !important;
+    color: var(--text-primary) !important;
+    font-size: 0.85em;
+    padding: 2px 6px !important;
+    transition: all 0.2s ease !important;
 }
 
 .rbc-event:hover {
     outline: none !important;
     border-color: var(--accent-color) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 0 4px var(--accent-color) !important;
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.3), 
+        0 0 10px var(--nebula-glow-1) !important;
 }
 
-/* Off-range days (dates belonging to the previous/next month) */
-/* Dark Mode (Default) - Off-range background */
-.rbc-off-range-bg {
-    background-color: rgba(0, 0, 0, 0.3) !important;
-}
-
-/* Dark Mode (Default) - Off-range text */
-.rbc-off-range {
-    color: var(--text-secondary) !important;
-    opacity: 0.4;
-}
-
-/* Light Mode - Off-range background */
-:root[data-theme="light"] .rbc-off-range-bg {
-    background-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-/* Light Mode - Off-range text */
-:root[data-theme="light"] .rbc-off-range {
-    color: var(--text-secondary) !important;
-    opacity: 0.6;
-}
-
+/* The "+x more" link styling */
 .rbc-show-more {
-    background-color: rgba(0, 115, 207, 0.15) !important; /* Faint wizard blue tint */
-    color: var(--accent-color) !important; /* Bright accent color */
-    font-weight: bold !important;
+    background-color: transparent !important;
+    color: var(--accent-color) !important; 
+    font-weight: 600 !important;
     font-size: 0.8rem !important;
     padding: 3px 6px !important;
     border-radius: 6px !important;
     margin: 2px 4px !important;
     transition: all 0.2s ease !important;
-    text-align: center !important;
-    display: block !important;
-    text-decoration: none !important;
 }
 
 .rbc-show-more:hover {
-    background-color: var(--accent-color) !important;
-    color: #f8fafc !important;
-}
-
-/* Light Mode Adjustments */
-:root[data-theme="light"] .rbc-show-more {
-    background-color: rgba(0, 115, 207, 0.1);
-}
-
-/* show more modal styles */
-/* Dark Mode (Default) */
-.rbc-overlay {
-    background: var(--sidebar-bg) !important; /* Deep dark glass */
-    border: 1px solid var(--column-border) !important;
-    backdrop-filter: blur(6px) !important;
-    -webkit-backdrop-filter: blur(6px) !important;
-    border-radius: 12px !important;
-    box-shadow: 0 4px 16px var(--column-shadow) !important;
-    padding: 10px !important;
-    z-index: 50 !important; /* Ensure it floats above calendar cells */
-}
-
-/* The header of the popup (shows the date) */
-.rbc-overlay-header {
-    font-weight: bold !important;
+    background-color: rgba(255, 255, 255, 0.08) !important;
     color: var(--text-primary) !important;
-    border-bottom: 1px solid var(--accent-color) !important;
-    padding-bottom: 8px !important;
-    margin-bottom: 8px !important;
+}
+
+/* Keep your pointer-event fixes */
+.rbc-row-content, .rbc-row, .rbc-row-segment { pointer-events: none !important; }
+.rbc-event, .rbc-show-more, .rbc-date-cell { pointer-events: auto !important; }
+
+/* Off-range days */
+.rbc-off-range-bg {
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+.rbc-off-range {
+    color: var(--text-secondary) !important;
+    opacity: 0.4;
+}
+
+:root[data-theme="light"] .rbc-off-range-bg {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+:root[data-theme="light"] .rbc-off-range {
+    color: var(--text-secondary) !important;
+    opacity: 0.6;
+}
+
+/* =========================================
+   CALENDAR POPUP (The "+x more" Overlay)
+   ========================================= */
+
+.rbc-overlay {
+    background: var(--sidebar-bg) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid var(--column-border) !important;
+    border-top: 1px solid var(--glass-edge-top) !important;
+    border-left: 1px solid var(--glass-edge-left) !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    z-index: 100 !important; /* Keep it high above the calendar */
+    box-shadow: 
+        0 16px 40px rgba(0, 0, 0, 0.4),
+        0 0 20px var(--nebula-glow-1) !important;
+}
+
+/* The popup header containing the Date */
+.rbc-overlay-header {
+    font-family: var(--font-magical) !important;
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.05em !important;
+    color: var(--text-primary) !important;
+    border-bottom: 1px solid var(--column-border) !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 12px !important;
     text-align: center !important;
 }
 
-/* Light Mode Overrides */
-:root[data-theme="light"] .rbc-overlay {
-    background: var(--sidebar-bg) !important;
-    border: 1px solid var(--column-border) !important;
-    box-shadow: 0 4px 16px var(--column-shadow) !important;
+/* Ensure the Tasks inside the popup have breathing room */
+.rbc-overlay > .rbc-event {
+    margin-bottom: 8px !important;
+    padding: 4px 8px !important;
+    /* These will automatically inherit the beautiful glass .rbc-event styles we wrote earlier! */
 }
 
 
