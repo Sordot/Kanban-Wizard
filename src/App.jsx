@@ -10,7 +10,7 @@ import {
   MouseSensor
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { FaGithub, FaLinkedin, FaBars } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaBars, FaFilter } from 'react-icons/fa';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import './App.css';
@@ -137,6 +137,9 @@ function App() {
     uiState.openDeleteModal('column', { columnID });
   };
 
+  // Helper to check if any filters are active so we can show the badge on the new button
+  const hasActiveFilters = filterData.filters.text || filterData.filters.priority || filterData.filters.issueType || filterData.filters.effort || filterData.filters.environment || filterData.filters.assignee
+
   return (
     <div className="app-layout">
       {/* Overlay for mobile when sidebar is open */}
@@ -158,16 +161,23 @@ function App() {
         handleBoardDragEnd={boardData.handleBoardDragEnd}
       />
       <div className='kanban-container'>
-        {/* Mobile Hamburger Menu Button */}
-        <button className="hamburger-btn" onClick={uiState.toggleSidebar}>
-          <FaBars size={20} />
-        </button>
+        <div className="mobile-action-buttons">
+          <button className="hamburger-btn" onClick={uiState.toggleSidebar}>
+            <FaBars size={20} />
+          </button>
+          <button className="mobile-filter-btn" onClick={uiState.toggleFilterModal}>
+            <FaFilter size={20} />
+            {hasActiveFilters && <span className="filter-badge"></span>}
+          </button>
+        </div>
         <FilterBar
           currentView={uiState.currentView}
           setCurrentView={uiState.setCurrentView}
           filters={filterData.filters}
           setFilters={filterData.setFilters}
           uniqueAssignees={filterData.uniqueAssignees}
+          isOpen={uiState.isFilterModalOpen}
+          onClose={uiState.closeFilterModal}
         />
         {uiState.currentView === 'board' ? (
           <div className="kanban-board-wrapper">

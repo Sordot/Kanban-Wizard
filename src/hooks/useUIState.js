@@ -8,6 +8,10 @@ export const useUIState = () => {
   const toggleSidebar = useCallback(() => setIsSidebarOpen(prev => !prev), []);
   const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
 
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const toggleFilterModal = useCallback(() => setIsFilterModalOpen(prev => !prev), []);
+  const closeFilterModal = useCallback(() => setIsFilterModalOpen(false), []);
+
   const [activeTask, setActiveTask] = useState(null)
 
   const [isAddingColumn, setIsAddingColumn] = useState(false)
@@ -74,6 +78,9 @@ export const useUIState = () => {
     isSidebarOpen,
     toggleSidebar,
     closeSidebar,
+    isFilterModalOpen,    
+    toggleFilterModal,    
+    closeFilterModal,
     activeTask,
     setActiveTask,
     isAddingColumn,

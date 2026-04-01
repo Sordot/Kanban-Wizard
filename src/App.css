@@ -3532,15 +3532,9 @@ button.sidebar-value {
     /* Matches the vibrant violet used in your Add Task buttons */
 }
 
-/* Hide hamburger menu by default on Desktop */
-.hamburger-btn {
-  display: none;
-  background: transparent;
-  border: none;
-  color: var(--text-primary);
-  cursor: pointer;
-  padding: 8px;
-  margin-right: auto; /* Aligns it to the left */
+/* --- Mobile Action Buttons --- */
+.mobile-action-buttons {
+    display: none; /* Hidden entirely on desktop */
 }
 
 /* Base overlay style (hidden by React conditional rendering) */
@@ -3552,25 +3546,12 @@ button.sidebar-value {
   z-index: 998;
 }
 
-@media (max-width: 768px) {
-  .hamburger-btn {
-    display: block;
-  }
+.filter-modal-overlay {
+    display: none; /* Hide overlay on desktop */
+}
 
-  /* Slide-in Sidebar styling */
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: -100%; /* Hidden off-screen */
-    z-index: 999;
-    width: 300px;
-    min-width: 300px;
-    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .sidebar.open {
-    left: 0; /* Slide in */
-  }
+.close-filter-btn {
+    display: none; /* Hide close button on desktop */
 }
 
 /* =========================================
@@ -3586,39 +3567,74 @@ button.sidebar-value {
    1024px - TABLETS & SMALL DESKTOPS
    ----------------------------------------- */
 @media (max-width: 1024px) {
+    .mobile-action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .hamburger-btn,
+    .mobile-filter-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--card-bg);
+        border: 1px solid var(--column-border);
+        border-top: 1px solid var(--glass-edge-top);
+        border-left: 1px solid var(--glass-edge-left);
+        color: var(--text-primary);
+        padding: 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease;
+        position: relative;
+    }
+
+    .hamburger-btn:hover,
+    .mobile-filter-btn:hover {
+        background: var(--column-bg);
+        border-color: var(--accent-color);
+        box-shadow: 0 0 15px var(--nebula-glow-1);
+    }
+
+    .filter-badge {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        width: 12px;
+        height: 12px;
+        background-color: var(--btn-red-bg); 
+        border-radius: 50%;
+        border: 2px solid var(--bg-color); /* Creates a cutout effect */
+        box-shadow: 0 0 8px var(--btn-red-shadow);
+    }
+
+    .filter-modal-overlay {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 1000;
+    }
+
     /* Slightly shrink the sidebar to give the board more breathing room */
-    .sidebar {
-        min-width: 260px;
-        padding: 30px 15px 10px;
-    }
-
-    /* Allow the FilterBar elements to wrap gracefully */
-    .filter-container {
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: 10px;
-    }
-
-    .clear-filters-btn {
-        align-self: flex-end;
-    }
-
-    .search-input-wrapper {
-        flex-grow: 1;
-        min-width: 180px;
-    }
-}
-
-/* -----------------------------------------
-   768px - MOBILE DEVICES
-   ----------------------------------------- */
-@media (max-width: 768px) {
-    /* -- 1. App Layout & Sidebar Drawer -- */
     .sidebar {
         position: fixed;
         left: -100%;
         top: 0;
-        z-index: 1000;
+        z-index: 999;
         transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         width: 280px;
         max-width: 80vw;
@@ -3642,20 +3658,76 @@ button.sidebar-value {
         z-index: 999; /* Sits just below the sidebar (1000) */
     }
 
-    .hamburger-btn {
-        display: inline-flex;
+    /* Allow the FilterBar elements to wrap gracefully */
+    .filter-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.95);
+        width: 90%;
+        max-width: 400px;
+        background: var(--bg-color); 
+        border: 1px solid var(--column-border);
+        border-top: 1px solid var(--glass-edge-top);
+        border-left: 1px solid var(--glass-edge-left);
+        border-radius: 16px;
+        padding: 24px;
+        flex-direction: column; /* Stack controls vertically */
+        z-index: 1001;
+        
+        /* Hidden by default */
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .filter-container.modal-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .filter-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .filter-controls {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px; /* Add vertical spacing between inputs */
+    }
+
+    .clear-filters-btn {
+        font-size: 1.2rem;
+        align-self: flex-end;
+    }
+
+    .search-input-wrapper,
+    .filter-dropdown {
+        width: 100% !important;
+    }
+
+    .close-filter-btn {
+        display: flex;
         align-items: center;
         justify-content: center;
         background: transparent;
-        border: 1px solid var(--column-border);
-        color: var(--text-primary);
-        padding: 8px 12px;
-        border-radius: 8px;
-        cursor: pointer;
-        margin-bottom: 15px;
-        width: fit-content;
+        border: none;
+        font-size: 1rem;
+        padding: 4px;
     }
+}
 
+/* -----------------------------------------
+   768px - MOBILE DEVICES
+   ----------------------------------------- */
+@media (max-width: 768px) {
     /* -- 2. Kanban Board (Horizontal Scrolling) -- */
     .kanban-container {
         padding: 20px 15px;
@@ -3684,78 +3756,6 @@ button.sidebar-value {
         max-width: 320px;
         min-width: 280px;
         height: calc(100vh - 220px); /* Adjust based on your header/footer heights */
-    }
-
-    /* -- 3. Filter Bar (Vertical Stack) -- */
-    .filter-container {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-    }
-
-    .filter-top-row {
-        justify-content: space-between;
-        width: 100%;
-    }
-
-    .view-switcher {
-        flex-grow: 1;
-    }
-
-    .mobile-filter-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        background: var(--card-bg);
-        border: 1px solid var(--column-border);
-        border-radius: 8px;
-        color: var(--text-primary);
-        padding: 0 16px;
-        height: 36px;
-        cursor: pointer;
-        position: relative;
-    }
-
-    .filter-badge {
-        position: absolute;
-        top: -2px;
-        right: -2px;
-        width: 10px;
-        height: 10px;
-        background: var(--btn-red-bg);
-        border-radius: 50%;
-        box-shadow: 0 0 8px var(--btn-red-bg);
-    }
-
-    .filter-controls {
-        display: none; 
-        flex-direction: column;
-        align-items: stretch;
-        width: 100%;
-        background: rgba(0, 0, 0, 0.15); /* Slight inset grouping look */
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid var(--column-border);
-        gap: 12px;
-    }
-
-    .filter-controls.open {
-        display: flex; /* Reveal when toggled */
-        animation: slideDown 0.2s ease-out;
-    }
-
-    .search-input-wrapper,
-    .filter-dropdown {
-        width: 100%; /* Force all filters to full width on mobile */
-    }
-
-    .view-btn {
-        flex: 1; /* Tabs take equal width on mobile */
-    }
-
-    .filter-dropdown {
-        width: 100%; /* Radix dropdowns span full width */
     }
 
     /* -- 4. Task Modal (Column Layout) -- */
