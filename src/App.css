@@ -107,17 +107,17 @@
     pointer-events: none;
     z-index: 0;
     background: conic-gradient(from 90deg at -5% -5%,
-            
+
             transparent 0deg,
             rgba(255, 255, 255, 0.2) 10deg,
             transparent 15deg,
             rgba(255, 255, 255, 0.3) 25deg,
-            
+
             transparent 35deg,
             rgba(255, 255, 255, 0.2) 45deg,
             transparent 50deg,
             rgba(255, 255, 255, 0.1) 65deg,
-            
+
             transparent 75deg);
     background-size: 200% 200%;
     background-position: 5% 5%;
@@ -161,20 +161,26 @@ body:has(.dragging-overlay) .task-card {
     pointer-events: none !important;
 }
 
-h1, h2, h3, h4, 
-.sidebar-logo, 
-.board-title-input, 
-.progress-text, 
+h1,
+h2,
+h3,
+h4,
+.sidebar-logo,
+.board-title-input,
+.progress-text,
 .analytics-stats span,
 .add-board-sidebar,
 .theme-toggle-btn,
-.modal-title,       
+.modal-title,
 .modal-title-input {
     font-family: var(--font-magical);
-    letter-spacing: 0.05em; /* Cinzel looks best with a little extra air */
+    letter-spacing: 0.05em;
+    /* Cinzel looks best with a little extra air */
 }
 
-button, input, textarea {
+button,
+input,
+textarea {
     font-family: var(--font-professional);
 }
 
@@ -208,15 +214,15 @@ button, input, textarea {
     cursor: pointer;
     transition: all 0.2s ease;
 
-    white-space: nowrap !important; 
+    white-space: nowrap !important;
     text-overflow: ellipsis !important;
     overflow: hidden;
 }
 
 .select-value-wrapper {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
 }
 
 .radix-select-trigger:focus,
@@ -233,7 +239,8 @@ button, input, textarea {
 
 /* The popup content wrapper - Now Opaque */
 .radix-select-content {
-    background-color: var(--bg-color); /* Solid background to prevent transparency */
+    background-color: var(--bg-color);
+    /* Solid background to prevent transparency */
     border: 1px solid var(--column-border);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
@@ -289,7 +296,8 @@ button, input, textarea {
    ========================================= */
 .radix-menu-content {
     min-width: 180px;
-    background-color: var(--bg-color); /* Fixed transparency */
+    background-color: var(--bg-color);
+    /* Fixed transparency */
     border: 1px solid var(--column-border);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
@@ -333,8 +341,15 @@ button, input, textarea {
 }
 
 @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .sidebar {
@@ -411,9 +426,9 @@ button, input, textarea {
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
     color: var(--text-primary);
-    box-shadow: 
+    box-shadow:
         /* 1. Inset glow: makes the internal edge of the field "vibrate" with light */
-        inset 0 0 10px rgba(0, 115, 207, 0.2), 
+        inset 0 0 10px rgba(0, 115, 207, 0.2),
         /* 2. Outer Bloom: uses your nebula-glow variable to bleed light outward */
         0 0 20px var(--nebula-glow-1),
         /* 3. Drop Shadow: maintains the physical depth and lift */
@@ -524,14 +539,14 @@ button, input, textarea {
 
 /* reveal the buttons when the wrapper focused or active */
 .board-actions:focus-within,
-.board-link.active + .board-actions {
+.board-link.active+.board-actions {
     opacity: 0.5;
     visibility: visible;
 }
 
 /* improve visibility further on hover */
 .board-actions:focus-within,
-.board-link.active + .board-actions:hover {
+.board-link.active+.board-actions:hover {
     opacity: 1;
     visibility: visible;
 }
@@ -541,7 +556,7 @@ button, input, textarea {
     border: none;
     cursor: pointer;
     padding: 4px;
-    font-size: 16px;   
+    font-size: 16px;
 }
 
 .delete-board-btn {
@@ -549,7 +564,7 @@ button, input, textarea {
     border: none;
     padding: 4px;
     font-size: 16px;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 
@@ -936,7 +951,8 @@ button, input, textarea {
     border-radius: 12px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
     color: var(--text-primary) !important;
-    overflow: hidden; /* Keeps the glass borders clean */
+    overflow: hidden;
+    /* Keeps the glass borders clean */
     padding: 16px;
 }
 
@@ -984,7 +1000,10 @@ button, input, textarea {
 }
 
 /* Cell borders */
-.rbc-month-view, .rbc-month-row, .rbc-day-bg, .rbc-header {
+.rbc-month-view,
+.rbc-month-row,
+.rbc-day-bg,
+.rbc-header {
     border-color: var(--column-border) !important;
 }
 
@@ -994,7 +1013,7 @@ button, input, textarea {
 }
 
 .rbc-day-bg:hover {
-    background-color: rgba(255, 255, 255, 0.05) !important; 
+    background-color: rgba(255, 255, 255, 0.05) !important;
     box-shadow: inset 0 0 20px var(--nebula-glow-1);
     cursor: pointer !important;
 }
@@ -1027,15 +1046,15 @@ button, input, textarea {
 .rbc-event:hover {
     outline: none !important;
     border-color: var(--accent-color) !important;
-    box-shadow: 
-        0 4px 12px rgba(0, 0, 0, 0.3), 
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.3),
         0 0 10px var(--nebula-glow-1) !important;
 }
 
 /* The "+x more" link styling */
 .rbc-show-more {
     background-color: transparent !important;
-    color: var(--accent-color) !important; 
+    color: var(--accent-color) !important;
     font-weight: 600 !important;
     font-size: 0.8rem !important;
     padding: 3px 6px !important;
@@ -1050,13 +1069,23 @@ button, input, textarea {
 }
 
 /* Keep your pointer-event fixes */
-.rbc-row-content, .rbc-row, .rbc-row-segment { pointer-events: none !important; }
-.rbc-event, .rbc-show-more, .rbc-date-cell { pointer-events: auto !important; }
+.rbc-row-content,
+.rbc-row,
+.rbc-row-segment {
+    pointer-events: none !important;
+}
+
+.rbc-event,
+.rbc-show-more,
+.rbc-date-cell {
+    pointer-events: auto !important;
+}
 
 /* Off-range days */
 .rbc-off-range-bg {
     background-color: rgba(0, 0, 0, 0.2) !important;
 }
+
 .rbc-off-range {
     color: var(--text-secondary) !important;
     opacity: 0.4;
@@ -1065,6 +1094,7 @@ button, input, textarea {
 :root[data-theme="light"] .rbc-off-range-bg {
     background-color: rgba(255, 255, 255, 0.1) !important;
 }
+
 :root[data-theme="light"] .rbc-off-range {
     color: var(--text-secondary) !important;
     opacity: 0.6;
@@ -1083,8 +1113,9 @@ button, input, textarea {
     border-left: 1px solid var(--glass-edge-left) !important;
     border-radius: 12px !important;
     padding: 16px !important;
-    z-index: 100 !important; /* Keep it high above the calendar */
-    box-shadow: 
+    z-index: 100 !important;
+    /* Keep it high above the calendar */
+    box-shadow:
         0 16px 40px rgba(0, 0, 0, 0.4),
         0 0 20px var(--nebula-glow-1) !important;
 }
@@ -1103,7 +1134,7 @@ button, input, textarea {
 }
 
 /* Ensure the Tasks inside the popup have breathing room */
-.rbc-overlay > .rbc-event {
+.rbc-overlay>.rbc-event {
     margin-bottom: 8px !important;
     padding: 4px 8px !important;
     /* These will automatically inherit the beautiful glass .rbc-event styles we wrote earlier! */
@@ -1116,8 +1147,10 @@ button, input, textarea {
 .rbc-event.is-new-calendar-event {
     /* Match the 0.8s cubic-bezier timing of your board items */
     animation: summonCalendarEvent 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
-    overflow: hidden !important; /* Crucial: keeps the magic sweep inside the task bubble */
-    position: relative; /* Required for the absolute ::before element */
+    overflow: hidden !important;
+    /* Crucial: keeps the magic sweep inside the task bubble */
+    position: relative;
+    /* Required for the absolute ::before element */
 }
 
 /* The Magical Gradient Sweep */
@@ -1148,14 +1181,15 @@ button, input, textarea {
         background-color: rgba(124, 58, 237, 0.3) !important;
         border-color: #7c3aed !important;
     }
+
     100% {
         opacity: 1;
         transform: translateX(0);
         /* Settles beautifully into your glassmorphism standard */
         background-color: var(--sidebar-bg) !important;
         border-color: var(--column-border) !important;
-        box-shadow: 
-            0 4px 12px rgba(0, 0, 0, 0.3), 
+        box-shadow:
+            0 4px 12px rgba(0, 0, 0, 0.3),
             0 0 10px var(--nebula-glow-1) !important;
     }
 }
@@ -1165,6 +1199,7 @@ button, input, textarea {
     0% {
         left: -100%;
     }
+
     100% {
         left: 100%;
     }
@@ -1177,10 +1212,11 @@ button, input, textarea {
 .rbc-event.is-deleting-calendar-event {
     /* 1.0s ease-in perfectly matches your banishSidebar timing */
     animation: banishCalendarEvent 1.0s ease-in forwards !important;
-    pointer-events: none !important; 
-    z-index: 0 !important; 
-    position: relative; /* Required so the ::after element stays inside */
-    overflow: hidden !important; 
+    pointer-events: none !important;
+    z-index: 0 !important;
+    position: relative;
+    /* Required so the ::after element stays inside */
+    overflow: hidden !important;
 }
 
 /* The Violet Flare Overlay */
@@ -1191,8 +1227,10 @@ button, input, textarea {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #7c3aed; /* The magic violet */
-    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.4); /* Inner glow */
+    background-color: #7c3aed;
+    /* The magic violet */
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.4);
+    /* Inner glow */
     z-index: 2;
     animation: banishFlareOpacity 1.0s ease-in forwards;
 }
@@ -1221,9 +1259,17 @@ button, input, textarea {
 }
 
 @keyframes banishFlareOpacity {
-    0% { opacity: 0; }
-    40% { opacity: 1; }
-    100% { opacity: 0; }
+    0% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 
@@ -1237,7 +1283,8 @@ button, input, textarea {
     justify-content: flex-start;
     gap: 12px;
     align-items: center;
-    background: var(--column-bg); /* Matches your board's card/surface color */
+    background: var(--column-bg);
+    /* Matches your board's card/surface color */
     padding: 12px 16px;
     border-radius: 8px;
     border: 1px solid var(--column-border);
@@ -1246,7 +1293,8 @@ button, input, textarea {
     /* width: 70%; */
     min-width: fit-content;
     max-width: 1000px;
-    margin: 0 auto; /* This centers the filter bar if the container is full-width */
+    margin: 0 auto;
+    /* This centers the filter bar if the container is full-width */
 }
 
 /* =========================================
@@ -1266,7 +1314,8 @@ button, input, textarea {
     border-radius: 8px;
     padding: 0px 12px;
     height: 36px;
-    width: 180px; /* Base width matching dropdowns */
+    width: 180px;
+    /* Base width matching dropdowns */
     transition: all 0.2s ease;
 }
 
@@ -1292,7 +1341,7 @@ button, input, textarea {
     display: flex;
     gap: 10px;
     align-items: center;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     flex-grow: 1;
 
     /* position: relative;
@@ -1306,7 +1355,8 @@ button, input, textarea {
 }
 
 .mobile-filter-toggle {
-    display: none; /* Hidden on desktop */
+    display: none;
+    /* Hidden on desktop */
 }
 
 /* --- The Clear Spell Button (Emoji Optimized) --- */
@@ -1316,13 +1366,13 @@ button, input, textarea {
     justify-content: center;
     width: 24px;
     height: 24px;
-    padding: 0; 
-    background: transparent; 
+    padding: 0;
+    background: transparent;
     border: 1px solid transparent;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.2s ease;  
-    
+    transition: all 0.2s ease;
+
     /* position: absolute;
     right: 0; */
 }
@@ -1331,21 +1381,21 @@ button, input, textarea {
 .task-card.search-obscured {
     opacity: 0.25;
     filter: blur(4px) grayscale(60%);
-    pointer-events: none; 
+    pointer-events: none;
 }
 
 /* ✨ The Scrying Glow: Illuminate the tasks that DO match */
 .task-card.search-matched {
-    box-shadow: 
-        0 0 20px var(--nebula-glow-1), 
+    box-shadow:
+        0 0 20px var(--nebula-glow-1),
         inset 0 0 10px rgba(255, 255, 255, 0.15);
     z-index: 10;
 }
 
 /* Light mode overrides for the matched glow so it stands out on light backgrounds */
 :root[data-theme="light"] .task-card.search-matched {
-    box-shadow: 
-        0 0 20px rgba(0, 115, 207, 0.4), 
+    box-shadow:
+        0 0 20px rgba(0, 115, 207, 0.4),
         inset 0 0 10px rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.4);
 }
@@ -1655,18 +1705,18 @@ button, input, textarea {
     background: var(--card-bg);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px dashed var(--column-border); 
+    border: 1px dashed var(--column-border);
     border-radius: 8px;
-    
+
     /* Slight inset shadow makes it look like a recessed slot */
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1); 
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
 
 .empty-column-placeholder h4 {
     margin: 0;
     color: var(--text-primary);
-    font-family: var(--font-professional); 
+    font-family: var(--font-professional);
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.05em;
@@ -1752,7 +1802,7 @@ button, input, textarea {
 }
 
 .task-card:hover {
-    overflow: visible !important; 
+    overflow: visible !important;
     z-index: 999;
     background: rgba(255, 255, 255, 0.2);
     border-color: var(--accent-color);
@@ -1767,7 +1817,7 @@ button, input, textarea {
 
 /* Override the default react-tooltip styles */
 .wizard-theme-tooltip {
-    background-color: var(--bg-color) !important; 
+    background-color: var(--bg-color) !important;
     color: var(--text-primary) !important;
     padding: 4px 10px !important;
     border-radius: 6px !important;
@@ -1775,14 +1825,14 @@ button, input, textarea {
     font-size: 0.8rem !important;
     font-family: var(--font-professional) !important;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
-    
+
     /* 🛡️ Guardrails for long text */
     max-width: 200px !important;
     text-align: center !important;
     line-height: 1.4 !important;
-    
+
     /* Z-index ensures it sits above absolutely everything */
-    z-index: 9999 !important; 
+    z-index: 9999 !important;
 }
 
 .assignee-avatar {
@@ -1799,9 +1849,9 @@ button, input, textarea {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 10px rgba(0, 115, 207, 0.2), 
-                inset 0 0 8px var(--nebula-glow-1);
-    
+    box-shadow: 0 0 10px rgba(0, 115, 207, 0.2),
+        inset 0 0 8px var(--nebula-glow-1);
+
     /* Typography for Initials */
     font-family: var(--font-magical);
     font-size: 0.8rem;
@@ -2284,7 +2334,8 @@ select.sidebar-value option {
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    animation: fadeIn 0.2s ease-out; /* Use existing fadeIn animation */
+    animation: fadeIn 0.2s ease-out;
+    /* Use existing fadeIn animation */
 }
 
 .modal-title-wrapper {
@@ -2301,7 +2352,7 @@ select.sidebar-value option {
     margin-top: 0;
     margin-bottom: 12px;
     letter-spacing: 0.05em;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); 
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
 }
 
 .modal-content.confirmation-modal {
@@ -2414,8 +2465,9 @@ select.sidebar-value option {
     background: var(--btn-red-bg);
     color: #ffffff;
     border: 1px solid transparent;
-    border-top: 1px solid rgba(255, 255, 255, 0.3); /* Gives it a tactile, 3D top edge */
-    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15); 
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    /* Gives it a tactile, 3D top edge */
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
 }
 
 .modal-btn.delete-red:hover {
@@ -2439,13 +2491,14 @@ select.sidebar-value option {
 
 /* Subtle entrance animation for the modal itself */
 @keyframes slideUpFade {
-    from { 
-        opacity: 0; 
-        transform: translateY(15px) scale(0.98); 
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
     }
-    to { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 
@@ -2469,12 +2522,12 @@ select.sidebar-value option {
     width: 100%;
     box-sizing: border-box;
     /* This margin is the key! It adds the exact vertical spacing needed to match the standard modal */
-    margin: 16px 0 24px 0; 
+    margin: 16px 0 24px 0;
     padding: 10px 14px;
     font-family: var(--font-professional, sans-serif);
     font-size: 1rem;
     color: var(--text-primary);
-    background-color: rgba(0, 0, 0, 0.1); 
+    background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid var(--column-border);
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
@@ -2490,9 +2543,10 @@ select.sidebar-value option {
 
 .modal-rename-input:focus {
     border-color: var(--accent-color);
-    box-shadow: 
+    box-shadow:
         0 4px 12px rgba(0, 0, 0, 0.1),
-        0 0 0 2px rgba(0, 115, 207, 0.2), /* Soft focus ring */
+        0 0 0 2px rgba(0, 115, 207, 0.2),
+        /* Soft focus ring */
         inset 0 0 10px var(--nebula-glow-1);
 }
 
@@ -2655,7 +2709,8 @@ select.sidebar-value option {
 .sidebar-value-container select {
     width: 100%;
     padding: 4px 8px;
-    text-overflow: ellipsis; /* Adds '...' if text is still too long */
+    text-overflow: ellipsis;
+    /* Adds '...' if text is still too long */
 }
 
 /* target custom field values specifically to make sure they dont overflow */
@@ -2701,11 +2756,11 @@ span.sidebar-value {
     font-family: inherit;
     line-height: 1;
     transition: all 0.2s ease;
-    text-align: center; 
+    text-align: center;
 
     white-space: nowrap;
-    overflow: hidden;           
-    text-overflow: ellipsis;    
+    overflow: hidden;
+    text-overflow: ellipsis;
     display: block;
 }
 
@@ -3416,8 +3471,8 @@ button.sidebar-value {
 /* Analytics Progress Bar */
 .progress-bar-container {
     display: flex;
-    align-items: center; 
-    gap: 16px;           
+    align-items: center;
+    gap: 16px;
     width: 100%;
     max-width: 30%;
     margin: 10px 0;
@@ -3430,7 +3485,7 @@ button.sidebar-value {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
+    box-shadow:
         inset 0 2px 4px rgba(0, 0, 0, 0.3),
         0 1px 0 rgba(255, 255, 255, 0.1);
     overflow: hidden;
@@ -3440,12 +3495,10 @@ button.sidebar-value {
 /* The Glowing Mana Liquid */
 .mana-liquid {
     height: 100%;
-    background: linear-gradient(
-        90deg, 
-        var(--accent-color) 0%, 
-        #50b5ff 50%, 
-        var(--accent-color) 100%
-    );
+    background: linear-gradient(90deg,
+            var(--accent-color) 0%,
+            #50b5ff 50%,
+            var(--accent-color) 100%);
     box-shadow: 0 0 15px var(--accent-color);
     transition: width 1s cubic-bezier(0.47, 0, 0.745, 0.715);
     position: relative;
@@ -3459,11 +3512,9 @@ button.sidebar-value {
     left: 5px;
     right: 5px;
     height: 6px;
-    background: linear-gradient(
-        to bottom, 
-        rgba(255, 255, 255, 0.3) 0%, 
-        transparent 100%
-    );
+    background: linear-gradient(to bottom,
+            rgba(255, 255, 255, 0.3) 0%,
+            transparent 100%);
     border-radius: 10px;
     pointer-events: none;
 }
@@ -3534,24 +3585,27 @@ button.sidebar-value {
 
 /* --- Mobile Action Buttons --- */
 .mobile-action-buttons {
-    display: none; /* Hidden entirely on desktop */
+    display: none;
+    /* Hidden entirely on desktop */
 }
 
 /* Base overlay style (hidden by React conditional rendering) */
 .sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  z-index: 998;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 998;
 }
 
 .filter-modal-overlay {
-    display: none; /* Hide overlay on desktop */
+    display: none;
+    /* Hide overlay on desktop */
 }
 
 .close-filter-btn {
-    display: none; /* Hide close button on desktop */
+    display: none;
+    /* Hide close button on desktop */
 }
 
 /* =========================================
@@ -3560,7 +3614,8 @@ button.sidebar-value {
 
 /* Desktop Base */
 .hamburger-btn {
-    display: none; /* Hide the hamburger by default on desktop */
+    display: none;
+    /* Hide the hamburger by default on desktop */
 }
 
 /* -----------------------------------------
@@ -3570,10 +3625,10 @@ button.sidebar-value {
     .mobile-action-buttons {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
         position: absolute;
-        top: 20px;
-        left: 20px;
+        top: 14px;
+        left: 14px;
         z-index: 1000;
     }
 
@@ -3610,9 +3665,10 @@ button.sidebar-value {
         right: -4px;
         width: 12px;
         height: 12px;
-        background-color: var(--btn-red-bg); 
+        background-color: var(--btn-red-bg);
         border-radius: 50%;
-        border: 2px solid var(--bg-color); /* Creates a cutout effect */
+        border: 2px solid var(--bg-color);
+        /* Creates a cutout effect */
         box-shadow: 0 0 8px var(--btn-red-shadow);
     }
 
@@ -3655,7 +3711,8 @@ button.sidebar-value {
         background: rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
-        z-index: 999; /* Sits just below the sidebar (1000) */
+        z-index: 999;
+        /* Sits just below the sidebar (1000) */
     }
 
     /* Allow the FilterBar elements to wrap gracefully */
@@ -3666,15 +3723,16 @@ button.sidebar-value {
         transform: translate(-50%, -50%) scale(0.95);
         width: 90%;
         max-width: 400px;
-        background: var(--bg-color); 
+        background: var(--bg-color);
         border: 1px solid var(--column-border);
         border-top: 1px solid var(--glass-edge-top);
         border-left: 1px solid var(--glass-edge-left);
         border-radius: 16px;
         padding: 24px;
-        flex-direction: column; /* Stack controls vertically */
+        flex-direction: column;
+        /* Stack controls vertically */
         z-index: 1001;
-        
+
         /* Hidden by default */
         opacity: 0;
         pointer-events: none;
@@ -3700,7 +3758,8 @@ button.sidebar-value {
         display: flex;
         flex-direction: column;
         width: 100%;
-        gap: 12px; /* Add vertical spacing between inputs */
+        gap: 12px;
+        /* Add vertical spacing between inputs */
     }
 
     .clear-filters-btn {
@@ -3722,110 +3781,120 @@ button.sidebar-value {
         font-size: 1rem;
         padding: 4px;
     }
-}
-
-/* -----------------------------------------
-   768px - MOBILE DEVICES
-   ----------------------------------------- */
-@media (max-width: 768px) {
-    /* -- 2. Kanban Board (Horizontal Scrolling) -- */
-    .kanban-container {
-        padding: 20px 15px;
-        width: 100vw;
-    }
 
     .kanban-board-wrapper {
+        flex: 1;
+        width: 100%;
         overflow-x: auto;
+        /* Enables native horizontal scrolling/swiping */
         overflow-y: hidden;
-        -webkit-overflow-scrolling: touch; /* Enables smooth inertial scrolling on iOS */
-        padding-bottom: 20px; /* Space for the scrollbar */
-        margin-right: -15px; /* Creates a visual bleed edge for scrolling */
-        padding-right: 15px;
+        /* Prevents vertical double-scrolling */
+
+        /* Optional: Provides momentum scrolling on iOS/Touch devices */
+        -webkit-overflow-scrolling: touch;
     }
 
     .kanban-board {
         display: flex;
         flex-direction: row;
-        gap: 16px;
-        min-width: max-content; /* Forces items into a horizontal line */
+        align-items: center;
         height: 100%;
+        padding: 20px;
+        margin-top: 20px;
+        gap: 20px;
+
+        /* CRITICAL: Forces the container to grow horizontally 
+        rather than squishing the columns together */
+        width: max-content;
+
+        /* Ensures the board still fills the screen if there are only 1 or 2 columns */
+        min-width: 100%;
     }
 
     .kanban-column {
-        width: 85vw; /* Takes up most of the screen, leaving a hint of the next column */
-        max-width: 320px;
-        min-width: 280px;
-        height: calc(100vh - 220px); /* Adjust based on your header/footer heights */
+        width: 75vw;
     }
 
-    /* -- 4. Task Modal (Column Layout) -- */
-    .task-modal-body {
-        flex-direction: column;
-        overflow-y: auto;
-        gap: 16px;
+    .kanban-board-wrapper::-webkit-scrollbar {
+        height: 12px;
     }
 
-    .task-sidebar {
-        width: 100%;
-        border-left: none;
-        border-top: 1px solid var(--column-border);
-        padding-top: 20px;
-        /* padding-left: 0; */
-        display: grid;
-        flex-direction: row; /* 2-column grid for meta info (Assignee, Priority, etc.) */
-        gap: 12px;
+    .kanban-board-wrapper::-webkit-scrollbar-track {
+        background: var(--bg-color);
+        border-radius: 8px;
     }
 
-    .task-sidebar-item {
-        width: 100%;
-        margin-bottom: 0; /* Override desktop margins */
+    .kanban-board-wrapper::-webkit-scrollbar-thumb {
+        background: var(--column-border);
+        border-radius: 8px;
+        border: 2px solid var(--bg-color);
+        /* Creates a nice padded look */
     }
 
-    /* -- 5. Analytics Bar & Footer -- */
-    .analytics-bar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 12px;
-        padding: 15px;
+    .kanban-board-wrapper::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-color);
     }
 
     .analytics-stats {
-        flex-direction: column;
-        align-items: flex-start;
+        display: none !important;
     }
 
-    .portfolio-footer .footer-content {
-        flex-direction: column;
-        gap: 10px;
-        align-items: center;
+    .analytics-bar {
+        justify-content: center;
+        padding: 4px 12px !important;
+        /* Slight padding adjustment if needed */
+        margin-bottom: 0;
     }
+
+    .progress-bar-container {
+        width: 100%;
+        max-width: 400px;
+        /* Prevents it from getting too stretched on tablets */
+        justify-content: center;
+    }
+
+
 }
 
+
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* -----------------------------------------
    390px & SMALLER - MICRO DEVICE TWEAKS
    ----------------------------------------- */
 @media (max-width: 480px) {
+
     /* 1. Reduce the gap between the switcher and the toggle */
     .filter-top-row {
-        gap: 8px; 
+        gap: 8px;
     }
 
     /* 2. Shrink the view switcher buttons slightly */
     .view-btn {
-        font-size: 0.85rem;    /* Scale down the text */
-        padding: 6px 8px;      /* Reduce horizontal padding */
-        white-space: nowrap;   /* Keep them on one line */
+        font-size: 0.85rem;
+        /* Scale down the text */
+        padding: 6px 8px;
+        /* Reduce horizontal padding */
+        white-space: nowrap;
+        /* Keep them on one line */
     }
 
     /* 3. Protect the toggle button and slim its padding */
     .mobile-filter-toggle {
         padding: 0 10px;
-        flex-shrink: 0;        /* Prevents the switcher from crushing it */
-        min-width: 44px;       /* Ensure it remains a clickable target size */
+        flex-shrink: 0;
+        /* Prevents the switcher from crushing it */
+        min-width: 44px;
+        /* Ensure it remains a clickable target size */
     }
 }
