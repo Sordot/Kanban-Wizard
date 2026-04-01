@@ -28,6 +28,8 @@ export default function SortableBoardItem({ board, activeBoardID, onSelectBoard,
       </button>
       <div className="board-actions">
         <button
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
           onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => { e.stopPropagation(); onRenameBoard(board); }}
           className="edit-board-name-btn"
@@ -35,6 +37,8 @@ export default function SortableBoardItem({ board, activeBoardID, onSelectBoard,
           data-tooltip-content="Rename board"
         >✏️</button>
         <button
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
           onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => { e.stopPropagation(); onDeleteBoard(board.id); }}
           className="delete-board-btn"

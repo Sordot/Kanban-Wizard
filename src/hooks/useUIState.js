@@ -4,6 +4,10 @@ export const useUIState = () => {
 
   const [currentView, setCurrentView] = useState('board')
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleSidebar = useCallback(() => setIsSidebarOpen(prev => !prev), []);
+  const closeSidebar = useCallback(() => setIsSidebarOpen(false), []);
+
   const [activeTask, setActiveTask] = useState(null)
 
   const [isAddingColumn, setIsAddingColumn] = useState(false)
@@ -67,21 +71,24 @@ export const useUIState = () => {
   return {
     currentView,
     setCurrentView,
-    activeTask, 
+    isSidebarOpen,
+    toggleSidebar,
+    closeSidebar,
+    activeTask,
     setActiveTask,
-    isAddingColumn, 
-    newColumnTitle, 
+    isAddingColumn,
+    newColumnTitle,
     setNewColumnTitle,
-    openColumnEditor, 
+    openColumnEditor,
     closeColumnEditor,
-    modalConfig, 
-    openDeleteModal, 
+    modalConfig,
+    openDeleteModal,
     closeModal,
-    modalRenameValue, 
-    setModalRenameValue, 
+    modalRenameValue,
+    setModalRenameValue,
     openRenameModal,
-    taskModalConfig, 
-    openTaskModal, 
+    taskModalConfig,
+    openTaskModal,
     closeTaskModal,
     handleDragStart
   };

@@ -1,16 +1,16 @@
-import { useCallback } from 'react';
 import {
   DndContext,
   DragOverlay,
   closestCorners,
   pointerWithin,
   KeyboardSensor,
-  PointerSensor,
+  TouchSensor,
   useSensor,
-  useSensors
+  useSensors,
+  MouseSensor
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaBars } from 'react-icons/fa';
 import { Tooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import './App.css';
@@ -53,7 +53,13 @@ function App() {
   const uiState = useUIState();
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
+    useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 250, // 250ms long-press to pick up a task/board on mobile
+        tolerance: 5, // Allow 5px of movement before canceling the long-press
+      },
+    }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
@@ -133,7 +139,13 @@ function App() {
 
   return (
     <div className="app-layout">
+      {/* Overlay for mobile when sidebar is open */}
+      {uiState.isSidebarOpen && (
+        <div className="sidebar-overlay" onClick={uiState.closeSidebar}></div>
+      )}
       <Sidebar
+        isOpen={uiState.isSidebarOpen}
+        closeSidebar={uiState.closeSidebar}
         boards={boardData.boards}
         activeBoardID={boardData.activeBoardID}
         onSelectBoard={boardData.setActiveBoardID}
@@ -146,6 +158,10 @@ function App() {
         handleBoardDragEnd={boardData.handleBoardDragEnd}
       />
       <div className='kanban-container'>
+        {/* Mobile Hamburger Menu Button */}
+        <button className="hamburger-btn" onClick={uiState.toggleSidebar}>
+          <FaBars size={20} />
+        </button>
         <FilterBar
           currentView={uiState.currentView}
           setCurrentView={uiState.setCurrentView}
@@ -209,7 +225,7 @@ function App() {
                   </button>
                 )}
               </div>
-              
+
               <DragOverlay>
                 {uiState.activeTask ? (
                   <div className="tilt-wrapper">

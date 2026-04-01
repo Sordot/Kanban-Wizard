@@ -4,7 +4,9 @@ import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from 
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import SortableBoardItem from './SortableBoardItem';
 
-export default function Sidebar({ 
+export default function Sidebar({
+  isOpen,
+  closeSidebar, 
   boards, 
   activeBoardID, 
   onSelectBoard, 
@@ -29,7 +31,7 @@ export default function Sidebar({
   );
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       <div className="sidebar-logo">
         <img src={logoIcon} alt="Theo Kanban" className="logo-icon" />
         <span>Kanban Wizard</span>

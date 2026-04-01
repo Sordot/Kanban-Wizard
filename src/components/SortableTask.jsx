@@ -36,7 +36,7 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
         transform,
         transition,
         isDragging
-    } = useSortable({ 
+    } = useSortable({
         id,
         animateLayoutChanges,
         transition: {
@@ -55,6 +55,11 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
     const style = {
         transform: CSS.Translate.toString(transform),
         transition: transition,
+
+        touchAction: 'manipulation', // Prevents double-tap to zoom, but allows vertical scrolling
+        WebkitTouchCallout: 'none',  // Prevents the iOS context menu from popping up on long-press
+        WebkitUserSelect: 'none',    // Prevents text highlighting on iOS Safari
+        userSelect: 'none',          // Prevents text highlighting on other mobile browsers
     }
 
     // Determine the CSS class based on the search status passed from useKanban
@@ -112,6 +117,8 @@ const SortableTask = memo(({ id, task, columnID, onDelete, onUpdate, onOpenModal
                             className='edit-btn'
                             data-tooltip-id="wizard-tooltip"
                             data-tooltip-content="Task details"
+                            onMouseDown={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
                             onPointerDown={(e) => e.stopPropagation()}
                             onClick={(e) => {
                                 e.stopPropagation();

@@ -202,7 +202,7 @@ button, input, textarea {
     border-top: 1px solid var(--glass-edge-top);
     border-left: 1px solid var(--glass-edge-left);
     border-radius: 8px;
-    padding: 0px 4px !important;
+    padding: 0px 12px !important;
     height: 36px;
     color: var(--text-primary);
     cursor: pointer;
@@ -903,7 +903,6 @@ button, input, textarea {
     background: var(--sidebar-bg);
     border-radius: 8px;
     padding: 4px;
-    margin-right: 15px;
 }
 
 .view-btn {
@@ -1235,6 +1234,7 @@ button, input, textarea {
 .filter-container {
     display: flex;
     flex-direction: row;
+    justify-content: flex-start;
     gap: 12px;
     align-items: center;
     background: var(--column-bg); /* Matches your board's card/surface color */
@@ -1243,68 +1243,88 @@ button, input, textarea {
     border: 1px solid var(--column-border);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
-    width: 70%;
+    /* width: 70%; */
+    min-width: fit-content;
     max-width: 1000px;
     margin: 0 auto; /* This centers the filter bar if the container is full-width */
 }
 
-/* --- The Text Search Input --- */
+/* =========================================
+   FILTER BAR & SEARCH REFINEMENTS
+   ========================================= */
+
+/* Make search input visually match the Custom Select dropdowns */
 .search-input-wrapper {
-    position: relative;
-    flex: 1; /* Allows the search bar to grow and take up available space */
-    min-width: 200px; /* Prevents it from getting too squished on small screens */
-}
-
-.search-icon {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-secondary);
-    pointer-events: none;
-}
-
-.search-input {
-    width: 100%;
-    padding: 10px 12px 10px 36px; /* Extra left padding for the icon */
+    display: flex;
+    align-items: center;
+    gap: 8px;
     background: var(--card-bg);
+    backdrop-filter: blur(8px);
     border: 1px solid var(--column-border);
-    color: var(--text-color);
-    border-radius: 6px;
-    font-size: 0.95rem;
+    border-top: 1px solid var(--glass-edge-top);
+    border-left: 1px solid var(--glass-edge-left);
+    border-radius: 8px;
+    padding: 0px 12px;
+    height: 36px;
+    width: 180px; /* Base width matching dropdowns */
     transition: all 0.2s ease;
 }
 
-.search-input:focus {
-    outline: none;
+.search-input-wrapper:focus-within {
     border-color: var(--accent-color);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 0 12px var(--accent-color); /* Magical focus glow */
+    box-shadow: 0 0 15px var(--nebula-glow-1);
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.search-icon {
+    color: var(--text-secondary);
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap; 
+    flex-grow: 1;
+
+    /* position: relative;
+    padding-right: 0px; */
+}
+
+.filter-top-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.mobile-filter-toggle {
+    display: none; /* Hidden on desktop */
 }
 
 /* --- The Clear Spell Button (Emoji Optimized) --- */
 .clear-filters-btn {
     display: flex;
-    align-items: center;
+    align-self: center;
     justify-content: center;
     width: 24px;
-    height: 24px; /* Matches the height of your standard inputs */
+    height: 24px;
     padding: 0; 
     background: transparent; 
     border: 1px solid transparent;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.2s ease;
-    flex-shrink: 0;   
-
-    opacity: 0.25;
-    pointer-events: none;
-    visibility: none;
-}
-
-.clear-filters-btn.visible {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+    transition: all 0.2s ease;  
+    
+    /* position: absolute;
+    right: 0; */
 }
 
 /* 🌫️ The Obscuring Mist: Blur and fade tasks that don't match */
@@ -3510,4 +3530,302 @@ button.sidebar-value {
 .footer-link:hover {
     color: var(--accent-color);
     /* Matches the vibrant violet used in your Add Task buttons */
+}
+
+/* Hide hamburger menu by default on Desktop */
+.hamburger-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 8px;
+  margin-right: auto; /* Aligns it to the left */
+}
+
+/* Base overlay style (hidden by React conditional rendering) */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 998;
+}
+
+@media (max-width: 768px) {
+  .hamburger-btn {
+    display: block;
+  }
+
+  /* Slide-in Sidebar styling */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Hidden off-screen */
+    z-index: 999;
+    width: 300px;
+    min-width: 300px;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar.open {
+    left: 0; /* Slide in */
+  }
+}
+
+/* =========================================
+   RESPONSIVE LAYOUT (1024px & 768px)
+   ========================================= */
+
+/* Desktop Base */
+.hamburger-btn {
+    display: none; /* Hide the hamburger by default on desktop */
+}
+
+/* -----------------------------------------
+   1024px - TABLETS & SMALL DESKTOPS
+   ----------------------------------------- */
+@media (max-width: 1024px) {
+    /* Slightly shrink the sidebar to give the board more breathing room */
+    .sidebar {
+        min-width: 260px;
+        padding: 30px 15px 10px;
+    }
+
+    /* Allow the FilterBar elements to wrap gracefully */
+    .filter-container {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .clear-filters-btn {
+        align-self: flex-end;
+    }
+
+    .search-input-wrapper {
+        flex-grow: 1;
+        min-width: 180px;
+    }
+}
+
+/* -----------------------------------------
+   768px - MOBILE DEVICES
+   ----------------------------------------- */
+@media (max-width: 768px) {
+    /* -- 1. App Layout & Sidebar Drawer -- */
+    .sidebar {
+        position: fixed;
+        left: -100%;
+        top: 0;
+        z-index: 1000;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 280px;
+        max-width: 80vw;
+    }
+
+    /* This class triggers when your hamburger button is clicked */
+    .sidebar.open {
+        left: 0;
+    }
+
+    /* Styles for the conditional overlay you added in App.jsx */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 999; /* Sits just below the sidebar (1000) */
+    }
+
+    .hamburger-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: 1px solid var(--column-border);
+        color: var(--text-primary);
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        width: fit-content;
+    }
+
+    /* -- 2. Kanban Board (Horizontal Scrolling) -- */
+    .kanban-container {
+        padding: 20px 15px;
+        width: 100vw;
+    }
+
+    .kanban-board-wrapper {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch; /* Enables smooth inertial scrolling on iOS */
+        padding-bottom: 20px; /* Space for the scrollbar */
+        margin-right: -15px; /* Creates a visual bleed edge for scrolling */
+        padding-right: 15px;
+    }
+
+    .kanban-board {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        min-width: max-content; /* Forces items into a horizontal line */
+        height: 100%;
+    }
+
+    .kanban-column {
+        width: 85vw; /* Takes up most of the screen, leaving a hint of the next column */
+        max-width: 320px;
+        min-width: 280px;
+        height: calc(100vh - 220px); /* Adjust based on your header/footer heights */
+    }
+
+    /* -- 3. Filter Bar (Vertical Stack) -- */
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .filter-top-row {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .view-switcher {
+        flex-grow: 1;
+    }
+
+    .mobile-filter-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: var(--card-bg);
+        border: 1px solid var(--column-border);
+        border-radius: 8px;
+        color: var(--text-primary);
+        padding: 0 16px;
+        height: 36px;
+        cursor: pointer;
+        position: relative;
+    }
+
+    .filter-badge {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 10px;
+        height: 10px;
+        background: var(--btn-red-bg);
+        border-radius: 50%;
+        box-shadow: 0 0 8px var(--btn-red-bg);
+    }
+
+    .filter-controls {
+        display: none; 
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.15); /* Slight inset grouping look */
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid var(--column-border);
+        gap: 12px;
+    }
+
+    .filter-controls.open {
+        display: flex; /* Reveal when toggled */
+        animation: slideDown 0.2s ease-out;
+    }
+
+    .search-input-wrapper,
+    .filter-dropdown {
+        width: 100%; /* Force all filters to full width on mobile */
+    }
+
+    .view-btn {
+        flex: 1; /* Tabs take equal width on mobile */
+    }
+
+    .filter-dropdown {
+        width: 100%; /* Radix dropdowns span full width */
+    }
+
+    /* -- 4. Task Modal (Column Layout) -- */
+    .task-modal-body {
+        flex-direction: column;
+        overflow-y: auto;
+        gap: 16px;
+    }
+
+    .task-sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--column-border);
+        padding-top: 20px;
+        /* padding-left: 0; */
+        display: grid;
+        flex-direction: row; /* 2-column grid for meta info (Assignee, Priority, etc.) */
+        gap: 12px;
+    }
+
+    .task-sidebar-item {
+        width: 100%;
+        margin-bottom: 0; /* Override desktop margins */
+    }
+
+    /* -- 5. Analytics Bar & Footer -- */
+    .analytics-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    .analytics-stats {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .portfolio-footer .footer-content {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* -----------------------------------------
+   390px & SMALLER - MICRO DEVICE TWEAKS
+   ----------------------------------------- */
+@media (max-width: 480px) {
+    /* 1. Reduce the gap between the switcher and the toggle */
+    .filter-top-row {
+        gap: 8px; 
+    }
+
+    /* 2. Shrink the view switcher buttons slightly */
+    .view-btn {
+        font-size: 0.85rem;    /* Scale down the text */
+        padding: 6px 8px;      /* Reduce horizontal padding */
+        white-space: nowrap;   /* Keep them on one line */
+    }
+
+    /* 3. Protect the toggle button and slim its padding */
+    .mobile-filter-toggle {
+        padding: 0 10px;
+        flex-shrink: 0;        /* Prevents the switcher from crushing it */
+        min-width: 44px;       /* Ensure it remains a clickable target size */
+    }
 }

@@ -29,7 +29,7 @@ export const issueIcons = {
 
 export const envIcons = {
   "Dev": "🧙‍♂️",
-  "QA": "🦉",
+  "QA": "🕵️",
   "Stage": "🎭",
   "Prod": "✨"
 };
