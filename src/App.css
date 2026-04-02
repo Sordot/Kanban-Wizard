@@ -3792,6 +3792,8 @@ button.sidebar-value {
 
         /* Optional: Provides momentum scrolling on iOS/Touch devices */
         -webkit-overflow-scrolling: touch;
+
+        
     }
 
     .kanban-board {
@@ -3799,7 +3801,7 @@ button.sidebar-value {
         flex-direction: row;
         align-items: center;
         height: 100%;
-        padding: 20px;
+        padding: 20px 20px 0px 20px;
         margin-top: 20px;
         gap: 20px;
 
@@ -3809,6 +3811,8 @@ button.sidebar-value {
 
         /* Ensures the board still fills the screen if there are only 1 or 2 columns */
         min-width: 100%;
+
+        margin: 0 !important;
     }
 
     .kanban-column {
@@ -3816,23 +3820,7 @@ button.sidebar-value {
     }
 
     .kanban-board-wrapper::-webkit-scrollbar {
-        height: 12px;
-    }
-
-    .kanban-board-wrapper::-webkit-scrollbar-track {
-        background: var(--bg-color);
-        border-radius: 8px;
-    }
-
-    .kanban-board-wrapper::-webkit-scrollbar-thumb {
-        background: var(--column-border);
-        border-radius: 8px;
-        border: 2px solid var(--bg-color);
-        /* Creates a nice padded look */
-    }
-
-    .kanban-board-wrapper::-webkit-scrollbar-thumb:hover {
-        background: var(--accent-color);
+        display: none;
     }
 
     .analytics-stats {
@@ -3851,6 +3839,10 @@ button.sidebar-value {
         max-width: 400px;
         /* Prevents it from getting too stretched on tablets */
         justify-content: center;
+    }
+
+    .portfolio-footer {
+        margin-top: 20px;
     }
 
 
