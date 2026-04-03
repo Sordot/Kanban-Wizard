@@ -1,42 +1,50 @@
-# 🪄 Kanban Wizard
+🧙‍♂️ Kanban Wizard (or Theo-Kanban)
+A purely client-side React Kanban board built to explore complex state management and drag-and-drop interfaces.
 
-**Kanban Wizard** is a high-performance, enchanted task management application designed to turn project chaos into organized magic. Built with React and a focus on fluid user experience, it allows you to conjure, track, and master your workflows with ease.
+[Live Demo on Netlify] (Insert your link here)
 
-## ✨ Features
+💡 Why I Built This
+I wanted a project that went beyond the standard "To-Do list" to genuinely challenge my understanding of React. My main goals were to figure out how to cleanly separate UI logic from data logic, handle deeply nested state updates, and implement a smooth drag-and-drop experience that works on both desktop and mobile.
 
--   **Multi-Board Sorcery**: Manage multiple distinct projects (Workspaces) from a single sidebar.
--   **Dynamic Drag-and-Drop**: Move tasks across columns with smooth, hardware-accelerated transitions powered by `@dnd-kit`.
--   **Deep Task Insight**: Every task is a "scroll" of information—track subtasks, assignees, priorities, and real-time "Last Updated" timestamps.
--   **Integrated Analytics**: A real-time `AnalyticsBar` provides a birds-eye view of your project's health and distribution.
--   **Theme Transmutation**: Instantly switch between **Dark** and **Light** modes to suit your environment.
--   **Rich Text Enchantments**: A fully integrated Tiptap editor for task descriptions, supporting professional formatting.
+✨ Features
+Smooth Drag & Drop: Move tasks between columns or reorder entire boards (powered by @dnd-kit).
 
-## 🛠️ Built With
+Local First: No database needed. Everything is saved instantly to your browser's localStorage.
 
--   **React** - The core engine.
--   **@dnd-kit** - For the fluid drag-and-drop mechanics.
--   **Lucide & FontAwesome Icons** - For clear visual metaphors.
--   **CSS Modules/Variables** - For a deeply customizable and responsive UI.
+Data Portability: Built-in JSON export/import using the File System Access API so users can backup their boards locally.
 
-## 🚀 Deployment
+Multiple Views: Toggle between the classic Kanban board and a Calendar view.
 
-The live version of the Wizard's workshop is available here:
-**[Your GitHub Pages Link Here]**
+Filtering & Theming: Filter tasks by priority, tags, or assignees, and toggle between Light/Dark/Wizard themes.
 
-## 📜 How to Run Locally
+🛠️ Under the Hood
+To keep App.jsx from becoming a massive, unreadable file, I focused heavily on custom hooks to isolate my logic:
 
-1.  **Clone the Repository**
-    ```bash
-    git clone [https://github.com/Sordot/Kanban-Wizard.git](https://github.com/Sordot/Kanban-Wizard.git)
-    ```
-2.  **Install Dependencies**
-    ```bash
-    npm install
-    ```
-3.  **Start the Magic**
-    ```bash
-    npm run dev
-    ```
+useBoards.js: Handles all the heavy lifting for creating, editing, deleting, and moving tasks/columns.
 
----
-*Built with passion by **Theo Gevirtz**.*
+useUIState.js: Manages the state for modals, sidebars, and currently dragged items.
+
+useFilters.js: Isolates the logic for searching and sorting tasks.
+
+🧠 Biggest Lessons Learned
+Drag and Drop is Tricky: Getting @dnd-kit to feel completely natural required tweaking custom collision detection algorithms and setting up specific touch-sensor delays so mobile users could scroll without accidentally picking up tasks.
+
+State Immutability: Updating a specific task deeply nested inside a column array taught me a lot about spreading state correctly without mutating the original data.
+
+CSS Animations vs. React State: I had to implement a "delay" system using setTimeout to allow CSS delete/rename animations to finish before actually removing the items from the React state.
+
+💻 Run it Locally
+If you want to poke around the code:
+
+Clone the repo:
+
+Bash
+git clone https://github.com/Sordot/Theo-Kanban.git
+Install dependencies:
+
+Bash
+npm install
+Start the Vite development server:
+
+Bash
+npm run dev
